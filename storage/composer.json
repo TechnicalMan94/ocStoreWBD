@@ -1,0 +1,17 @@
+{
+	"name": "opencart/opencart",
+    "type": "project",
+    "description": "OpenCart",
+    "keywords": ["opencart", "ecommerce", "framework", "opensource"],
+    "homepage": "http://www.opencart.com",
+    "license": "GPL-3.0+",
+    "config": {
+        "vendor-dir": "./vendor/"
+    },
+    "require": {
+		"twig/twig": "^3.0",
+		"ezyang/htmlpurifier": "^4.17",
+		"scssphp/scssphp": "^1.13",
+		"phpmailer/phpmailer": "^6.10"
+	}
+}
