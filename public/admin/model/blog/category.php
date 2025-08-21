@@ -256,7 +256,7 @@ class ModelBlogCategory extends Model {
 	}
 	
 	public function getAllCategories() {
-		$category_data = $this->cache->get('category.all.' . $this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'));
+		$category_data = $this->cache->get('blog_category.all.' . $this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'));
 		if (!$category_data || !is_array($category_data)) {
 		
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog_category c LEFT JOIN " . DB_PREFIX . "blog_category_description cd ON (c.blog_category_id = cd.blog_category_id) LEFT JOIN " . DB_PREFIX . "blog_category_to_store c2s ON (c.blog_category_id = c2s.blog_category_id) WHERE cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY c.parent_id, c.sort_order, cd.name");
@@ -265,7 +265,7 @@ class ModelBlogCategory extends Model {
 		foreach ($query->rows as $row) {
 			$category_data[$row['parent_id']][$row['blog_category_id']] = $row;
 		}
-		$this->cache->set('category.all.' . $this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'), $category_data);
+		$this->cache->set('blog_category.all.' . $this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'), $category_data);
 		}
 		
 		return $category_data;
