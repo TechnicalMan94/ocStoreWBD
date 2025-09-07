@@ -404,9 +404,29 @@ class SeoPro {
 
                 $query = $this->db->query($sql);
                 if($query->num_rows) {
-                    foreach($query->rows as $row) {
-                        $this->keywords[$row['query']][$row['store_id']][$row['language_id']] = $row['keyword'];
-                        $this->queries[$row['keyword']][$row['store_id']][$row['language_id']] = $row['query'];
+                    foreach ($query->rows as $row) {
+                        $queryValue = $row['query'] ?? '';
+                        $keywordValue = $row['keyword'] ?? '';
+                        $storeId = $row['store_id'] ?? 0;
+                        $languageId = $row['language_id'] ?? 0;
+                        
+                        // Инициализация вложенных массивов при необходимости
+                        if (!isset($this->keywords[$queryValue])) {
+                            $this->keywords[$queryValue] = [];
+                        }
+                        if (!isset($this->keywords[$queryValue][$storeId])) {
+                            $this->keywords[$queryValue][$storeId] = [];
+                        }
+                        
+                        if (!isset($this->queries[$keywordValue])) {
+                            $this->queries[$keywordValue] = [];
+                        }
+                        if (!isset($this->queries[$keywordValue][$storeId])) {
+                            $this->queries[$keywordValue][$storeId] = [];
+                        }
+                        
+                        $this->keywords[$queryValue][$storeId][$languageId] = $keywordValue;
+                        $this->queries[$keywordValue][$storeId][$languageId] = $queryValue;
                     }
                 }
             }
