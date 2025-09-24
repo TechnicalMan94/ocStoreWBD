@@ -447,6 +447,9 @@ class ControllerBlogCategory extends Controller {
 			
 			foreach ($this->request->post['category_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
+					if(empty($keyword)){
+						$keyword = $this->request->post['category_seo_url'][$store_id][$language_id] = translit($this->request->post['category_description'][$language_id]['name']);
+					}
 					if (!empty($keyword)) {
 						if (count(array_keys($language, $keyword)) > 1) {
 							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_unique');
