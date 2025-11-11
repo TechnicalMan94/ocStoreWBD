@@ -80,35 +80,7 @@ class ControllerCommonDeveloper extends Controller {
 	}
 
 	public function sass() {
-		$this->load->language('common/developer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'common/developer')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			// Before we delete we need to make sure there is a sass file to regenerate the css
-			$file = DIR_APPLICATION  . 'view/stylesheet/bootstrap.css';
-
-			if (is_file($file) && is_file(DIR_APPLICATION . 'view/stylesheet/sass/_bootstrap.scss')) {
-				unlink($file);
-			}
-			 
-			$files = glob(DIR_CATALOG  . 'view/theme/*/stylesheet/sass/_bootstrap.scss');
-			 
-			foreach ($files as $file) {
-				$file = substr($file, 0, -21) . '/bootstrap.css';
-
-				if (is_file($file)) {
-					unlink($file);
-				}
-			}
-
-			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_sass'));
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		// Устаревшая функция удалена
 	}
 
 	public function systemcache() {
