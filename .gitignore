@@ -8,3 +8,9 @@ public/config.php
 public/admin/config.php
 public/image/cache
 .vscode
+uni_*.php
+unishop2*
+uni_*.twig
+unishop*
+public/image/catalog/demo
+error.log
