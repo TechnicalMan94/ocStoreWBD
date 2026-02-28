@@ -1,4 +1,9 @@
 storage/cache
 storage/session
+storage/modification
+storage/logs
+storage/download
+storage/upload
 public/config.php
 public/admin/config.php
+public/image/cache
