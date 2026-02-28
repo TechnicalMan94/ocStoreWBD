@@ -167,7 +167,7 @@ class ControllerInstallStep2 extends Controller {
 	}
 
 	private function validate() {
-		if (phpversion() < '8.2') {
+		if (phpversion() < '8.1') {
 			$this->error['warning'] = $this->language->get('error_version');
 		}
 

@@ -39,7 +39,7 @@ $_['text_unwritable']        = 'Не соответствует (Не досту
 $_['text_missing']           = 'Файл отсутствует или не верное имя';
 
 // Error
-$_['error_version']          = 'Вам нужно использовать PHP 8.2 или выше для работы OpenCart!';
+$_['error_version']          = 'Вам нужно использовать PHP 8.1 или выше для работы OpenCart!';
 $_['error_file_upload']      = 'Необходимы права на запись 777';
 $_['error_session']          = 'OpenCart не будет работать с включенным session.auto_start!';
 $_['error_db']               = 'Расширение базы данных должно быть установлено в php.ini для работы OpenCart!';
