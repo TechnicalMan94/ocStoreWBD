@@ -1,2 +1,4 @@
 storage/cache
 storage/session
+public/config.php
+public/admin/config.php
