@@ -22,10 +22,14 @@ $_['template_cache']    = true;
 $_['action_pre_action'] = array(
 	'startup/startup',
 	'startup/error',
-	'startup/event',
-	'startup/login',
-	'startup/permission'
+	'startup/event'
 );
+
+if (php_sapi_name() !== 'cli') {
+    // CLI режим
+    $_['action_pre_action'][] = "startup/login";
+    $_['action_pre_action'][] = "startup/permission";
+}
 
 // Actions
 $_['action_default'] = 'common/dashboard';

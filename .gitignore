@@ -13,4 +13,5 @@ unishop2*
 uni_*.twig
 unishop*
 public/image/catalog/demo
-error.log
+public/admin/errors.log
+public/errors.log
