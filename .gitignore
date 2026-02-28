@@ -7,3 +7,4 @@ storage/upload
 public/config.php
 public/admin/config.php
 public/image/cache
+.vscode
