@@ -69,6 +69,16 @@ if(!function_exists('hash_equals')) {
 		}
 	}
 }
+if(!function_exists('array_first')){
+    function array_first($array){
+        return !empty($array) ? $array[array_key_first($array)] : [];
+    }
+}
+if(!function_exists('array_last')){
+    function array_last($array){
+        return !empty($array) ? $array[array_key_last($array)] : [];
+    }
+}
 function writelog($text, $file = false, $color = null, $date = true)
 {
     // ANSI color codes
