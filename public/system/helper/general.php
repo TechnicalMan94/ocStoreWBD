@@ -69,41 +69,58 @@ if(!function_exists('hash_equals')) {
 		}
 	}
 }
-
 function writelog($text, $file = false, $color = null, $date = true)
 {
-	// ANSI color codes
-	$colors = [
-		'black' => '0;30',
-		'red' => '0;31',
-		'green' => '0;32',
-		'yellow' => '0;33',
-		'blue' => '0;34',
-		'purple' => '0;35',
-		'cyan' => '0;36',
-		'white' => '0;37',
-		'bright_black' => '1;30',
-		'bright_red' => '1;31',
-		'bright_green' => '1;32',
-		'bright_yellow' => '1;33',
-		'bright_blue' => '1;34',
-		'bright_purple' => '1;35',
-		'bright_cyan' => '1;36',
-		'bright_white' => '1;37',
-	];
-	
-	$line = ($date ? (date('Y-m-d H:i:s') . ' ') : '') . $text;
-	
-	// Добавляем цвет для вывода в консоль
-	if ($color && isset($colors[$color])) {
-		$coloredLine = "\033[" . $colors[$color] . "m" . $line . "\033[0m";
-		echo $coloredLine . PHP_EOL;
-	} else {
-		echo $line . PHP_EOL;
-	}
-	
-	// В файл записываем без цветовых кодов
-	if ($file) {
-		file_put_contents(DIR_LOGS . $file . '.log', $line . PHP_EOL, FILE_APPEND);
-	}
+    // ANSI color codes
+    $colors = [
+        'black'         => '0;30',
+        'red'           => '0;31',
+        'green'         => '0;32',
+        'yellow'        => '0;33',
+        'blue'          => '0;34',
+        'purple'        => '0;35',
+        'cyan'          => '0;36',
+        'white'         => '0;37',
+        'bright_black'  => '1;30',
+        'bright_red'    => '1;31',
+        'bright_green'  => '1;32',
+        'bright_yellow' => '1;33',
+        'bright_blue'   => '1;34',
+        'bright_purple' => '1;35',
+        'bright_cyan'   => '1;36',
+        'bright_white'  => '1;37',
+    ];
+
+    if ($file AND !$color AND $colors[$file]) {
+        $color = $file;
+        $file  = false;
+    }
+    if (is_array($text)) {
+        $text = json_encode($text, JSON_UNESCAPED_UNICODE);
+    }
+    $line = ($date ? (date('Y-m-d H:i:s') . ' ') : '') . $text;
+        
+    
+    // Определяем, является ли запрос AJAX
+    $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+    
+    // В файл записываем без цветовых кодов
+    if ($file) {
+        file_put_contents(DIR_LOGS . $file . '.log', $line . PHP_EOL, FILE_APPEND);
+    }
+    if(!$isAjax){
+        // Добавляем цвет для вывода в консоль
+        if ($color && isset($colors[$color]) && posix_isatty(STDOUT)) {
+            $coloredLine = "\e[" . $colors[$color] . 'm' . $line . "\e[0m";
+            echo $coloredLine . PHP_EOL;
+        } else {
+            echo $line . PHP_EOL;
+        }
+    } else {
+        return $line;
+    }    
+    
+
+    
 }
