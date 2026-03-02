@@ -59,45 +59,75 @@ class ModelCatalogOption extends Model {
 	}
 
 	public function getOptions($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "option` o LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE od.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = [];
+		$where = [];
+		$join = [];
+		$table = DB_PREFIX . "option o";
+		
+		if(!empty($data['count'])){
+			$sql[] = "SELECT COUNT(*) as count FROM " . $table;
+		} else {
+			$sql[] = "SELECT * FROM " . $table;
+		}
+		
+		$join[] = DB_PREFIX . "option_description od ON (o.option_id = od.option_id) AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND od.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$where[] = "od.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
 		}
 
-		$sort_data = array(
-			'od.name',
-			'o.type',
-			'o.sort_order'
-		);
-
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY od.name";
+		if (!empty($data['filter_name_important'])) {
+			$where[] = "od.name = '" . $this->db->escape($data['filter_name_important']) . "'";
 		}
 
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
+		if($join){
+			$sql[] = "LEFT JOIN " . implode(" LEFT JOIN ", array_unique($join));
 		}
+		
+		if($where){
+			$sql[] = "WHERE " . implode(" AND ", array_unique($where));
+		}
+		
+		if (empty($data['count'])) {
+			
+			$sort_data = array(
+				'od.name',
+				'o.type',
+				'o.sort_order'
+			);
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
+			if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+				$sql[] = "ORDER BY " . $data['sort'];
+			} else {
+				$sql[] = "ORDER BY od.name";
 			}
 
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
+			if (isset($data['order']) && ($data['order'] == 'DESC')) {
+				$sql[] = "DESC";
+			} else {
+				$sql[] = "ASC";
 			}
 
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
+			if (isset($data['start']) || isset($data['limit'])) {
+				if ($data['start'] < 0) {
+					$data['start'] = 0;
+				}
 
+				if ($data['limit'] < 1) {
+					$data['limit'] = 20;
+				}
+
+				$sql[] = "LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+			}
+		}
+		$sql = implode(' ', $sql);
 		$query = $this->db->query($sql);
+		if(!empty($data['count'])){
+			return $query->row['count'];
+		} else {
+			return $query->rows;
+		}
 
-		return $query->rows;
 	}
 
 	public function getOptionDescriptions($option_id) {
