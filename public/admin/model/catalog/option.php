@@ -77,7 +77,7 @@ class ModelCatalogOption extends Model {
 		}
 
 		if (!empty($data['filter_name_important'])) {
-			$where[] = "od.name = '" . $this->db->escape($data['filter_name_important']) . "'";
+			$where[] = "LOWER(od.name) = '" . $this->db->escape(mb_strtolower($data['filter_name_important'])) . "'";
 		}
 
 		if($join){
