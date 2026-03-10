@@ -82,6 +82,21 @@ if ($config->get('db_autostart')) {
 
 	// Sync PHP and DB time zones
 	$db->query("SET time_zone = '" . $db->escape(date('P')) . "'");
+
+	$medoo = new \Medoo\Medoo([
+		'type' => 'mysql',
+		'host' => $config->get('db_hostname'),
+		'database' => $config->get('db_database'),
+		'username' => $config->get('db_username'),
+		'password' => $config->get('db_password'),
+		'charset' => 'utf8mb4',
+		'collation' => 'utf8mb4_general_ci',
+		'port' => $config->get('db_port'),
+		'prefix' => DB_PREFIX,
+
+	]);
+
+	$registry->set('medoo', $medoo);
 }
 
 // Session

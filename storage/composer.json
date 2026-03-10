@@ -12,6 +12,7 @@
 		"twig/twig": "^3.0",
 		"ezyang/htmlpurifier": "^4.17",
 		"scssphp/scssphp": "^1.13",
-		"phpmailer/phpmailer": "^6.10"
+		"phpmailer/phpmailer": "^6.10",
+		"catfan/medoo": "^2.2"
 	}
 }
