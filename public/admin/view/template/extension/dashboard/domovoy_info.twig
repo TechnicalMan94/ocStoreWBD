@@ -149,7 +149,7 @@
         background-color: #d0321e;
     }
 </style>
-<script type="text/javascript"><!--
+<script>
     $('#button-phpinfo').on('click', function () {
         $.ajax({
             url: 'index.php?route=extension/dashboard/domovoy/phpinfo&user_token={{ user_token }}',
@@ -264,8 +264,8 @@
 
         calcFolder(element);
     });
-    //--></script>
-<script type="text/javascript"><!--
+    </script>
+<script>
     $('#domovoy input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change', function () {
         $.ajax({
             url: 'index.php?route=common/developer/edit&user_token={{ user_token }}',
@@ -337,4 +337,4 @@
             }
         });
     });
-    //--></script>
+    </script>

@@ -164,7 +164,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
   $('.table-responsive').on('shown.bs.dropdown', function (e) {
     var t = $(this),
       m = $(e.target).find('.dropdown-menu'),
@@ -181,8 +181,8 @@
   }).on('hidden.bs.dropdown', function () {
     $(this).css({'padding-bottom': '', 'overflow': ''});
   });
-  //--></script>
-  <script type="text/javascript"><!--
+  </script>
+  <script>
   $('#button-filter').on('click', function() {
     url = 'index.php?route=customer/customer&user_token={{ user_token }}';
     var filter_name = $('input[name=\'filter_name\']').val();
@@ -211,8 +211,8 @@
     }
     location = url;
   });
-  //--></script>
-  <script type="text/javascript"><!--
+  </script>
+  <script>
   $('input[name=\'filter_name\']').autocomplete({
     'source': function(request, response) {
       $.ajax({
@@ -251,19 +251,19 @@
       $('input[name=\'filter_email\']').val(item['label']);
     }
   });
-  //--></script>
-  <script type="text/javascript"><!--
+  </script>
+  <script>
   $('.date').datetimepicker({
     language: '{{ datepicker }}',
     pickTime: false
   });
-  //--></script>
-<script type="text/javascript"><!--
+  </script>
+<script>
   $('#filter-customer').on('keydown', function(e) {
     if (e.keyCode == 13) {
       $('#button-filter').trigger('click')
     }
   });
-//--></script>
+</script>
 </div>
 {{ footer }}

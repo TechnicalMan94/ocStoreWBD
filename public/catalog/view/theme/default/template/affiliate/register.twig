@@ -566,7 +566,7 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
+<script>
 // Sort the custom fields
 $('#account .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {
@@ -629,8 +629,8 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script> 
-<script type="text/javascript"><!--
+</script> 
+<script>
 $('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 
@@ -682,8 +682,8 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 		}
 	}, 500);
 });
-//--></script> 
-<script type="text/javascript"><!--
+</script> 
+<script>
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
 	pickTime: false
@@ -699,8 +699,8 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script>
-<script type="text/javascript"><!--
+</script>
+<script>
 $('input[name=\'payment\']').on('change', function() {
 	$('.payment').hide();
 
@@ -708,5 +708,5 @@ $('input[name=\'payment\']').on('change', function() {
 });
 
 $('input[name=\'payment\']:checked').trigger('change');
-//--></script> 
+</script> 
 {{ footer }} 

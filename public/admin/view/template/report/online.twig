@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=report/online&user_token={{ user_token }}';
 
@@ -106,8 +106,8 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -127,5 +127,5 @@ $('input[name=\'filter_customer\']').autocomplete({
 		$('input[name=\'filter_customer\']').val(item['label']);
 	}
 });
-//--></script></div>
+</script></div>
 {{ footer }}

@@ -375,7 +375,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
   $(document).delegate('#button-invoice', 'click', function() {
 	  $.ajax({
 		  url: 'index.php?route=sale/order/createinvoiceno&user_token={{ user_token }}&order_id={{ order_id }}',
@@ -592,6 +592,6 @@
 		  }
 	  });
   });
-  //--></script>
+  </script>
 </div>
 {{ footer }} 

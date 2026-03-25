@@ -89,7 +89,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 // Reorderable drag-and-drop lists
 $('#featured-product div input').before(' <i class="fa fa-hand-grab-o handle"></i> ');
 $('#featured-product').sortable({
@@ -123,5 +123,5 @@ $('input[name=\'product_name\']').autocomplete({
 $('#featured-product').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script></div>
+</script></div>
 {{ footer }}

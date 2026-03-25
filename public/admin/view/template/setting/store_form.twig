@@ -565,7 +565,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('select[name=\'config_theme\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=setting/setting/theme&user_token={{ user_token }}&theme=' + this.value,
@@ -586,7 +586,7 @@ $('select[name=\'config_theme\']').on('change', function() {
 });
 
 $('select[name=\'config_theme\']').trigger('change');
-//--></script>   <script type="text/javascript"><!--
+</script>   <script>
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
@@ -623,5 +623,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script></div>
+</script></div>
 {{ footer }} 

@@ -86,7 +86,7 @@
       {{ content_bottom }}</div>
     {{ column_right }}</div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $(document).on('change', 'input[name=\'account\']', function() {
 	if ($('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a')) {
 		if (this.value == 'register') {
@@ -810,5 +810,5 @@ $(document).delegate('#button-payment-method', 'click', function() {
         }
     });
 });
-//--></script>
+</script>
 {{ footer }}

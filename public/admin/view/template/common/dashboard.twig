@@ -30,7 +30,7 @@
       {% endfor %}</div>
     {% endfor %}</div>
     {{ security }}
-  <script type="text/javascript"><!--
+  <script>
 $('#button-developer').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=common/developer&user_token={{ user_token }}',
@@ -53,6 +53,6 @@ $('#button-developer').on('click', function() {
 		}
 	});	
 });	
-//--></script> 
+</script> 
 </div>
 {{ footer }}

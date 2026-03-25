@@ -102,14 +102,14 @@
   </div>
   <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
   <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <script src="view/javascript/codemirror/lib/codemirror.js"></script> 
+  <script src="view/javascript/codemirror/lib/xml.js"></script> 
+  <script src="view/javascript/codemirror/lib/formatting.js"></script> 
+  <script src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
-  <script type="text/javascript"><!--
+  <script src="view/javascript/summernote/summernote-image-attributes.js"></script> 
+  <script src="view/javascript/summernote/opencart.js"></script> 
+  <script>
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
 
@@ -117,8 +117,8 @@ $('select[name=\'to\']').on('change', function() {
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 // Customers
 $('input[name=\'customers\']').autocomplete({
 	'source': function(request, response) {
@@ -261,5 +261,5 @@ function send(url) {
 		}
 	});
 }
-//--></script></div>
+</script></div>
 {{ footer }}

@@ -125,14 +125,14 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('.datetime').datetimepicker({
 	language: '{{ datepicker }}',
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -153,5 +153,5 @@ $('input[name=\'product\']').autocomplete({
 		$('input[name=\'product_id\']').val(item['value']);		
 	}	
 });
-//--></script></div>
+</script></div>
 {{ footer }}

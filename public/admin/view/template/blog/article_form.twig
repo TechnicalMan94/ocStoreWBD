@@ -312,14 +312,14 @@
   </div>
   <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
   <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/xml.js"></script> 
-  <script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
-  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <script src="view/javascript/codemirror/lib/codemirror.js"></script> 
+  <script src="view/javascript/codemirror/lib/xml.js"></script> 
+  <script src="view/javascript/codemirror/lib/formatting.js"></script> 
+  <script src="view/javascript/summernote/summernote.js"></script>
   <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
-  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script> 
-  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script> 
-  <script type="text/javascript"><!--
+  <script src="view/javascript/summernote/summernote-image-attributes.js"></script> 
+  <script src="view/javascript/summernote/opencart.js"></script> 
+  <script>
 // Category
 $('input[name=\'category\']').autocomplete({
 	'source': function(request, response) {
@@ -433,9 +433,9 @@ $('input[name=\'relatedproduct\']').autocomplete({
 $('#product-related').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script> 
+</script> 
   
-  <script type="text/javascript"><!--
+  <script>
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
 	pickTime: false
@@ -451,9 +451,9 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');
-//--></script></div>
+</script></div>
 {{ footer }} 

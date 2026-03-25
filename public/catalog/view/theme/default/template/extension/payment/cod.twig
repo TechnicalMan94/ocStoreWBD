@@ -3,7 +3,7 @@
     <input type="button" value="{{ button_confirm }}" id="button-confirm" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
   </div>
 </div>
-<script type="text/javascript"><!--
+<script>
 $('#button-confirm').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=extension/payment/cod/confirm',
@@ -24,4 +24,4 @@ $('#button-confirm').on('click', function() {
 		}
 	});
 });
-//--></script>
+</script>

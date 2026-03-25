@@ -38,7 +38,7 @@
     </div>
   </div>
   {% if categories %}
-  <script type="text/javascript"><!--
+  <script>
 $('select[name="type"]').on('change', function() {
 	$.ajax({
 		url: $('select[name="type"]').val(),
@@ -111,7 +111,7 @@ $('#extension').on('click', '.btn-danger, .btn-warning', function(e) {
 		});
 	}
 });
-//--></script>
+</script>
   {% endif %}
 </div>
 {{ footer }} 

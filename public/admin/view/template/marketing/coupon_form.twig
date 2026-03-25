@@ -212,7 +212,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -269,9 +269,9 @@ $('input[name=\'category\']').autocomplete({
 $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script> 
+</script> 
   {% if coupon_id %} 
-  <script type="text/javascript"><!--
+  <script>
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
 	
@@ -279,12 +279,12 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 });			
 
 $('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_token }}&coupon_id={{ coupon_id }}');
-//--></script> 
+</script> 
   {% endif %} 
-  <script type="text/javascript"><!--
+  <script>
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
 	pickTime: false
 });
-//--></script></div>
+</script></div>
 {{ footer }}

@@ -239,7 +239,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('input[name=\'customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -269,8 +269,8 @@ $('input[name=\'customer\']').autocomplete({
 		$('input[name=\'telephone\']').val(item['telephone']);
 	}
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -333,11 +333,11 @@ $('#button-history').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
 	pickTime: false
 });
-//--></script></div>
+</script></div>
 {{ footer }} 

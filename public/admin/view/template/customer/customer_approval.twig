@@ -123,7 +123,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('#customer-approval').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
 
@@ -200,8 +200,8 @@ $('#button-filter').on('click', function() {
 	
 	$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}' + url);
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -246,12 +246,12 @@ $('#filter-customer').on('keydown', function(e) {
     $('#button-filter').trigger('click')
   }
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
 	pickTime: false
 });
-//--></script>
+</script>
 </div>
 {{ footer }}

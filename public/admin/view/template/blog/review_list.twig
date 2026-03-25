@@ -203,7 +203,7 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+  <script>
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=blog/review&user_token={{ user_token }}';
 	
@@ -233,11 +233,11 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script> 
-  <script type="text/javascript"><!--
+</script> 
+  <script>
 $('.date').datetimepicker({
 	language: '{{ datepicker }}',
 	pickTime: false
 });
-//--></script></div>
+</script></div>
 {{ footer }}
