@@ -5,7 +5,12 @@ class ModelToolImage extends Model {
 			return;
 		}
 
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		if ($this->config->get('config_webp_support')) {
+			$extension = 'webp';
+		} else {
+			$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		}
+
 
 		$image_old = $filename;
 		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
@@ -13,20 +18,12 @@ class ModelToolImage extends Model {
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
 			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
 				 
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
+			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_WEBP))) { 
 				return DIR_IMAGE . $image_old;
 			}
  
-			$path = '';
-
-			$directories = explode('/', dirname($image_new));
-
-			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
-
-				if (!is_dir(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
-				}
+			if (!is_dir(dirname($image_new))) {
+				mkdir(dirname($image_new), 0755, true);
 			}
 
 			if ($width_orig != $width || $height_orig != $height) {
