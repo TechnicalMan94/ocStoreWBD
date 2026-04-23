@@ -22,8 +22,8 @@ class ModelToolImage extends Model {
 				return DIR_IMAGE . $image_old;
 			}
  
-			if (!is_dir(dirname($image_new))) {
-				mkdir(dirname($image_new), 0755, true);
+			if (!is_dir(dirname(DIR_IMAGE . $image_new))) {
+				mkdir(dirname(DIR_IMAGE . $image_new), 0755, true);
 			}
 
 			if ($width_orig != $width || $height_orig != $height) {
