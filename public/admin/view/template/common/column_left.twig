@@ -4,7 +4,7 @@
     {% set i = 0 %}
     {% for menu in menus %}
     <li id="{{ menu.id }}">
-        {% set menu_icon = menu.icon|replace({'fa-dashboard':'bi-speedometer2','fa-tags':'bi-tags','fa-book':'bi-book','fa-puzzle-piece':'bi-puzzle','fa-television':'bi-display','fa-shopping-cart':'bi-cart','fa-user':'bi-person','fa-share-alt':'bi-share','fa-cog':'bi-gear','fa-bar-chart':'bi-bar-chart'}) %}
+        {% set menu_icon = menu.icon|replace({'fa-dashboard':'bi-speedometer2','fa-tags':'bi-tags','fa-book':'bi-book','fa-puzzle-piece':'bi-puzzle','fa-television':'bi-display','fa-shopping-cart':'bi-cart','fa-user':'bi-person','fa-share-alt':'bi-share','fa-cog':'bi-gear','fa-bar-chart':'bi-bar-chart','fa-briefcase':'bi-briefcase'}) %}
         {% if menu.href %}<a href="{{ menu.href }}"><i class="bi {{ menu_icon }}"></i> {{ menu.name }}</a>{% else %}<a href="#collapse{{ i }}" data-bs-toggle="collapse" class="parent collapsed"><i class="bi {{ menu_icon }}"></i> {{ menu.name }}</a>{% endif %}
         {% if menu.children %}
           <ul id="collapse{{ i }}" class="collapse">
