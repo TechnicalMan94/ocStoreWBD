@@ -27,7 +27,7 @@
                     <option value="0" {{ not advertise_google_debug_log ? 'selected' }}>{{ text_disabled }}</option>
                     <option value="1" {{ advertise_google_debug_log ? 'selected' }}>{{ text_enabled }}</option>
                 </select>
-                <a href="{{ url_debug_log_download }}" id="download-debug-log" data-bs-toggle="tooltip" title="{{ text_download_debug_log }}" class="btn btn-light"><i class="bi bi-download"></i></a>
+                <a href="{{ url_debug_log_download }}" id="download-debug-log" data-bs-toggle="tooltip" title="{{ text_download_debug_log }}" class="btn btn-secondary"><i class="bi bi-download"></i></a>
             </div>
         </div>
         <div class="form-group">
@@ -35,7 +35,7 @@
             <div class="col-sm-10">
                 <div role="alert" class="alert alert-info"><i class="bi bi-info-circle"></i> {{ text_disconnect_reminder }}</div>
                 <div class="form-control-static"><i class="text-success bi bi-circle-fill"></i> {{ text_connected }}</div>
-                <a id="button_disconnect" href="{{ disconnect }}" class="btn btn-light"><i class="bi bi-power"></i> {{ button_disconnect }}</a>
+                <a id="button_disconnect" href="{{ disconnect }}" class="btn btn-secondary"><i class="bi bi-power"></i> {{ button_disconnect }}</a>
             </div>
         </div>
     </fieldset>

@@ -3,11 +3,11 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end">
-        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-article').toggleClass('d-none d-md-block');" class="btn btn-light d-md-none"><i class="bi bi-funnel"></i></button>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-article').toggleClass('d-none d-md-block');" class="btn btn-secondary d-md-none"><i class="bi bi-funnel"></i></button>
         <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
-        <button type="submit" form="form-article" formaction="{{ copy }}" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-light"><i class="bi bi-copy"></i></button>
-        <button type="submit" form="form-article" formaction="{{ enabled }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-light"><i class="bi bi-play-fill"></i></button>
-		<button type="submit" form="form-article" formaction="{{ disabled }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-light"><i class="bi bi-pause-fill"></i></button>
+        <button type="submit" form="form-article" formaction="{{ copy }}" data-bs-toggle="tooltip" title="{{ button_copy }}" class="btn btn-secondary"><i class="bi bi-copy"></i></button>
+        <button type="submit" form="form-article" formaction="{{ enabled }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-secondary"><i class="bi bi-play-fill"></i></button>
+		<button type="submit" form="form-article" formaction="{{ disabled }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-secondary"><i class="bi bi-pause-fill"></i></button>
 		<button type="button" form="form-article" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-article').submit() : false;"><i class="bi bi-trash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
@@ -40,7 +40,7 @@
 			  <div class="input-group">
               <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
 			  
-                    <button type="button" id="button-clear-input-name" class="btn btn-light"><i class="bi bi-x-lg"></i></button>
+                    <button type="button" id="button-clear-input-name" class="btn btn-secondary"><i class="bi bi-x-lg"></i></button>
 			
 			</div>
 			</div>  
@@ -77,8 +77,8 @@
               </select>
 			</div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
-			  <button type="button" id="button-clear-filter" class="btn btn-light"><i class="bi bi-x-lg"></i><span class="d-sm-none d-md-inline"> {{ button_clear }}</span></button>
+              <button type="button" id="button-filter" class="btn btn-secondary"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
+			  <button type="button" id="button-clear-filter" class="btn btn-secondary"><i class="bi bi-x-lg"></i><span class="d-sm-none d-md-inline"> {{ button_clear }}</span></button>
             </div>
           </div>
         </div>

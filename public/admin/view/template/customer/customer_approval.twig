@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="float-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none d-md-block');" class="btn btn-light d-md-none"><i class="bi bi-funnel"></i></button></div>
+      <div class="float-end"><button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none d-md-block');" class="btn btn-secondary d-md-none"><i class="bi bi-funnel"></i></button></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -102,11 +102,11 @@
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                 
-                <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                 </div>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-light"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-secondary"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>

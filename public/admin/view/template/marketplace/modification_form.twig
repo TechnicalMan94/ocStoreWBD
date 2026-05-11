@@ -5,7 +5,7 @@
       <div class="float-end">
         <a type="button" onclick="update()" data-bs-toggle="tooltip" title="{{button_update}}" class="btn btn-success"><i class="bi bi-check-lg"></i></a>
         <button type="submit" form="form-modification" data-bs-toggle="tooltip" title="{{button_save}}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
-        <a href="{{cancel}}" data-bs-toggle="tooltip" title="{{button_cancel}}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
+        <a href="{{cancel}}" data-bs-toggle="tooltip" title="{{button_cancel}}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{heading_title}}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -53,7 +53,7 @@
                     <td class="text-left">{{column_id}}</td>
                     <td class="text-left">{{column_code}}</td>
                     <td class="text-left">{{column_date_added}}</td>
-                    <td class="text-right">{{column_restore}} <a type="button" href="{{history}}" data-bs-toggle="tooltip" title="{{button_history}}" class="btn btn-light"><i class="bi bi-trash"></i></a></td>
+                    <td class="text-right">{{column_restore}} <a type="button" href="{{history}}" data-bs-toggle="tooltip" title="{{button_history}}" class="btn btn-secondary"><i class="bi bi-trash"></i></a></td>
                   </tr>
                   </thead>
                   <tbody>

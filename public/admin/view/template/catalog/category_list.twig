@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="float-end"><a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
-	  <a href="{{ repair }}" data-bs-toggle="tooltip" title="{{ button_rebuild }}" class="btn btn-light"><i class="bi bi-arrow-clockwise"></i></a>
-		<button type="submit" form="form-category" formaction="{{ enabled }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-light"><i class="bi bi-play-fill"></i></button>
-		<button type="submit" form="form-category" formaction="{{ disabled }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-light"><i class="bi bi-pause-fill"></i></button>
+	  <a href="{{ repair }}" data-bs-toggle="tooltip" title="{{ button_rebuild }}" class="btn btn-secondary"><i class="bi bi-arrow-clockwise"></i></a>
+		<button type="submit" form="form-category" formaction="{{ enabled }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-secondary"><i class="bi bi-play-fill"></i></button>
+		<button type="submit" form="form-category" formaction="{{ disabled }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-secondary"><i class="bi bi-pause-fill"></i></button>
 		<button type="button" form="form-category" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-category').submit() : false;"><i class="bi bi-trash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>

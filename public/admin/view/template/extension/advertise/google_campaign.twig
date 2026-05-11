@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="float-end">
                 <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-bs-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="bi bi-camera-video"></i></a>
-                <a href="{{ cancel }}" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_cancel }}"><i class="bi bi-arrow-left"></i></a>
+                <a href="{{ cancel }}" class="btn btn-secondary" data-bs-toggle="tooltip" title="{{ button_cancel }}"><i class="bi bi-arrow-left"></i></a>
             </div> 
             <h1>{{ heading_title }}</h1>
             <ul class="breadcrumb">
@@ -115,7 +115,7 @@
                                         {% endif %}
                                     </div>
                                     <div>
-                                        <button id="button-target-add" class="btn btn-light"><i class="bi bi-plus-lg"></i> {{ button_add_target }}</button>
+                                        <button id="button-target-add" class="btn btn-secondary"><i class="bi bi-plus-lg"></i> {{ button_add_target }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +295,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> {{ button_close }}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> {{ button_close }}</button>
                     <button type="button" class="btn btn-primary" id="button-target-save" data-text="{{ button_save }}" data-loading="{{ text_loading_please_wait }}" data-url="{url}"><i class="bi bi-floppy"></i> {{ button_save }}</button>
                 </div>
             </div>
@@ -318,7 +318,7 @@
                 </select>
             </div>
         </div>
-        <button class="button-feed-delete btn btn-light" data-bs-toggle="tooltip" title="{{ button_delete }}"><i class="bi bi-trash"></i></button>
+        <button class="button-feed-delete btn btn-secondary" data-bs-toggle="tooltip" title="{{ button_delete }}"><i class="bi bi-trash"></i></button>
     </div>
 </script>
 <script type="text/template" id="template-alert">

@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="float-end">
         <button type="submit" form="form-customer" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
-        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -184,7 +184,7 @@
                         <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                           <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                           <div class="col-sm-10">
-                            <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="bi bi-upload"></i> {{ button_upload }}</button>
+                            <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-secondary"><i class="bi bi-upload"></i> {{ button_upload }}</button>
                             <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}" />
                             {% if error_custom_field[custom_field.custom_field_id] %}
                             <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -198,7 +198,7 @@
                             <div class="input-group date">
                               <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                               
-                              <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                              <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                               </div>
                             {% if error_custom_field[custom_field.custom_field_id] %}
                             <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -212,7 +212,7 @@
                             <div class="input-group time">
                               <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                               
-                              <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                              <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                               </div>
                             {% if error_custom_field[custom_field.custom_field_id] %}
                             <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -226,7 +226,7 @@
                             <div class="input-group datetime">
                               <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                               
-                              <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                              <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                               </div>
                             {% if error_custom_field[custom_field.custom_field_id] %}
                             <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -468,7 +468,7 @@
                       <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">
                         <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                         <div class="col-sm-10">
-                          <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="bi bi-upload"></i> {{ button_upload }}</button>
+                          <button type="button" id="button-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-secondary"><i class="bi bi-upload"></i> {{ button_upload }}</button>
                           <input type="hidden" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] }}" />
                           {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
@@ -482,7 +482,7 @@
                           <div class="input-group date">
                             <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             
-                            <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                            <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                             </div>
                           {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
@@ -496,7 +496,7 @@
                           <div class="input-group time">
                             <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             
-                            <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                            <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                             </div>
                           {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
@@ -510,7 +510,7 @@
                           <div class="input-group datetime">
                             <input type="text" name="address[{{ address_row }}][custom_field][{{ custom_field.custom_field_id }}]" value="{{ address.custom_field[custom_field.custom_field_id] ? address.custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address{{ address_row }}-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                             
-                            <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                            <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                              </div>
                           {% if error_address[address_row]['custom_field'][custom_field.custom_field_id] %}
                           <div class="text-danger">{{ error_address[address_row].custom_field[custom_field.custom_field_id] }}</div>
@@ -651,7 +651,7 @@
                 <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order }}">
                   <label class="col-sm-2 col-form-label">{{ custom_field.name }}</label>
                   <div class="col-sm-10">
-                    <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="bi bi-upload"></i> {{ button_upload }}</button>
+                    <button type="button" id="button-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-secondary"><i class="bi bi-upload"></i> {{ button_upload }}</button>
                     <input type="hidden" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] }}" id="input-custom-field{{ custom_field.custom_field_id }}" />
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -665,7 +665,7 @@
                     <div class="input-group date">
                       <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                       
-                      <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                      <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                       </div>
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -679,7 +679,7 @@
                     <div class="input-group time">
                       <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                       
-                      <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                      <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                       </div>
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -693,7 +693,7 @@
                     <div class="input-group datetime">
                       <input type="text" name="custom_field[{{ custom_field.custom_field_id }}]" value="{{ account_custom_field[custom_field.custom_field_id] ? account_custom_field[custom_field.custom_field_id] : custom_field.value }}" placeholder="{{ custom_field.name }}" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field{{ custom_field.custom_field_id }}" class="form-control" />
                       
-                      <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
+                      <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
                       </div>
                     {% if error_custom_field[custom_field.custom_field_id] %}
                     <div class="text-danger">{{ error_custom_field[custom_field.custom_field_id] }}</div>
@@ -1062,7 +1062,7 @@
     html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '		<label class="col-sm-2 col-form-label">{{ custom_field.name|e('js') }}</label>';
     html += '		<div class="col-sm-10">';
-    html += '		  <button type="button" id="button-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-light"><i class="bi bi-upload"></i> {{ button_upload }}</button>';
+    html += '		  <button type="button" id="button-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" data-loading-text="{{ text_loading }}" class="btn btn-secondary"><i class="bi bi-upload"></i> {{ button_upload }}</button>';
     html += '		  <input type="hidden" name="address[' + address_row + '][{{ custom_field.custom_field_id }}]" value="" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" />';
     html += '		</div>';
     html += '	  </div>';
@@ -1072,7 +1072,7 @@
     html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
     html += '		<div class="col-sm-10">';
-    html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button></div>';
+    html += '		  <div class="input-group date"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }} data-date-format="YYYY-MM-DD" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div>';
     html += '		</div>';
     html += '	  </div>';
     {% endif %}
@@ -1081,7 +1081,7 @@
     html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
     html += '		<div class="col-sm-10">';
-    html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button></div>';
+    html += '		  <div class="input-group time"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div>';
     html += '		</div>';
     html += '	  </div>';
     {% endif %}
@@ -1090,7 +1090,7 @@
     html += '	  <div class="form-group custom-field custom-field{{ custom_field.custom_field_id }}" data-sort="{{ custom_field.sort_order + 1 }}">';
     html += '		<label class="col-sm-2 col-form-label" for="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}">{{ custom_field_value.name|e('js') }}</label>';
     html += '		<div class="col-sm-10">';
-    html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button></div>';
+    html += '		  <div class="input-group datetime"><input type="text" name="address[' + address_row + '][custom_field][{{ custom_field.custom_field_id }}]" value="{{ custom_field.value|e('js') }}" placeholder="{{ custom_field.name|e('js') }}" data-date-format="YYYY-MM-DD HH:mm" id="input-address' + address_row + '-custom-field{{ custom_field.custom_field_id }}" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div>';
     html += '		</div>';
     html += '	  </div>';
     {% endif %}
