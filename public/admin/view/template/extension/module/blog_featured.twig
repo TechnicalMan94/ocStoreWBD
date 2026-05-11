@@ -38,7 +38,7 @@
             <label class="col-sm-2 col-form-label" for="input-article"><span data-bs-toggle="tooltip" title="{{ help_article }}">{{ entry_article }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="article_name" value="" placeholder="{{ entry_article }}" id="input-article" class="form-control" />
-              <div id="blog_featured-article" class="well well-sm" style="height: 150px; overflow: auto;">
+              <div id="blog_featured-article" class="bg-light p-3 style="height: 150px; overflow: auto;">
                 {% for article in articles %}
                 <div id="blog_featured-article{{ article.article_id }}"><i class="bi bi-dash-circle"></i> {{ article.name }}
                   <input type="hidden" name="article[]" value="{{ article.article_id }}" />
