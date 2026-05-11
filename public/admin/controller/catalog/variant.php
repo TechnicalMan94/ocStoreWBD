@@ -205,16 +205,21 @@ class ControllerCatalogVariant extends Controller {
 			$this->load->model('catalog/variant');
 
 			$filter_data = array(
-				'filter_name'   => $this->request->get['filter_name'],
-				'filter_status' => 1,
-				'start'         => 0,
-				'limit'         => $this->config->get('config_limit_autocomplete')
+				'filter_name'             => $this->request->get['filter_name'],
+				'filter_variant_group_id' => $this->request->get['filter_variant_group_id'] ?? 0,
+				'filter_status'           => 1,
+				'start'                   => 0,
+				'limit'                   => $this->config->get('config_limit_autocomplete')
 			);
 
 			$results = $this->model_catalog_variant->getVariantValuesByFilter($filter_data);
 
 			foreach ($results as $result) {
-				$name = $result['group_name'] . ' &gt; ' . $result['name'];
+				if (!empty($filter_data['filter_variant_group_id'])) {
+					$name = $result['name'];
+				} else {
+					$name = $result['group_name'] . ' &gt; ' . $result['name'];
+				}
 
 				if ($result['keyword']) {
 					$name .= ' (' . $result['keyword'] . ')';
@@ -225,6 +230,41 @@ class ControllerCatalogVariant extends Controller {
 					'name'       => strip_tags(html_entity_decode($name, ENT_QUOTES, 'UTF-8')),
 					'group'      => strip_tags(html_entity_decode($result['group_name'], ENT_QUOTES, 'UTF-8')),
 					'keyword'    => $result['keyword']
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function autocompleteGroup() {
+		$json = array();
+
+		if (isset($this->request->get['filter_name'])) {
+			$this->load->model('catalog/variant');
+
+			$filter_data = array(
+				'filter_name'   => $this->request->get['filter_name'],
+				'filter_status' => 1,
+				'sort'          => 'sort_order',
+				'order'         => 'ASC',
+				'start'         => 0,
+				'limit'         => $this->config->get('config_limit_autocomplete')
+			);
+
+			$results = $this->model_catalog_variant->getVariantGroups($filter_data);
+
+			foreach ($results as $result) {
+				$tag = $result['keyword'] ? '{' . $result['keyword'] . '}' : '';
+				$name = $result['name'] . ($tag ? ' ' . $tag : '');
+
+				$json[] = array(
+					'variant_group_id' => $result['variant_group_id'],
+					'name'             => strip_tags(html_entity_decode($name, ENT_QUOTES, 'UTF-8')),
+					'group_name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'keyword'          => $result['keyword'],
+					'tag'              => $tag
 				);
 			}
 		}

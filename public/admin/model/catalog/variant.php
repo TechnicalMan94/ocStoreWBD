@@ -44,7 +44,17 @@ class ModelCatalogVariant extends Model {
 	}
 
 	public function getVariantGroups($data = array()) {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "variant_group`";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "variant_group` WHERE 1";
+
+		if (!empty($data['filter_name'])) {
+			$filter_name = $this->db->escape((string)$data['filter_name']);
+
+			$sql .= " AND (name LIKE '%" . $filter_name . "%' OR keyword LIKE '%" . $filter_name . "%')";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+		}
 
 		$sort_data = array(
 			'name',
@@ -102,6 +112,10 @@ class ModelCatalogVariant extends Model {
 
 	public function getVariantValuesByFilter($data = array()) {
 		$sql = "SELECT v.*, vg.name AS group_name, vg.keyword AS group_keyword, vg.sort_order AS group_sort_order FROM `" . DB_PREFIX . "variant` v LEFT JOIN `" . DB_PREFIX . "variant_group` vg ON (v.variant_group_id = vg.variant_group_id) WHERE 1";
+
+		if (!empty($data['filter_variant_group_id'])) {
+			$sql .= " AND v.variant_group_id = '" . (int)$data['filter_variant_group_id'] . "'";
+		}
 
 		if (!empty($data['filter_name'])) {
 			$filter_name = $this->db->escape((string)$data['filter_name']);

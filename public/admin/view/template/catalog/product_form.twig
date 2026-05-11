@@ -807,14 +807,26 @@
             </div>
             <div class="tab-pane" id="tab-variant">
               <div class="form-group">
-                <label class="col-sm-2 col-form-label" for="input-variant"><span data-bs-toggle="tooltip" title="{{ help_variant }}">{{ entry_variant }}</span></label>
+                <label class="col-sm-2 col-form-label" for="input-variant-group"><span data-bs-toggle="tooltip" title="{{ help_variant }}">{{ entry_variant_group }}</span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="variant" value="" placeholder="{{ entry_variant }}" id="input-variant" class="form-control"/>
-                  <div id="product-variant" class="bg-light p-3" style="height: 150px; overflow: auto;"> {% for product_variant in product_variants %}
-                      <div id="product-variant{{ product_variant.variant_id }}"><i class="bi bi-dash-circle"></i> {{ product_variant.name }}
-                        <input type="hidden" name="product_variant[]" value="{{ product_variant.variant_id }}"/>
+                  <input type="text" name="variant_group" value="" placeholder="{{ entry_variant_group }}" id="input-variant-group" class="form-control"/>
+                  <div id="product-variant-group" class="mt-3">
+                    {% for product_variant_group in product_variant_groups %}
+                      <div id="product-variant-group{{ product_variant_group.variant_group_id }}" class="border rounded p-3 mb-3 variant-group">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <div><i class="bi bi-dash-circle variant-group-remove" style="cursor:pointer;"></i> <strong>{{ product_variant_group.name }}</strong>{% if product_variant_group.tag %} <span class="text-muted">{{ product_variant_group.tag }}</span>{% endif %}</div>
+                        </div>
+                        <input type="text" name="variant_value{{ product_variant_group.variant_group_id }}" value="" placeholder="{{ entry_variant_value }}" class="form-control variant-value-autocomplete" data-variant-group-id="{{ product_variant_group.variant_group_id }}"/>
+                        <div id="product-variant-values{{ product_variant_group.variant_group_id }}" class="bg-light p-3 mt-2" style="height: 120px; overflow: auto;">
+                          {% for product_variant in product_variant_group.values %}
+                            <div id="product-variant-value{{ product_variant.variant_id }}"><i class="bi bi-dash-circle variant-value-remove" style="cursor:pointer;"></i> {{ product_variant.name }}
+                              <input type="hidden" name="product_variant[]" value="{{ product_variant.variant_id }}"/>
+                            </div>
+                          {% endfor %}
+                        </div>
                       </div>
-                    {% endfor %}</div>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1274,32 +1286,96 @@
 	  $(this).parent().remove();
   });
 
-  // Variant
-  $('input[name=\'variant\']').autocomplete({
+  // Variant Group
+  function htmlEscape(value) {
+	  return $('<div/>').text(value).html();
+  }
+
+  function initVariantValueAutocomplete(context) {
+	  $(context).find('input.variant-value-autocomplete').each(function() {
+		  var input = $(this);
+
+		  if (input.data('autocompleteReady')) {
+			  return;
+		  }
+
+		  input.data('autocompleteReady', true);
+
+		  input.autocomplete({
+			  'source': function(request, response) {
+				  $.ajax({
+					  url: 'index.php?route=catalog/variant/autocomplete&user_token={{ user_token }}&filter_variant_group_id=' + encodeURIComponent(input.attr('data-variant-group-id')) + '&filter_name=' + encodeURIComponent(request),
+					  dataType: 'json',
+					  success: function(json) {
+						  response($.map(json, function(item) {
+							  return {
+								  label: item['name'],
+								  value: item['variant_id']
+							  }
+						  }));
+					  }
+				  });
+			  },
+			  'select': function(item) {
+				  input.val('');
+
+				  $('#product-variant-value' + item['value']).remove();
+
+				  $('#product-variant-values' + input.attr('data-variant-group-id')).append('<div id="product-variant-value' + item['value'] + '"><i class="bi bi-dash-circle variant-value-remove" style="cursor:pointer;"></i> ' + htmlEscape(item['label']) + '<input type="hidden" name="product_variant[]" value="' + item['value'] + '" /></div>');
+			  }
+		  });
+	  });
+  }
+
+  $('input[name=\'variant_group\']').autocomplete({
 	  'source': function(request, response) {
 		  $.ajax({
-			  url: 'index.php?route=catalog/variant/autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+			  url: 'index.php?route=catalog/variant/autocompleteGroup&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
 			  dataType: 'json',
 			  success: function(json) {
 				  response($.map(json, function(item) {
 					  return {
 						  label: item['name'],
-						  value: item['variant_id']
+						  value: item['variant_group_id'],
+						  group_name: item['group_name'],
+						  tag: item['tag']
 					  }
 				  }));
 			  }
 		  });
 	  },
 	  'select': function(item) {
-		  $('input[name=\'variant\']').val('');
+		  $('input[name=\'variant_group\']').val('');
 
-		  $('#product-variant' + item['value']).remove();
+		  if ($('#product-variant-group' + item['value']).length) {
+			  return;
+		  }
 
-		  $('#product-variant').append('<div id="product-variant' + item['value'] + '"><i class="bi bi-dash-circle"></i> ' + item['label'] + '<input type="hidden" name="product_variant[]" value="' + item['value'] + '" /></div>');
+		  var html = '<div id="product-variant-group' + item['value'] + '" class="border rounded p-3 mb-3 variant-group">';
+		  html += '<div class="d-flex align-items-center justify-content-between mb-2">';
+		  html += '<div><i class="bi bi-dash-circle variant-group-remove" style="cursor:pointer;"></i> <strong>' + htmlEscape(item['group_name']) + '</strong>';
+
+		  if (item['tag']) {
+			  html += ' <span class="text-muted">' + htmlEscape(item['tag']) + '</span>';
+		  }
+
+		  html += '</div></div>';
+		  html += '<input type="text" name="variant_value' + item['value'] + '" value="" placeholder="{{ entry_variant_value }}" class="form-control variant-value-autocomplete" data-variant-group-id="' + item['value'] + '"/>';
+		  html += '<div id="product-variant-values' + item['value'] + '" class="bg-light p-3 mt-2" style="height: 120px; overflow: auto;"></div>';
+		  html += '</div>';
+
+		  $('#product-variant-group').append(html);
+		  initVariantValueAutocomplete($('#product-variant-group' + item['value']));
 	  }
   });
 
-  $('#product-variant').delegate('.bi-dash-circle', 'click', function() {
+  initVariantValueAutocomplete(document);
+
+  $('#product-variant-group').delegate('.variant-group-remove', 'click', function() {
+	  $(this).closest('.variant-group').remove();
+  });
+
+  $('#product-variant-group').delegate('.variant-value-remove', 'click', function() {
 	  $(this).parent().remove();
   });
 

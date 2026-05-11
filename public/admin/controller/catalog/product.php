@@ -1344,24 +1344,60 @@ class ControllerCatalogProduct extends Controller {
 			$variants = array();
 		}
 
-		$data['product_variants'] = array();
+		$product_variant_groups = array();
 
 		foreach ($variants as $variant_id) {
 			$variant_info = $this->model_catalog_variant->getVariantValue($variant_id);
 
 			if ($variant_info) {
-				$name = $variant_info['group_name'] . ' &gt; ' . $variant_info['name'];
+				$variant_group_id = (int)$variant_info['variant_group_id'];
+
+				if (!isset($product_variant_groups[$variant_group_id])) {
+					$product_variant_groups[$variant_group_id] = array(
+						'variant_group_id' => $variant_group_id,
+						'name'             => $variant_info['group_name'],
+						'keyword'          => $variant_info['group_keyword'],
+						'tag'              => $variant_info['group_keyword'] ? '{' . $variant_info['group_keyword'] . '}' : '',
+						'sort_order'       => $variant_info['group_sort_order'],
+						'values'           => array()
+					);
+				}
+
+				$name = $variant_info['name'];
 
 				if ($variant_info['keyword']) {
 					$name .= ' (' . $variant_info['keyword'] . ')';
 				}
 
-				$data['product_variants'][] = array(
+				$product_variant_groups[$variant_group_id]['values'][] = array(
 					'variant_id' => $variant_info['variant_id'],
-					'name'       => $name
+					'name'       => $name,
+					'sort_order' => $variant_info['sort_order']
 				);
 			}
 		}
+
+		uasort($product_variant_groups, function($a, $b) {
+			if ($a['sort_order'] == $b['sort_order']) {
+				return strcasecmp($a['name'], $b['name']);
+			}
+
+			return ($a['sort_order'] < $b['sort_order']) ? -1 : 1;
+		});
+
+		foreach ($product_variant_groups as &$product_variant_group) {
+			usort($product_variant_group['values'], function($a, $b) {
+				if ($a['sort_order'] == $b['sort_order']) {
+					return strcasecmp($a['name'], $b['name']);
+				}
+
+				return ($a['sort_order'] < $b['sort_order']) ? -1 : 1;
+			});
+		}
+
+		unset($product_variant_group);
+
+		$data['product_variant_groups'] = array_values($product_variant_groups);
 
 		// Attributes
 		$this->load->model('catalog/attribute');
