@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end"><a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -12,15 +12,15 @@
     </div>
   </div>
   <div id="marketplace-extension-info" class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ name }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-puzzle"></i> {{ name }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <div class="row extension-info">
           <div class="col-sm-8">{% if banner %}
             <div id="banner" class="text-center thumbnail"><img src="{{ banner }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></div>
@@ -29,8 +29,8 @@
               <div class="col-xs-4 col-sm-2"><a href="{{ image.popup }}" class="thumbnail"><img src="{{ image.thumb }}" alt="{{ image.name }}" title="{{ image.name }}" class="img-responsive" /></a></div>
               {% endfor %} </div>
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab-description" data-toggle="tab">{{ tab_general }}</a></li>
-              <li><a href="#tab-changelog" data-toggle="tab">{{ tab_changelog }}</a></li>
+              <li class="active"><a href="#tab-description" data-bs-toggle="tab">{{ tab_general }}</a></li>
+              <li><a href="#tab-changelog" data-bs-toggle="tab">{{ tab_changelog }}</a></li>
             </ul>
             <div class="tab-content">
               <div id="tab-description" class="tab-pane active">{{ description }}</div>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="col-sm-4">
-            <div id="buy" class="well">{% if license == '1' and not purchased %}
+            <div id="buy" class="card card-body">{% if license == '1' and not purchased %}
               <a target="_blank" href="{{ extension_url }}?utm_source=ocstore_marketplace" id="button-buy" class="btn btn-success btn-lg btn-block">{{ button_purchase }}</a>
               {% endif %}
               <div id="price" class="row">
@@ -59,7 +59,7 @@
               <div class="row">
                 <div class="col-xs-5"><strong>{{ text_rating }}</strong></div>
                 <div class="col-xs-7 text-right">{% for i in 1..5 %}
-                  {% if rating >= i %}<i class="fa fa-star"></i>{% else %}<i class="fa fa-star-o"></i>{% endif %}
+                  {% if rating >= i %}<i class="bi bi-star-fill"></i>{% else %}<i class="bi bi-star"></i>{% endif %}
                   {% endfor %} ({{ rating_total }})</div>
               </div>
               <hr>
@@ -73,11 +73,11 @@
                 <div class="col-xs-7 text-right">{{ date_added }}</div>
               </div>
             </div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
-            <div id="sales" class="well"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
-            <div class="well">
+            <div id="sales" class="card card-body"><i class="opencart-icon-cart-mini"></i> <strong>{{ sales }}</strong> {{ text_sales }}</div>
+            <div id="sales" class="card card-body"><i class="opencart-icon-cart-mini"></i> <strong>{{ downloaded }}</strong> {{ text_downloaded }}</div>
+            <div class="card card-body">
               <div class="media">
-                <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object img-circle"></div>
+                <div class="media-left media-middle"><img src="{{ member_image }}" alt="{{ member_username }}" title="{{ member_username }}" class="media-object rounded-circle"></div>
                 <div class="media-body"> <span><a target="_blank" href="{{ member_url }}">{{ member_username }}</a></span><br>
                   <small>{{ text_member_since }} {{ member_date_added }}</small></div>
               </div>

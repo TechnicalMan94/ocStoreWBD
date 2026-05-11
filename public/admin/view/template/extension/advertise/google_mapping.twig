@@ -3,9 +3,9 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
-            <div class="pull-right">
-                <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="fa fa-video-camera"></i></a>
-                <a href="{{ cancel }}" class="btn btn-default" data-toggle="tooltip" title="{{ button_cancel }}"><i class="fa fa-reply"></i></a>
+            <div class="float-end">
+                <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-bs-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="bi bi-camera-video"></i></a>
+                <a href="{{ cancel }}" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_cancel }}"><i class="bi bi-arrow-left"></i></a>
             </div>
             <h1>{{ heading_title }}</h1>
             <ul class="breadcrumb">
@@ -21,20 +21,20 @@
         {% endif %}
         {% if success %}
             <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+                <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
             </div>
         {% endif %}
         {% if error %}
             <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+                <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
             </div>
         {% endif %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <i class="fa fa-tags"></i>&nbsp;
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="bi bi-tags"></i>&nbsp;
                     <span>
                         {% if from_dashboard %}
                             {{ text_panel_heading_mapping_2 }}
@@ -44,7 +44,7 @@
                     </span>
                 </h3>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
                     <input type="hidden" name="advertise_google_modify_existing" value="0" />
 
@@ -67,7 +67,7 @@
                                         <td class="width_66 category-select-container">
                                             <input type="text" name="category_autocomplete" value="{{ map.oc_category.name }}" class="form-control" />
                                             <input type="hidden" name="advertise_google_mapping[{{ map.google_product_category.id }}]" data-google-category-id="{{ map.google_product_category.id }}" value="{{ map.oc_category.category_id }}">
-                                            <button class="btn btn-danger button-remove"><i class="fa fa-close"></i></button>
+                                            <button class="btn btn-danger button-remove"><i class="bi bi-x-lg"></i></button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -75,7 +75,7 @@
                         </table>
                     </div>
 
-                    <div class="pull-right">
+                    <div class="float-end">
                         <button type="submit" class="btn btn-primary" id="proceed">{{ button_proceed }}</button>
                     </div>
                 </form>

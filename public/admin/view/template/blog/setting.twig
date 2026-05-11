@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-setting" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-setting" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,54 +15,54 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-success"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_edit }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-setting" class="form-horizontal">
           <ul class="nav nav-tabs">
-			<li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
-            <li><a href="#tab-option" data-toggle="tab">{{ tab_option }}</a></li>
-            <li><a href="#tab-image" data-toggle="tab">{{ tab_image }}</a></li>
+			<li class="active"><a href="#tab-general" data-bs-toggle="tab">{{ tab_general }}</a></li>
+            <li><a href="#tab-option" data-bs-toggle="tab">{{ tab_option }}</a></li>
+            <li><a href="#tab-image" data-bs-toggle="tab">{{ tab_image }}</a></li>
           </ul>
           <div class="tab-content">
 		  <div class="tab-pane active" id="tab-general">
 				<div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="configblog_name" value="{{ configblog_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
                   </div>
                 </div>
 				<div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-h1">{{ entry_html_h1 }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-h1">{{ entry_html_h1 }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="configblog_html_h1" value="{{ configblog_html_h1 }}" placeholder="{{ entry_html_h1 }}" id="input-h1" class="form-control" />
                   </div>
                 </div>
 				<div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-meta-title">{{ entry_meta_title }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-meta-title">{{ entry_meta_title }}</label>
                   <div class="col-sm-10">
                     <input type="text" name="configblog_meta_title" value="{{ configblog_meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title" class="form-control" />
                   </div>
                 </div>
 				<div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-meta-description">{{ entry_meta_description }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-meta-description">{{ entry_meta_description }}</label>
                   <div class="col-sm-10">
                     <textarea name="configblog_meta_description" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description" class="form-control">{{ configblog_meta_description }}</textarea>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-meta-keyword">{{ entry_meta_keyword }}</label>
+                  <label class="col-sm-2 col-form-label" for="input-meta-keyword">{{ entry_meta_keyword }}</label>
                   <div class="col-sm-10">
                     <textarea name="configblog_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ configblog_meta_keyword }}</textarea>
                   </div>
@@ -72,7 +72,7 @@
               <fieldset>
                 <legend>{{ text_article }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_article_count }}">{{ entry_article_count }}</span></label>
+                  <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_article_count }}">{{ entry_article_count }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if configblog_article_count %}
@@ -95,7 +95,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="{{ help_article_limit }}">{{ entry_article_limit }}</span></label>
+                  <label class="col-sm-2 col-form-label" for="input-catalog-limit"><span data-bs-toggle="tooltip" title="{{ help_article_limit }}">{{ entry_article_limit }}</span></label>
                   <div class="col-sm-10">
                     <input type="text" name="configblog_article_limit" value="{{ configblog_article_limit }}" placeholder="{{ entry_article_limit }}" id="input-catalog-limit" class="form-control" />
                     {% if error_article_limit %}
@@ -104,7 +104,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-list-description-limit"><span data-toggle="tooltip" title="{{ help_article_description_length }}">{{ entry_article_description_length }}</span></label>
+                  <label class="col-sm-2 col-form-label" for="input-list-description-limit"><span data-bs-toggle="tooltip" title="{{ help_article_description_length }}">{{ entry_article_description_length }}</span></label>
                   <div class="col-sm-10">
                     <input type="text" name="configblog_article_description_length" value="{{ configblog_article_description_length }}" placeholder="{{ entry_article_description_length }}" id="input-list-description-limit" class="form-control" />
                     {% if error_article_description_length %}
@@ -113,7 +113,7 @@
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-admin-limit"><span data-toggle="tooltip" title="{{ help_limit_admin }}">{{ entry_limit_admin }}</span></label>
+                  <label class="col-sm-2 col-form-label" for="input-admin-limit"><span data-bs-toggle="tooltip" title="{{ help_limit_admin }}">{{ entry_limit_admin }}</span></label>
                   <div class="col-sm-10">
                     <input type="text" name="configblog_limit_admin" value="{{ configblog_limit_admin }}" placeholder="{{ entry_limit_admin }}" id="input-admin-limit" class="form-control" />
                     {% if error_limit_admin %}
@@ -122,7 +122,7 @@
                   </div>
                 </div>
 				<div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_blog_menu }}">{{ entry_blog_menu }}</span></label>
+                  <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_blog_menu }}">{{ entry_blog_menu }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if configblog_blog_menu %}
@@ -145,7 +145,7 @@
                   </div>
                 </div>
 				<div class="form-group">
-                  <label class="col-sm-2 control-label">{{ entry_article_download }}</label>
+                  <label class="col-sm-2 col-form-label">{{ entry_article_download }}</label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if configblog_article_download %}
@@ -171,7 +171,7 @@
               <fieldset>
                 <legend>{{ text_review }}</legend>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_review }}">{{ entry_review }}</span></label>
+                  <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_review }}">{{ entry_review }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if configblog_review_status %}
@@ -194,7 +194,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_review_guest }}">{{ entry_review_guest }}</span></label>
+                  <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_review_guest }}">{{ entry_review_guest }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if configblog_review_guest %}
@@ -217,7 +217,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_review_mail }}">{{ entry_review_mail }}</span></label>
+                  <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_review_mail }}">{{ entry_review_mail }}</span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
                       {% if configblog_review_mail %}
@@ -243,7 +243,7 @@
             </div>
             <div class="tab-pane" id="tab-image">
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-category-width">{{ entry_image_category }}</label>
+                <label class="col-sm-2 col-form-label" for="input-image-category-width">{{ entry_image_category }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-6">
@@ -259,7 +259,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-article-width">{{ entry_image_article }}</label>
+                <label class="col-sm-2 col-form-label" for="input-image-article-width">{{ entry_image_article }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-6">
@@ -275,7 +275,7 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-related">{{ entry_image_related }}</label>
+                <label class="col-sm-2 col-form-label" for="input-image-related">{{ entry_image_related }}</label>
                 <div class="col-sm-10">
                   <div class="row">
                     <div class="col-sm-6">

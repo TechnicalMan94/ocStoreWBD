@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-review" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-review" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,18 +14,18 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_form }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-review" class="form-horizontal">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-author">{{ entry_author }}</label>
+            <label class="col-sm-2 col-form-label" for="input-author">{{ entry_author }}</label>
             <div class="col-sm-10">
               <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
               {% if error_author %}
@@ -33,7 +33,7 @@
               {% endif %} </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-article"><span data-toggle="tooltip" title="{{ help_article }}">{{ entry_article }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-article"><span data-bs-toggle="tooltip" title="{{ help_article }}">{{ entry_article }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="article" value="{{ article }}" placeholder="{{ entry_article }}" id="input-article" class="form-control" />
               <input type="hidden" name="article_id" value="{{ article_id }}" />
@@ -42,7 +42,7 @@
               {% endif %} </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-text">{{ entry_text }}</label>
+            <label class="col-sm-2 col-form-label" for="input-text">{{ entry_text }}</label>
             <div class="col-sm-10">
               <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
               {% if error_text %}
@@ -50,7 +50,7 @@
               {% endif %} </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-name">{{ entry_rating }}</label>
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_rating }}</label>
             <div class="col-sm-10">
               <label class="radio-inline"> {% if rating == 1 %}
                 <input type="radio" name="rating" value="1" checked="checked" />
@@ -92,17 +92,17 @@
               {% endif %} </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-date-added">{{ entry_date_added }}</label>
+            <label class="col-sm-2 col-form-label" for="input-date-added">{{ entry_date_added }}</label>
             <div class="col-sm-3">
               <div class="input-group datetime">
                 <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" id="input-date-added" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
                 </span> </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
                 

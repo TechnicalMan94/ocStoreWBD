@@ -3,9 +3,9 @@
 <div id="content">
     <div class="page-header">
         <div class="container-fluid">
-            <div class="pull-right">
-                <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="fa fa-video-camera"></i></a>
-                <a href="{{ cancel }}" class="btn btn-default" data-toggle="tooltip" title="{{ button_cancel }}"><i class="fa fa-reply"></i></a>
+            <div class="float-end">
+                <a href="{{ text_video_tutorial_url_install }}" target="_blank" class="btn btn-info" data-bs-toggle="tooltip" title="{{ button_video_tutorial_install }}"><i class="bi bi-camera-video"></i></a>
+                <a href="{{ cancel }}" class="btn btn-light" data-bs-toggle="tooltip" title="{{ button_cancel }}"><i class="bi bi-arrow-left"></i></a>
             </div>
             <h1>{{ heading_title }}</h1>
             <ul class="breadcrumb">
@@ -21,20 +21,20 @@
         {% endif %}
         {% if success %}
             <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+                <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
             </div>
         {% endif %}
         {% if error %}
             <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+                <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
             </div>
         {% endif %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <i class="fa fa-truck"></i>&nbsp;
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="bi bi-truck"></i>&nbsp;
                     <span>
                         {% if from_dashboard %}
                             {{ text_panel_heading_shipping_taxes_2 }}
@@ -44,12 +44,12 @@
                     </span>
                 </h3>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
                     <fieldset>
                         <legend>{{ text_shipping_transit_times }}</legend>
                         <div class="form-group required">
-                            <label for="input-min-transit-time" class="col-sm-3 control-label">{{ entry_min_transit_time }}</label>
+                            <label for="input-min-transit-time" class="col-sm-3 col-form-label">{{ entry_min_transit_time }}</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="input-min-transit-time" name="advertise_google_shipping_taxes[min_transit_time]" value="{{ advertise_google_shipping_taxes.min_transit_time }}" />
                                 {% if error_min_transit_time %}
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <label for="input-max-transit-time" class="col-sm-3 control-label">{{ entry_max_transit_time }}</label>
+                            <label for="input-max-transit-time" class="col-sm-3 col-form-label">{{ entry_max_transit_time }}</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="input-max-transit-time" name="advertise_google_shipping_taxes[max_transit_time]" value="{{ advertise_google_shipping_taxes.max_transit_time }}" />
                                 {% if error_max_transit_time %}
@@ -78,9 +78,9 @@
                             </div>
                             <div class="col-sm-9" data-shipping-visible-on="flat">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                    <div class="input-group-text"><i class="bi bi-currency-dollar"></i></div>
                                     <input type="number" class="form-control" name="advertise_google_shipping_taxes[flat_rate]" value="{{ advertise_google_shipping_taxes.flat_rate }}" />
-                                    <div class="input-group-addon">{{ text_usd }}</div>
+                                    <div class="input-group-text">{{ text_usd }}</div>
                                 </div>
                                 {% if error_flat_rate %}
                                     <div class="text-danger">{{ error_flat_rate }}</div>
@@ -96,16 +96,16 @@
                             </div>
                             <div class="col-sm-9" data-shipping-visible-on="carrier">
                                 <div class="input-group">
-                                    <div class="input-group-addon">{{ text_carrier_postcode }}</div>
+                                    <div class="input-group-text">{{ text_carrier_postcode }}</div>
                                     <input type="text" class="form-control" name="advertise_google_shipping_taxes[carrier_postcode]" value="{{ advertise_google_shipping_taxes.carrier_postcode }}" />
                                 </div>
                                 {% if error_carrier_postcode %}
                                     <div class="text-danger">{{ error_carrier_postcode }}</div>
                                 {% endif %}
                                 <div class="input-group margin-top-10">
-                                    <div class="input-group-addon"><span data-toggle="tooltip" title="{{ help_carrier_price_percentage }}">{{ text_carrier_price_percentage }}</span></div>
+                                    <div class="input-group-text"><span data-bs-toggle="tooltip" title="{{ help_carrier_price_percentage }}">{{ text_carrier_price_percentage }}</span></div>
                                     <input type="number" class="form-control" name="advertise_google_shipping_taxes[carrier_price_percentage]" value="{{ advertise_google_shipping_taxes.carrier_price_percentage }}" />
-                                    <div class="input-group-addon"><i class="fa fa-percent"></i></div>
+                                    <div class="input-group-text"><i class="bi bi-percent"></i></div>
                                 </div>
                                 {% if error_carrier_price_percentage %}
                                     <div class="text-danger">{{ error_carrier_price_percentage }}</div>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="col-sm-9" data-tax-visible-on="usa">
                                 <div class="input-group">
-                                    <div class="input-group-addon">{{ text_tax_on_shipping }}</div>
+                                    <div class="input-group-text">{{ text_tax_on_shipping }}</div>
                                     <select class="form-control" name="advertise_google_shipping_taxes[tax_on_shipping]">
                                         <option value="1" {{ advertise_google_shipping_taxes.tax_on_shipping == '1' ? 'selected' }}>{{ text_enabled }}</option>
                                         <option value="0" {{ advertise_google_shipping_taxes.tax_on_shipping == '0' ? 'selected' }}>{{ text_disabled }}</option>
@@ -175,7 +175,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <button type="submit" class="btn btn-primary" id="proceed">{{ button_proceed }}</button>
                     </div>
                 </form>

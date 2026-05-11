@@ -2,10 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" id="button-send" data-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="fa fa-envelope"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-voucher').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="float-end">
+        <button type="button" id="button-send" data-bs-toggle="tooltip" title="{{ button_send }}" class="btn btn-warning"><i class="bi bi-envelope"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-voucher').submit() : false;"><i class="bi bi-trash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -17,20 +17,20 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_list }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-voucher">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -93,9 +93,9 @@
                   <td class="text-left">{{ voucher.date_added }}</td>
                   <td class="text-right">
                   {% if voucher.order %}
-                  <a href="{{ voucher.order }}" data-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="fa fa fa-eye"></i></a>
+                  <a href="{{ voucher.order }}" data-bs-toggle="tooltip" title="{{ button_order }}" class="btn btn-info"><i class="bi bi-eye"></i></a>
                   {% endif %}
-                  <a href="{{ voucher.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <a href="{{ voucher.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
@@ -122,22 +122,22 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: $('input[name^=\'selected\']:checked'),
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$('#button-send i').replaceWith('<i class="bi bi-arrow-clockwise fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-envelope"></i>');
+			$('#button-send i').replaceWith('<i class="bi bi-envelope"></i>');
 			$('#button-send').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
 			}		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

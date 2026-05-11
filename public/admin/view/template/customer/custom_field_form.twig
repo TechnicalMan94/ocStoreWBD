@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-custom-field" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-custom-field" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,23 +14,23 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_form }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-custom-field" class="form-horizontal">
                       <fieldset>
               <legend>{{ text_custom_field }}</legend>
           
           <div class="form-group required">
-            <label class="col-sm-2 control-label">{{ entry_name }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
             <div class="col-sm-10"> {% for language in languages %}
-              <div class="input-group"><span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+              <div class="input-group"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                 <input type="text" name="custom_field_description[{{ language.language_id }}][name]" value="{{ custom_field_description[language.language_id] ? custom_field_description[language.language_id].name }}" placeholder="{{ entry_name }}" class="form-control" />
               </div>
               {% if error_name[language.language_id] %}
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-location">{{ entry_location }}</label>
+            <label class="col-sm-2 col-form-label" for="input-location">{{ entry_location }}</label>
             <div class="col-sm-10">
               <select name="location" id="input-location" class="form-control">
                 
@@ -107,7 +107,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-type">{{ entry_type }}</label>
+            <label class="col-sm-2 col-form-label" for="input-type">{{ entry_type }}</label>
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-control">
                 <optgroup label="{{ text_choose }}">
@@ -275,19 +275,19 @@
             </div>
           </div>
           <div class="form-group" id="display-value">
-            <label class="col-sm-2 control-label" for="input-value">{{ entry_value }}</label>
+            <label class="col-sm-2 col-form-label" for="input-value">{{ entry_value }}</label>
             <div class="col-sm-10">
               <input type="text" name="value" value="{{ value }}" placeholder="{{ entry_value }}" id="input-value" class="form-control" />
             </div>
           </div>
           <div class="form-group" id="display-validation">
-            <label class="col-sm-2 control-label" for="input-validation"><span data-toggle="tooltip" title="{{ help_regex }}">{{ entry_validation }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-validation"><span data-bs-toggle="tooltip" title="{{ help_regex }}">{{ entry_validation }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="validation" id="input-validation" value="{{ validation }}" placeholder="{{ text_regex }}"  class="form-control"/>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">{% set customer_group_row = 0 %}
               {% for customer_group in customer_groups %}
               <div class="checkbox">
@@ -303,7 +303,7 @@
               {% endfor %}</div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label">{{ entry_required }}</label>
+            <label class="col-sm-2 col-form-label">{{ entry_required }}</label>
             <div class="col-sm-10">{% set customer_group_row = 0 %}
               {% for customer_group in customer_groups %}
               <div class="checkbox">
@@ -319,7 +319,7 @@
               {% endfor %}</div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
                 
@@ -351,7 +351,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="{{ help_sort_order }}">{{ entry_sort_order }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-sort-order"><span data-bs-toggle="tooltip" title="{{ help_sort_order }}">{{ entry_sort_order }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
             </div>
@@ -376,7 +376,7 @@
                 <tr id="custom-field-value-row{{ custom_field_value_row }}">
                   <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_id]" value="{{ custom_field_value.custom_field_value_id }}" />
                     {% for language in languages %}
-                    <div class="input-group"> <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                    <div class="input-group"> <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
                       <input type="text" name="custom_field_value[{{ custom_field_value_row }}][custom_field_value_description][{{ language.language_id }}][name]" value="{{ custom_field_value.custom_field_value_description[language.language_id] ? custom_field_value.custom_field_value_description[language.language_id].name }}" placeholder="{{ entry_custom_value }}" class="form-control" />
                     </div>
                     {% if error_custom_field_value[custom_field_value_row][language.language_id] %}
@@ -384,7 +384,7 @@
                     {% endif %}
                     {% endfor %}</td>
                   <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
-                  <td class="text-left"><button onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  <td class="text-left"><button onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                 </tr>
                 {% set custom_field_value_row = custom_field_value_row + 1 %}
                 {% endfor %}
@@ -393,7 +393,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addCustomFieldValue();" data-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    <td class="text-left"><button type="button" onclick="addCustomFieldValue();" data-bs-toggle="tooltip" title="{{ button_custom_field_value_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -414,11 +414,11 @@ $('select[name=\'type\']').on('change', function() {
 	}
 
 	if (this.value == 'date') {
-		$('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
+		$('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button></span></div>');
 	} else if (this.value == 'time') {
-		$('#display-value > div').html('<div class="input-group time"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="HH:mm" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
+		$('#display-value > div').html('<div class="input-group time"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="HH:mm" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button></span></div>');
 	} else if (this.value == 'datetime') {
-		$('#display-value > div').html('<div class="input-group datetime"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
+		$('#display-value > div').html('<div class="input-group datetime"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="{{ entry_value }}" data-date-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button></span></div>');
 	} else if (this.value == 'textarea') {
 		$('#display-value > div').html('<textarea name="value" placeholder="{{ entry_value }}" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
 	} else {
@@ -451,12 +451,12 @@ function addCustomFieldValue() {
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	{% for language in languages %}
 	html += '    <div class="input-group">';
-	html += '      <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" class="form-control" />';
+	html += '      <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_custom_value }}" class="form-control" />';
     html += '    </div>';
 	{% endfor %}
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#custom-field-value tbody').append(html);

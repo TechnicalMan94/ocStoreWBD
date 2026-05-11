@@ -22,7 +22,151 @@ function getURLVar(key) {
 	}
 }
 
+(function($) {
+	if (!$ || typeof bootstrap === 'undefined') {
+		return;
+	}
+
+	function pluginBridge(name, Constructor) {
+		$.fn[name] = function(option) {
+			return this.each(function() {
+				var instance = Constructor.getOrCreateInstance(this, typeof option === 'object' ? option : {});
+
+				if (typeof option === 'string') {
+					var method = option === 'destroy' ? 'dispose' : option;
+
+					if (typeof instance[method] === 'function') {
+						instance[method]();
+					}
+				}
+			});
+		};
+	}
+
+	pluginBridge('tooltip', bootstrap.Tooltip);
+	pluginBridge('popover', bootstrap.Popover);
+	pluginBridge('modal', bootstrap.Modal);
+	pluginBridge('collapse', bootstrap.Collapse);
+	pluginBridge('tab', bootstrap.Tab);
+	pluginBridge('dropdown', bootstrap.Dropdown);
+
+	$.fn.modal = function(option) {
+		return this.each(function() {
+			var instance = bootstrap.Modal.getOrCreateInstance(this, typeof option === 'object' ? option : {});
+
+			if (typeof option === 'string') {
+				var method = option === 'destroy' ? 'dispose' : option;
+
+				if (typeof instance[method] === 'function') {
+					instance[method]();
+				}
+			} else if (!option || option.show !== false) {
+				instance.show();
+			}
+		});
+	};
+
+	$.fn.button = function(action) {
+		return this.each(function() {
+			var $button = $(this);
+
+			if (action === 'loading') {
+				$button.data('reset-text', $button.html());
+				$button.html($button.attr('data-loading-text') || $button.data('loading-text') || $button.html()).prop('disabled', true);
+			}
+
+			if (action === 'reset') {
+				$button.html($button.data('reset-text') || $button.html()).prop('disabled', false);
+			}
+		});
+	};
+
+	function normalizeLegacyIcons(context) {
+		var icons = {
+			'fa-dashboard': 'bi-speedometer2',
+			'fa-tags': 'bi-tags',
+			'fa-book': 'bi-book',
+			'fa-puzzle-piece': 'bi-puzzle',
+			'fa-television': 'bi-display',
+			'fa-shopping-cart': 'bi-cart',
+			'fa-user': 'bi-person',
+			'fa-share-alt': 'bi-share',
+			'fa-cog': 'bi-gear',
+			'fa-bar-chart': 'bi-bar-chart'
+		};
+
+		$('.fa', context || document).each(function() {
+			var element = this;
+
+			$.each(icons, function(oldClass, newClass) {
+				if ($(element).hasClass(oldClass)) {
+					$(element).removeClass('fa ' + oldClass + ' fw').addClass('bi ' + newClass);
+				}
+			});
+		});
+	}
+
+	$.fn.datetimepicker = function(option) {
+		if (typeof flatpickr === 'undefined') {
+			return this;
+		}
+
+		return this.each(function() {
+			var $element = $(this);
+			var format = option && option.format ? option.format : $element.find('input').attr('data-date-format') || $element.attr('data-date-format') || 'YYYY-MM-DD';
+			var enableTime = /H|h|m/.test(format);
+			var noCalendar = option && option.pickDate === false;
+			var dateFormat = format
+				.replace('YYYY', 'Y')
+				.replace('YY', 'y')
+				.replace('DD', 'd')
+				.replace('D', 'j')
+				.replace('MM', 'm')
+				.replace('M', 'n')
+				.replace('HH', 'H')
+				.replace('H', 'H')
+				.replace('mm', 'i');
+			var input = $element.is('input') ? this : $element.find('input').get(0);
+			var locale = document.documentElement.lang || 'en';
+			var config = {
+				allowInput: true,
+				dateFormat: noCalendar ? 'H:i' : dateFormat,
+				enableTime: enableTime || noCalendar,
+				noCalendar: noCalendar,
+				time_24hr: true
+			};
+
+			if (flatpickr.l10ns && flatpickr.l10ns[locale]) {
+				config.locale = locale;
+			}
+
+			if (input) {
+				flatpickr(input, config);
+			}
+		});
+	};
+
+	window.normalizeLegacyAdminIcons = normalizeLegacyIcons;
+})(window.jQuery);
+
 $(document).ready(function() {
+	window.normalizeLegacyAdminIcons();
+	$('[data-original-title]').each(function() {
+		if (!$(this).attr('title')) {
+			$(this).attr('title', $(this).attr('data-original-title'));
+		}
+	});
+	$('.dropdown-menu-left').removeClass('dropdown-menu-left').addClass('dropdown-menu-start');
+	$('.dropdown-menu-right').removeClass('dropdown-menu-right').addClass('dropdown-menu-end');
+	$('.breadcrumb > li').addClass('breadcrumb-item');
+	$('.nav-tabs > li').addClass('nav-item');
+	$('.nav-tabs > li > a').addClass('nav-link').each(function() {
+		if ($(this).parent().hasClass('active')) {
+			$(this).addClass('active');
+		}
+	});
+	$('.collapse.in').removeClass('in').addClass('show');
+
 	//Form Submit for IE Browser
 	$('button[type=\'submit\']').on('click', function() {
 		$("form[id*='form-']").submit();
@@ -38,11 +182,17 @@ $(document).ready(function() {
 	});
 
 	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
+	$('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body', html: true});
 
 	// Makes tooltips work on ajax generated content
 	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+		window.normalizeLegacyAdminIcons();
+		$('[data-original-title]').each(function() {
+			if (!$(this).attr('title')) {
+				$(this).attr('title', $(this).attr('data-original-title'));
+			}
+		});
+		$('[data-bs-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 
 	// https://github.com/opencart/opencart/issues/2595
@@ -55,12 +205,12 @@ $(document).ready(function() {
 	}
 	
 	// tooltip remove
-	$('[data-toggle=\'tooltip\']').on('remove', function() {
+	$('[data-bs-toggle=\'tooltip\']').on('remove', function() {
 		$(this).tooltip('destroy');
 	});
 
 	// Tooltip remove fixed
-	$(document).on('click', '[data-toggle=\'tooltip\']', function(e) {
+	$(document).on('click', '[data-bs-toggle=\'tooltip\']', function(e) {
 		$('body > .tooltip').remove();
 	});
 	
@@ -84,22 +234,22 @@ $(document).ready(function() {
 	
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li > a').removeClass('collapsed');
 	
-	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('in');
+	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('ul').addClass('show');
 	
 	$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active');
 	
 	// Image Manager
-	$(document).on('click', 'a[data-toggle=\'image\']', function(e) {
+	$(document).on('click', 'a[data-oc-toggle=\'image\']', function(e) {
 		var $element = $(this);
-		var $popover = $element.data('bs.popover'); // element has bs popover?
+		var popover = bootstrap.Popover.getInstance(this);
 
 		e.preventDefault();
 
 		// destroy all image popovers
-		$('a[data-toggle="image"]').popover('destroy');
+		$('a[data-oc-toggle="image"]').popover('destroy');
 
 		// remove flickering (do not re-add popover when clicking for removal)
-		if ($popover) {
+		if (popover) {
 			return;
 		}
 
@@ -108,7 +258,7 @@ $(document).ready(function() {
 			placement: 'right',
 			trigger: 'manual',
 			content: function() {
-				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
+				return '<button type="button" id="button-image" class="btn btn-primary"><i class="bi bi-pencil-square"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="bi bi-trash"></i></button>';
 			}
 		});
 
@@ -126,20 +276,20 @@ $(document).ready(function() {
 				beforeSend: function() {
 					$button.prop('disabled', true);
 					if ($icon.length) {
-						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
+						$icon.attr('class', 'bi bi-arrow-clockwise fa-spin');
 					}
 				},
 				complete: function() {
 					$button.prop('disabled', false);
 
 					if ($icon.length) {
-						$icon.attr('class', 'fa fa-pencil');
+						$icon.attr('class', 'bi bi-pencil-square');
 					}
 				},
 				success: function(html) {
 					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 
-					$('#modal-image').modal('show');
+					bootstrap.Modal.getOrCreateInstance(document.getElementById('modal-image')).show();
 				}
 			});
 
@@ -245,7 +395,7 @@ $(document).ready(function() {
 
 						if (!json[i]['category']) {
 							// ungrouped items
-							html += '<li data-value="' + json[i]['value'] + '"><a href="#">' + json[i]['label'] + '</a></li>';
+							html += '<li data-value="' + json[i]['value'] + '"><a href="#" class="dropdown-item">' + json[i]['label'] + '</a></li>';
 						} else {
 							// grouped items
 							name = json[i]['category'];
@@ -261,7 +411,7 @@ $(document).ready(function() {
 						html += '<li class="dropdown-header">' + name + '</li>';
 
 						for (j = 0; j < category[name].length; j++) {
-							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[name][j]['label'] + '</a></li>';
+							html += '<li data-value="' + category[name][j]['value'] + '"><a href="#" class="dropdown-item ps-4">' + category[name][j]['label'] + '</a></li>';
 						}
 					}
 				}

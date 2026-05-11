@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-feed" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-feed" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,18 +15,18 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_edit }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-feed" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="feed_google_sitemap_status" id="input-status" class="form-control">
                 {% if feed_google_sitemap_status %}
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-data-feed">{{ entry_data_feed }}</label>
+            <label class="col-sm-2 col-form-label" for="input-data-feed">{{ entry_data_feed }}</label>
             <div class="col-sm-10">
               <textarea rows="5" readonly id="input-data-feed" class="form-control">{{ data_feed }}</textarea>
             </div>

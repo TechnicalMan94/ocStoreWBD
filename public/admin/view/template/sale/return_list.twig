@@ -2,10 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-return').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-return').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-return').toggleClass('d-none d-md-block');" class="btn btn-light d-md-none"><i class="bi bi-funnel"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-return').submit() : false;"><i class="bi bi-trash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -16,44 +16,44 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     <div class="row">
-      <div id="filter-return" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+      <div id="filter-return" class="col-md-3 order-md-2 col-sm-12 d-none d-md-block">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-funnel"></i> {{ text_filter }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group">
-              <label class="control-label" for="input-return-id">{{ entry_return_id }}</label>
+              <label class="col-form-label" for="input-return-id">{{ entry_return_id }}</label>
               <input type="text" name="filter_return_id" value="{{ filter_return_id }}" placeholder="{{ entry_return_id }}" id="input-return-id" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-order-id">{{ entry_order_id }}</label>
+              <label class="col-form-label" for="input-order-id">{{ entry_order_id }}</label>
               <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-customer">{{ entry_customer }}</label>
+              <label class="col-form-label" for="input-customer">{{ entry_customer }}</label>
               <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-product">{{ entry_product }}</label>
+              <label class="col-form-label" for="input-product">{{ entry_product }}</label>
               <input type="text" name="filter_product" value="{{ filter_product }}" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-model">{{ entry_model }}</label>
+              <label class="col-form-label" for="input-model">{{ entry_model }}</label>
               <input type="text" name="filter_model" value="{{ filter_model }}" placeholder="{{ entry_model }}" id="input-model" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-return-status">{{ entry_return_status }}</label>
+              <label class="col-form-label" for="input-return-status">{{ entry_return_status }}</label>
               <select name="filter_return_status_id" id="input-return-status" class="form-control">
                 <option value=""></option>
                 
@@ -114,33 +114,33 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+              <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
                 </span></div>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-date-modified">{{ entry_date_modified }}</label>
+              <label class="col-form-label" for="input-date-modified">{{ entry_date_modified }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_modified" value="{{ filter_date_modified }}" placeholder="{{ entry_date_modified }}" data-date-format="YYYY-MM-DD" id="input-date-modified" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
                 </span></div>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-9 col-md-pull-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      <div class="col-md-9 order-md-1 col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_list }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-return">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -176,7 +176,7 @@
                     <td class="text-left">{{ return.return_status }}</td>
                     <td class="text-left">{{ return.date_added }}</td>
                     <td class="text-left">{{ return.date_modified }}</td>
-                    <td class="text-right"><a href="{{ return.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <td class="text-right"><a href="{{ return.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                   </tr>
                   {% endfor %}
                   {% else %}

@@ -2,12 +2,12 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-review').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="submit" form="form-review" formaction="{{ enabled }}" data-toggle="tooltip" title="{{ button_enable }}" class="btn btn-default"><i class="fa fa-play"></i></button>
-		<button type="submit" form="form-review" formaction="{{ disabled }}" data-toggle="tooltip" title="{{ button_disable }}" class="btn btn-default"><i class="fa fa-pause"></i></button>
-		<button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-review').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-review').toggleClass('d-none d-md-block');" class="btn btn-light d-md-none"><i class="bi bi-funnel"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+        <button type="submit" form="form-review" formaction="{{ enabled }}" data-bs-toggle="tooltip" title="{{ button_enable }}" class="btn btn-light"><i class="bi bi-play-fill"></i></button>
+		<button type="submit" form="form-review" formaction="{{ disabled }}" data-bs-toggle="tooltip" title="{{ button_disable }}" class="btn btn-light"><i class="bi bi-pause-fill"></i></button>
+		<button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-review').submit() : false;"><i class="bi bi-trash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -18,32 +18,32 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     <div class="row">
-      <div id="filter-review" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+      <div id="filter-review" class="col-md-3 order-md-2 col-sm-12 d-none d-md-block">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-funnel"></i> {{ text_filter }}</h3>
           </div>
-          <div  class="panel-body">
+          <div  class="card-body">
             <div class="form-group">
-              <label class="control-label" for="input-article">{{ entry_article }}</label>
+              <label class="col-form-label" for="input-article">{{ entry_article }}</label>
               <input type="text" name="filter_article" value="{{ filter_article }}" placeholder="{{ entry_article }}" id="input-article" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-author">{{ entry_author }}</label>
+              <label class="col-form-label" for="input-author">{{ entry_author }}</label>
               <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-status">{{ entry_status }}</label>
+              <label class="col-form-label" for="input-status">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
                 
@@ -133,25 +133,25 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+              <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
                 </span></div>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-9 col-md-pull-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      <div class="col-md-9 order-md-1 col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_list }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-review">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -181,7 +181,7 @@
                     <td class="text-right">{{ review.rating }}</td>
                     <td class="text-left">{{ review.status }}</td>
                     <td class="text-left">{{ review.date_added }}</td>
-                    <td class="text-right"><a href="{{ review.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <td class="text-right"><a href="{{ review.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                   </tr>
                   {% endfor %}
                   {% else %}

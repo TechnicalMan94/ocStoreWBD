@@ -11,14 +11,14 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> {{ text_list }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-puzzle"></i> {{ text_list }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <fieldset>
           <legend>{{ text_type }}</legend>
-          <div class="well">
+          <div class="card card-body">
             <div class="input-group">
               <select name="type" class="form-control">
                 {% for category in categories %}
@@ -29,7 +29,7 @@
                 {% endif %}
                 {% endfor %}
               </select>
-              <span class="input-group-addon"><i class="fa fa-filter"></i> {{ text_filter }}</span>
+              <span class="input-group-text"><i class="bi bi-funnel"></i> {{ text_filter }}</span>
             </div>
           </div>
         </fieldset>
@@ -44,13 +44,13 @@ $('select[name="type"]').on('change', function() {
 		url: $('select[name="type"]').val(),
 		dataType: 'html',
 		beforeSend: function() {
-			$('.fa-filter').addClass('fa-circle-o-notch fa-spin');
-			$('.fa-filter').removeClass('fa-filter');
+			$('.bi-funnel').addClass('bi-arrow-clockwise fa-spin');
+			$('.bi-funnel').removeClass('bi-funnel');
 			$('select[name=\'type\']').prop('disabled', true);
 		},
 		complete: function() {
-			$('.fa-circle-o-notch').addClass('fa-filter');
-			$('.fa-circle-o-notch').removeClass('fa-circle-o-notch fa-spin');
+			$('.bi-arrow-clockwise').addClass('bi-funnel');
+			$('.bi-arrow-clockwise').removeClass('bi-arrow-clockwise fa-spin');
 			$('select[name=\'type\']').prop('disabled', false);
 		},
 		success: function(html) {

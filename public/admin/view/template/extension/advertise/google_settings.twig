@@ -2,7 +2,7 @@
     <fieldset>
         <legend>{{ text_extension_settings }}</legend>
         <div class="form-group">
-            <label for="select-status" class="col-sm-2 control-label">{{ text_status }}</label>
+            <label for="select-status" class="col-sm-2 col-form-label">{{ text_status }}</label>
             <div class="col-sm-10">
                 <select name="advertise_google_status" id="select-status" class="form-control">
                     <option value="1" {{ advertise_google_status ? 'selected' }}>{{ text_enabled }}</option>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="select-reporting-interval" class="col-sm-2 control-label">{{ text_reporting_interval }}</label>
+            <label for="select-reporting-interval" class="col-sm-2 col-form-label">{{ text_reporting_interval }}</label>
             <div class="col-sm-10">
                 <select name="advertise_google_reporting_interval" id="select-reporting-interval" class="form-control">
                     {% for interval, description in reporting_intervals %}
@@ -21,47 +21,47 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="select-debug-log" class="col-sm-2 control-label">{{ text_debug_log }}</label>
+            <label for="select-debug-log" class="col-sm-2 col-form-label">{{ text_debug_log }}</label>
             <div class="col-sm-10" id="select-debug-log-container">
                 <select name="advertise_google_debug_log" id="select-debug-log" class="form-control">
                     <option value="0" {{ not advertise_google_debug_log ? 'selected' }}>{{ text_disabled }}</option>
                     <option value="1" {{ advertise_google_debug_log ? 'selected' }}>{{ text_enabled }}</option>
                 </select>
-                <a href="{{ url_debug_log_download }}" id="download-debug-log" data-toggle="tooltip" title="{{ text_download_debug_log }}" class="btn btn-default"><i class="fa fa-download"></i></a>
+                <a href="{{ url_debug_log_download }}" id="download-debug-log" data-bs-toggle="tooltip" title="{{ text_download_debug_log }}" class="btn btn-light"><i class="bi bi-download"></i></a>
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">{{ text_connection }}</label>
+            <label class="col-sm-2 col-form-label">{{ text_connection }}</label>
             <div class="col-sm-10">
-                <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_disconnect_reminder }}</div>
-                <div class="form-control-static"><i class="text-success fa fa-circle"></i> {{ text_connected }}</div>
-                <a id="button_disconnect" href="{{ disconnect }}" class="btn btn-default"><i class="fa fa-power-off"></i> {{ button_disconnect }}</a>
+                <div class="alert alert-info"><i class="bi bi-info-circle"></i> {{ text_disconnect_reminder }}</div>
+                <div class="form-control-static"><i class="text-success bi bi-circle-fill"></i> {{ text_connected }}</div>
+                <a id="button_disconnect" href="{{ disconnect }}" class="btn btn-light"><i class="bi bi-power"></i> {{ button_disconnect }}</a>
             </div>
         </div>
     </fieldset>
     <fieldset>
         <legend>{{ text_cron_settings }}</legend>
-        <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_cron_info }}</div>
+        <div class="alert alert-info"><i class="bi bi-info-circle"></i> {{ text_cron_info }}</div>
         <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-original-title="{{ help_local_cron }}">{{ text_local_cron }}</span></label>
+            <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" data-original-title="{{ help_local_cron }}">{{ text_local_cron }}</span></label>
             <div class="col-sm-10">
                 <input readonly type="text" class="form-control" value="{{ advertise_google_cron_command }}" />
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-original-title="{{ help_remote_cron }}">{{ text_remote_cron }}</span></label>
+            <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" data-original-title="{{ help_remote_cron }}">{{ text_remote_cron }}</span></label>
             <div class="col-sm-10">
                 <div class="input-group">
                     <input readonly type="text" name="advertise_google_cron_url" id="input_advertise_google_cron_url" class="form-control" value="" />
-                    <div data-toggle="tooltip" data-original-title="{{ text_refresh_token }}" class="input-group-addon btn btn-primary" id="refresh-cron-token">
-                        <i class="fa fa-refresh"></i>
+                    <div data-bs-toggle="tooltip" data-original-title="{{ text_refresh_token }}" class="input-group-text btn btn-primary" id="refresh-cron-token">
+                        <i class="bi bi-arrow-clockwise"></i>
                     </div>
                 </div>
                 <input id="input_advertise_google_cron_token" type="hidden" name="advertise_google_cron_token" value="{{ advertise_google_cron_token }}" />
             </div>
         </div>
         <div class="form-group required">
-            <label class="col-sm-2 control-label" for="checkbox_advertise_google_cron_acknowledge">{{ entry_setup_confirmation }}</label>
+            <label class="col-sm-2 col-form-label" for="checkbox_advertise_google_cron_acknowledge">{{ entry_setup_confirmation }}</label>
             <div class="col-sm-10">
                 <label class="checkbox-inline">
                     <input id="checkbox_advertise_google_cron_acknowledge" type="checkbox" value="1" {% if advertise_google_cron_acknowledge %} checked {% endif %} name="advertise_google_cron_acknowledge" /> {{ text_acknowledge_cron }}
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="dropdown_advertise_google_cron_email_status"><span data-toggle="tooltip" data-original-title="{{ help_cron_email_status }}">{{ text_cron_email_status }}</span></label>
+            <label class="col-form-label col-sm-2" for="dropdown_advertise_google_cron_email_status"><span data-bs-toggle="tooltip" data-original-title="{{ help_cron_email_status }}">{{ text_cron_email_status }}</span></label>
             <div class="col-sm-10">
                 <select id="dropdown_advertise_google_cron_email_status" name="advertise_google_cron_email_status" class="form-control">
                     <option value="1" {% if advertise_google_cron_email_status == '1' %} selected {% endif %}>{{ text_enabled }}</option>
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input_advertise_google_cron_email"><span data-toggle="tooltip" data-original-title="{{ help_cron_email }}">{{ text_cron_email }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input_advertise_google_cron_email"><span data-bs-toggle="tooltip" data-original-title="{{ help_cron_email }}">{{ text_cron_email }}</span></label>
             <div class="col-sm-10">
                 <input id="input_advertise_google_cron_email" name="advertise_google_cron_email" type="text" class="form-control" value="{{ advertise_google_cron_email }}"/>
                 {% if error_cron_email %}

@@ -2,10 +2,10 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('hidden-sm hidden-xs');" class="btn btn-default hidden-md hidden-lg"><i class="fa fa-filter"></i></button>
-        <a href="{{ add }}" data-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
-        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="float-end">
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-customer').toggleClass('d-none d-md-block');" class="btn btn-light d-md-none"><i class="bi bi-funnel"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-customer').submit() : false;"><i class="bi bi-trash"></i></button>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -16,32 +16,32 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     <div class="row">
-      <div id="filter-customer" class="col-md-3 col-md-push-9 col-sm-12 hidden-sm hidden-xs">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+      <div id="filter-customer" class="col-md-3 order-md-2 col-sm-12 d-none d-md-block">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-funnel"></i> {{ text_filter }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="form-group">
-              <label class="control-label" for="input-name">{{ entry_name }}</label>
+              <label class="col-form-label" for="input-name">{{ entry_name }}</label>
               <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-email">{{ entry_email }}</label>
+              <label class="col-form-label" for="input-email">{{ entry_email }}</label>
               <input type="text" name="filter_email" value="{{ filter_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-customer-group">{{ entry_customer_group }}</label>
+              <label class="col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
               <select name="filter_customer_group_id" id="input-customer-group" class="form-control">
                 <option value=""></option>
                 {% for customer_group in customer_groups %}
@@ -54,7 +54,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-status">{{ entry_status }}</label>
+              <label class="col-form-label" for="input-status">{{ entry_status }}</label>
               <select name="filter_status" id="input-status" class="form-control">
                 <option value=""></option>
                 {% if filter_status == '1' %}
@@ -70,30 +70,30 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-ip">{{ entry_ip }}</label>
+              <label class="col-form-label" for="input-ip">{{ entry_ip }}</label>
               <input type="text" name="filter_ip" value="{{ filter_ip }}" placeholder="{{ entry_ip }}" id="input-ip" class="form-control" />
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-date-added">{{ entry_date_added }}</label>
+              <label class="col-form-label" for="input-date-added">{{ entry_date_added }}</label>
               <div class="input-group date">
                 <input type="text" name="filter_date_added" value="{{ filter_date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                 <span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-light"><i class="bi bi-calendar3"></i></button>
                 </span>
               </div>
             </div>
             <div class="form-group text-right">
-              <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+              <button type="button" id="button-filter" class="btn btn-light"><i class="bi bi-funnel"></i> {{ button_filter }}</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-9 col-md-pull-3 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      <div class="col-md-9 order-md-1 col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_list }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <div class="table-responsive">
               <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-customer">
                 <table class="table table-bordered table-hover">
@@ -127,19 +127,19 @@
                     <td class="text-left">{{ customer.date_added }}</td>
                     <td class="text-right">
                       <div class="btn-group" style="min-width: 65px;">
-                        <a href="{{ customer.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
+                        <a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                        <button type="button" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle"><i class="bi bi-caret-down-fill"></i></button>
                         <ul class="dropdown-menu dropdown-menu-right">
                           <li class="dropdown-header">{{ text_option }}</li>
                           {% if customer.unlock %}
-                          <li><a href="{{ customer.unlock }}"><i class="fa fa-unlock"></i> {{ text_unlock }}</a></li>
+                          <li><a href="{{ customer.unlock }}"><i class="bi bi-unlock"></i> {{ text_unlock }}</a></li>
                           {% else %}
-                          <li class="disabled"><a><i class="fa fa-unlock"></i> {{ text_unlock }}</a></li>
+                          <li class="disabled"><a><i class="bi bi-unlock"></i> {{ text_unlock }}</a></li>
                           {% endif %}
                           <li role="separator" class="divider"></li>
                           <li class="dropdown-header">{{ text_login }}</li>
                           {% for store in customer.store %}
-                          <li><a href="{{ store.href }}" target="_blank"><i class="fa fa-lock"></i> {{ store.name }}</a></li>
+                          <li><a href="{{ store.href }}" target="_blank"><i class="bi bi-lock"></i> {{ store.name }}</a></li>
                           {% endfor %}
                         </ul>
                       </div>

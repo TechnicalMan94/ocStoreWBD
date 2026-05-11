@@ -1,28 +1,28 @@
 <!-- The filters -->
-<div id="filter-ads" class="col-lg-3 col-lg-push-9 col-md-12">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-filter"></i> {{ text_filter }}</h3>
+<div id="filter-ads" class="col-lg-3 order-lg-2 col-md-12">
+    <div class="card">
+        <div class="card-header">
+          <h3 class="card-title mb-0"><i class="bi bi-funnel"></i> {{ text_filter }}</h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="form-group">
-                <label class="control-label" for="input-name">{{ text_product_name }}</label>
+                <label class="col-form-label" for="input-name">{{ text_product_name }}</label>
                 <input type="text" name="filter_name" value="" placeholder="{{ text_product_name }}" id="input-name" class="form-control" autocomplete="off">
             </div>
             <div class="form-group">
-                <label class="control-label" for="input-model">{{ text_product_model }}</label>
+                <label class="col-form-label" for="input-model">{{ text_product_model }}</label>
                 <input type="text" name="filter_model" value="" placeholder="{{ text_product_model }}" id="input-model" class="form-control" autocomplete="off">
             </div>
             <div class="form-group">
-                <label class="control-label" for="input-category">{{ text_product_category }}</label>
+                <label class="col-form-label" for="input-category">{{ text_product_category }}</label>
                 <div class="category-select-container">
                     <input id="input-category" type="text" name="category_autocomplete" value="" class="form-control" placeholder="{{ text_product_category }}" />
                     <input type="hidden" name="filter_category_id" value="">
-                    <button id="button-category-remove" class="btn btn-default" disabled><i class="fa fa-close"></i></button>
+                    <button id="button-category-remove" class="btn btn-light" disabled><i class="bi bi-x-lg"></i></button>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label" for="select-is-modified">{{ text_product_is_modified }}</label>
+                <label class="col-form-label" for="select-is-modified">{{ text_product_is_modified }}</label>
                 <select class="form-control" name="filter_is_modified" id="select-is-modified">
                     <option value="">{{ text_all }}</option>
                     <option value="0">{{ text_no }}</option>
@@ -30,25 +30,25 @@
                 </select>
             </div>
             <div class="form-group text-right">
-                <button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ text_filter }}</button>
+                <button type="button" id="button-filter" class="btn btn-light"><i class="bi bi-funnel"></i> {{ text_filter }}</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- The ads -->
-<div class="col-lg-9 col-lg-pull-3 col-md-12">
+<div class="col-lg-9 order-lg-1 col-md-12">
     <div class="alert alert-info">
         {{ text_ads_intro }}
     </div>
     <hr />
     <div class="row">
         <div class="col-md-12">
-            <div class="pull-right form-control-static">
-                <button type="button" class="btn btn-default button-popup-bulk-edit form-control-static"><i class="fa fa-cog"></i> {{ button_bulk_edit_google_fields }}</button>
+            <div class="float-end form-control-static">
+                <button type="button" class="btn btn-light button-popup-bulk-edit form-control-static"><i class="bi bi-gear"></i> {{ button_bulk_edit_google_fields }}</button>
                 <div class="btn-group form-control-static">
-                    <button type="button" class="btn btn-default dropdown-toggle button-advertise" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ button_select_campaigns }} <span class="caret"></span>
+                    <button type="button" class="btn btn-light dropdown-toggle button-advertise" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ button_select_campaigns }} <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right campaign-dropdown">
                         {% for campaign in campaigns %}
@@ -57,7 +57,7 @@
                         <li role="separator" class="divider"></li>
                         <li class="text-center padding-lr-5">
                             <p class="text-left text-sm text-pre-line"><em>{{ text_maximum_five }}</em></p>
-                            <button class="btn btn-success btn-xs button-apply-advertising"><i class="fa fa-check"></i> {{ button_apply }}</button>
+                            <button class="btn btn-success btn-xs button-apply-advertising"><i class="bi bi-check-lg"></i> {{ button_apply }}</button>
                         </li>
                     </ul>
                 </div>
@@ -72,13 +72,13 @@
                 <tr>
                     <th class="text-center"><input type="checkbox" name="select_all" /></th>
                     <th class="text-center">{{ text_image }}</th>
-                    <th class="text-left visible-lg"><a href="javascript:void(0)" data-sort="name">{{ text_product_name }}</a></th>
+                    <th class="text-left d-none d-lg-table-cell"><a href="javascript:void(0)" data-sort="name">{{ text_product_name }}</a></th>
                     <th class="text-left"><a href="javascript:void(0)" data-sort="model">{{ text_product_model }}</a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="impressions"><i data-toggle="tooltip" data-original-title="{{ text_impressions }}" class="fa fa-eye"></i></a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="clicks"><i data-toggle="tooltip" data-original-title="{{ text_clicks }}" class="fa fa-hand-pointer-o"></i></a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="cost"><i data-toggle="tooltip" data-original-title="{{ text_cost }}" class="fa fa-dollar"></i></a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversions"><i data-toggle="tooltip" data-original-title="{{ text_conversions }}" class="fa fa-handshake-o"></i></a></th>
-                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversion_value"><i data-toggle="tooltip" data-original-title="{{ text_conversion_value }}" class="fa fa-line-chart"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="impressions"><i data-bs-toggle="tooltip" data-original-title="{{ text_impressions }}" class="bi bi-eye"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="clicks"><i data-bs-toggle="tooltip" data-original-title="{{ text_clicks }}" class="bi bi-hand-index"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="cost"><i data-bs-toggle="tooltip" data-original-title="{{ text_cost }}" class="bi bi-currency-dollar"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversions"><i data-bs-toggle="tooltip" data-original-title="{{ text_conversions }}" class="bi bi-people"></i></a></th>
+                    <th class="text-center"><a href="javascript:void(0)" data-sort="conversion_value"><i data-bs-toggle="tooltip" data-original-title="{{ text_conversion_value }}" class="bi bi-graph-up"></i></a></th>
                     </a></th>
                     <th class="text-left">{{ text_campaigns }}</th>
                     <th class="text-center"><a href="javascript:void(0)" data-sort="destination_status">{{ text_destination_status }}</a></th>
@@ -93,11 +93,11 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="pull-right form-control-static">
-                <button type="button" class="btn btn-default button-popup-bulk-edit form-control-static"><i class="fa fa-cog"></i> {{ button_bulk_edit_google_fields }}</button>
+            <div class="float-end form-control-static">
+                <button type="button" class="btn btn-light button-popup-bulk-edit form-control-static"><i class="bi bi-gear"></i> {{ button_bulk_edit_google_fields }}</button>
                 <div class="btn-group dropup form-control-static">
-                    <button type="button" class="btn btn-default dropdown-toggle button-advertise" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ button_select_campaigns }} <span class="caret"></span>
+                    <button type="button" class="btn btn-light dropdown-toggle button-advertise" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ button_select_campaigns }} <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right campaign-dropdown">
                         {% for campaign in campaigns %}
@@ -106,7 +106,7 @@
                         <li role="separator" class="divider"></li>
                         <li class="text-center padding-lr-5">
                             <p class="text-left text-sm text-pre-line"><em>{{ text_maximum_five }}</em></p>
-                            <button class="btn btn-success btn-sm button-apply-advertising"><i class="fa fa-check"></i> {{ button_apply }}</button>
+                            <button class="btn btn-success btn-sm button-apply-advertising"><i class="bi bi-check-lg"></i> {{ button_apply }}</button>
                         </li>
                     </ul>
                 </div>
@@ -121,7 +121,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="pull-right list-showing form-control-static">
+            <div class="float-end list-showing form-control-static">
 
             </div>
         </div>
@@ -157,20 +157,20 @@
 </style>
 <script id="template-success" type="text/template">
     <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-        <i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;{message}
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+        <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{message}
     </div>
 </script>
 <script id="template-error" type="text/template">
     <div class="alert alert-danger alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{message}
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{message}
     </div>
 </script>
 <script id="template-warning" type="text/template">
     <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
-        <i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{message}
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
+        <i class="bi bi-info-circle" aria-hidden="true"></i>&nbsp;{message}
     </div>
 </script>
 <script id="template-popup-product" type="text/template">
@@ -178,14 +178,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <h4 class="modal-title">{title}</h4>
                 </div>
                 <div class="modal-body">
                     {body}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_close }}</button>
                     <button type="button" class="btn btn-primary" id="button-popup-product-save">{{ button_save }}</button>
                 </div>
             </div>
@@ -197,14 +197,14 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="fa fa-close"></i></span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <h4 class="modal-title">{title}</h4>
                 </div>
                 <div class="modal-body">
                     {body}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ button_close }}</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ button_close }}</button>
                 </div>
             </div>
         </div>
@@ -270,17 +270,17 @@
     var makeDestinationStatus = function(status) {
         switch (status) {
             case 'pending' :
-                return '<span class="label label-warning">{{ text_label_pending }}</span>';
+                return '<span class="badge text-bg-warning">{{ text_label_pending }}</span>';
             case 'approved' : 
-                return '<span class="label label-success">{{ text_label_approved }}</span>';
+                return '<span class="badge text-bg-success">{{ text_label_approved }}</span>';
             case 'disapproved' :
-                return '<span class="label label-danger">{{ text_label_disapproved }}</span>';
+                return '<span class="badge text-bg-danger">{{ text_label_disapproved }}</span>';
         }
     }
 
     var makeIssuesButton = function(has_issues, url) {
         if (has_issues) {
-            return '<a data-toggle="tooltip" title="{{ text_view_issues }}" class="btn btn-warning" data-url-popup-issues="' + url + '"><i class="fa fa-exclamation-triangle"></i></a>';
+            return '<a data-bs-toggle="tooltip" title="{{ text_view_issues }}" class="btn btn-warning" data-url-popup-issues="' + url + '"><i class="bi bi-exclamation-triangle"></i></a>';
         }
 
         return '&ndash;';
@@ -297,7 +297,7 @@
             html = result.join('<br />');
         }
 
-        return html != '' ? html : '<span class="label label-default">{{ text_label_unassigned }}</span>';
+        return html != '' ? html : '<span class="badge text-bg-secondary">{{ text_label_unassigned }}</span>';
     }
 
     var getFilterPostData = function() {
@@ -327,7 +327,7 @@
 
                 $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="text-center">{{ text_loading }}</div></td></tr>');
 
-                $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-default', true);
+                $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-light', true);
 
                 $(selector.button_bulk_edit).attr('disabled', true);
 
@@ -361,7 +361,7 @@
 
                             html += '<td class="highlightable text-center"><input type="checkbox" name="select[]" value="' + product.product_id + '"></td>';
                             html += '<td class="highlightable text-center"><img class="img-thumbnail" src="' + product.image + '" alt="' + product.name + '" /></td>';
-                            html += '<td class="highlightable text-left visible-lg">' + product.name + '</td>';
+                            html += '<td class="highlightable text-left d-none d-lg-table-cell">' + product.name + '</td>';
                             html += '<td class="highlightable text-left">' + product.model + '</td>';
                             html += '<td class="highlightable text-center">' + product.impressions + '</td>';
                             html += '<td class="highlightable text-center">' + product.clicks + '</td>';
@@ -371,7 +371,7 @@
                             html += '<td class="highlightable text-left no-wrap">' + makeCampaigns(product.campaigns) + '</td>';
                             html += '<td class="highlightable text-center">' + makeDestinationStatus(product.destination_status) + '</td>';
                             html += '<td class="highlightable text-center">' + makeIssuesButton(product.has_issues, product.url_issues) + '</td>';
-                            html += '<td class="highlightable text-right"><button class="btn ' + (product.is_modified ? "btn-default" : "btn-warning") + '" data-toggle="tooltip" title="' + (product.is_modified ? "{{ button_product_edit }}" : "{{ button_product_set }}") + '" data-product-id="' + product.product_id + '" data-product-advertise-google-id="' + product.product_advertise_google_id + '"><i class="fa fa-cog"></i></button></td>';
+                            html += '<td class="highlightable text-right"><button class="btn ' + (product.is_modified ? "btn-light" : "btn-warning") + '" data-bs-toggle="tooltip" title="' + (product.is_modified ? "{{ button_product_edit }}" : "{{ button_product_set }}") + '" data-product-id="' + product.product_id + '" data-product-advertise-google-id="' + product.product_advertise_google_id + '"><i class="bi bi-gear"></i></button></td>';
 
                             html += '</tr>';
 
@@ -439,7 +439,7 @@
                 $(selector.alert_container).empty();
                 $(selector.warning_container).empty();
 
-                $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-default', true);
+                $(selector.button_advertise).attr('disabled', true).toggleClass('btn-info', false).toggleClass('btn-light', true);
 
                 $(selector.button_bulk_edit).attr('disabled', true);
 
@@ -474,10 +474,10 @@
         var deselection_text = '{{ text_selection_all }}'.replace(/{total}/, total_items);
 
         if (selected_all_pages) {
-            $(selector.selection_container).html('<div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> ' + deselection_text + '</div>');
+            $(selector.selection_container).html('<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ' + deselection_text + '</div>');
         } else {
             if (selected > 0 && total_pages > 1) {
-                $(selector.selection_container).html('<div class="alert alert-warning"><i class="fa fa-exclamation-triangle"></i> ' + selection_text + '</div>');
+                $(selector.selection_container).html('<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ' + selection_text + '</div>');
             } else {
                 $(selector.selection_container).empty();
             }
@@ -639,7 +639,7 @@
 
             var status = $(selector.checkboxes + ":checked").length == 0;
 
-            $(selector.button_advertise).attr('disabled', status).toggleClass('btn-info', !status).toggleClass('btn-default', status);
+            $(selector.button_advertise).attr('disabled', status).toggleClass('btn-info', !status).toggleClass('btn-light', status);
 
             $(selector.button_bulk_edit).attr('disabled', status);
 
@@ -688,7 +688,7 @@
                     data: $(this).attr('data-product-advertise-google-id')
                 },
                 success_callback : function(data) {
-                    $(selector.popup.product.button_show + '[data-product-id=' + data.product_id + ']').removeClass('btn-warning').addClass('btn-default');
+                    $(selector.popup.product.button_show + '[data-product-id=' + data.product_id + ']').removeClass('btn-warning').addClass('btn-light');
                 }
             });
         })

@@ -1,15 +1,15 @@
 <form id="oc-search" class="navbar-form" role="search">
   <div class="input-group">
     <div class="input-group-btn">
-      <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-        <i class="fa fa-search"></i>
-        <span class="caret"></span>
+      <a class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#">
+        <i class="bi bi-search"></i>
+        <i class="bi bi-caret-down-fill"></i>
       </a>
       <ul class="dropdown-menu dropdown-menu-left alerts-dropdown">
         <li class="dropdown-header">{{ text_search_options }}</li>
-        <li><a onclick="setOption('catalog', '{{ text_catalog_placeholder }}'); return false;"><i class="fa fa-book"></i><span>{{ text_catalog }}</span></a></li>
-        <li><a onclick="setOption('customers', '{{ text_customers_placeholder }}'); return false;"><i class="fa fa-group"></i><span>{{ text_customers }}</span></a></li>
-        <li><a onclick="setOption('orders', '{{ text_orders_placeholder }}'); return false;"><i class="fa fa-credit-card"></i><span>{{ text_orders }}</span></a></li>
+        <li><a onclick="setOption('catalog', '{{ text_catalog_placeholder }}'); return false;"><i class="bi bi-book"></i><span>{{ text_catalog }}</span></a></li>
+        <li><a onclick="setOption('customers', '{{ text_customers_placeholder }}'); return false;"><i class="bi bi-people"></i><span>{{ text_customers }}</span></a></li>
+        <li><a onclick="setOption('orders', '{{ text_orders_placeholder }}'); return false;"><i class="bi bi-credit-card"></i><span>{{ text_orders }}</span></a></li>
       </ul>
     </div>
     <input id="oc-search-input" type="text" class="form-control" placeholder="{{ text_search_placeholder }}" name="query" autocomplete="off" />

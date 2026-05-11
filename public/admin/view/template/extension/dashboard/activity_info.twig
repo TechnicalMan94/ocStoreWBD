@@ -1,12 +1,12 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> {{ heading_title }}</h3>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title mb-0"><i class="bi bi-calendar3"></i> {{ heading_title }}</h3>
   </div>
   <ul class="list-group">
     {% if activities %}
     {% for activity in activities %}
     <li class="list-group-item">{{ activity.comment }}<br />
-      <small class="text-muted"><i class="fa fa-clock-o"></i> {{ activity.date_added }}</small></li>
+      <small class="text-muted"><i class="bi bi-clock"></i> {{ activity.date_added }}</small></li>
     {% endfor %}
     {% else %}
     <li class="list-group-item text-center">{{ text_no_results }}</li>

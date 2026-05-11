@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-feed-yandex-market" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-feed-yandex-market" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,18 +15,18 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_edit }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-feed-yandex-market" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_status" id="input-status" class="form-control">
                 {% if feed_yandex_market_status %} 
@@ -40,25 +40,25 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-secret-key"><span data-toggle="tooltip" title="{{ help_secret_key }}">{{ entry_secret_key }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-secret-key"><span data-bs-toggle="tooltip" title="{{ help_secret_key }}">{{ entry_secret_key }}</span></label>
             <div class="col-sm-10">
 			   <input type="text" name="feed_yandex_market_secret_key" value="{{ feed_yandex_market_secret_key }}" placeholder="{{ entry_secret_key }}" id="input-secret-key" class="form-control" />
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-shopname"><span data-toggle="tooltip" title="{{ help_shopname }}">{{ entry_shopname }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-shopname"><span data-bs-toggle="tooltip" title="{{ help_shopname }}">{{ entry_shopname }}</span></label>
             <div class="col-sm-10">
 			   <input type="text" name="feed_yandex_market_shopname" value="{{ feed_yandex_market_shopname }}" placeholder="{{ entry_shopname }}" id="input-shopname" class="form-control" />
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-company"><span data-toggle="tooltip" title="{{ help_company }}">{{ entry_company }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-company"><span data-bs-toggle="tooltip" title="{{ help_company }}">{{ entry_company }}</span></label>
             <div class="col-sm-10">
 			  <input type="text" name="feed_yandex_market_company" value="{{ feed_yandex_market_company }}" placeholder="{{ entry_company }}" id="input-company" class="form-control" />
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-id"><span data-toggle="tooltip" title="{{ help_id }}">{{ entry_id }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-id"><span data-bs-toggle="tooltip" title="{{ help_id }}">{{ entry_id }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_id" id="input-id" class="form-control">
                 {% if feed_yandex_market_id == 'model' %} 
@@ -78,7 +78,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-type"><span data-bs-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_type" id="input-type" class="form-control" disabled="disabled">
                 {% if feed_yandex_market_type == 'vendor.model' %} 
@@ -158,7 +158,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-name"><span data-toggle="tooltip" title="{{ help_name }}">{{ entry_name }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-name"><span data-bs-toggle="tooltip" title="{{ help_name }}">{{ entry_name }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_name" id="input-name" class="form-control">
 				{% for result in code_man %} 
@@ -170,7 +170,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-model"><span data-toggle="tooltip" title="{{ help_model }}">{{ entry_model }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-model"><span data-bs-toggle="tooltip" title="{{ help_model }}">{{ entry_model }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_model" id="input-model" class="form-control">
 				{% for result in code_man %} 
@@ -184,7 +184,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-vendorcode"><span data-toggle="tooltip" title="{{ help_vendorcode }}">{{ entry_vendorcode }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-vendorcode"><span data-bs-toggle="tooltip" title="{{ help_vendorcode }}">{{ entry_vendorcode }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_vendorcode" id="input-vendorcode" class="form-control">
 				{% for result in code_man %} 
@@ -198,7 +198,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="{{ help_image }}">{{ entry_image }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-image"><span data-bs-toggle="tooltip" title="{{ help_image }}">{{ entry_image }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_image" id="input-image" class="form-control">
                 {% if feed_yandex_market_image %} 
@@ -212,7 +212,7 @@
             </div>
           </div>
 		  <div class="form-group required">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_image_resize }}">{{ entry_image_resize }}</span></label>
+            <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_image_resize }}">{{ entry_image_resize }}</span></label>
             <div class="col-sm-10">
               <div class="row">
                 <div class="col-sm-6">
@@ -243,13 +243,13 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image-quantity"><span data-toggle="tooltip" title="{{ help_image_quantity }}">{{ entry_image_quantity }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-image-quantity"><span data-bs-toggle="tooltip" title="{{ help_image_quantity }}">{{ entry_image_quantity }}</span></label>
             <div class="col-sm-10">
 			   <input type="number" name="feed_yandex_market_image_quantity" value="{{ feed_yandex_market_image_quantity }}" placeholder="{{ entry_image_quantity }}" id="input-image-quantity" class="form-control" />
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-main-category"><span data-toggle="tooltip" title="{{ help_main_category }}">{{ entry_main_category }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-main-category"><span data-bs-toggle="tooltip" title="{{ help_main_category }}">{{ entry_main_category }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_main_category" id="input-main-category" class="form-control">
                 {% if feed_yandex_market_main_category %} 
@@ -263,7 +263,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
+            <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
 			<div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
                 {% for category in categories %} 
@@ -283,7 +283,7 @@
               <a style="cursor:default;" onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a style="cursor:default;" onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a></div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_manufacturer }}">{{ entry_manufacturer }}</span></label>
+            <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_manufacturer }}">{{ entry_manufacturer }}</span></label>
 			<div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
                 {% for manufacturer in manufacturers %} 
@@ -303,7 +303,7 @@
               <a style="cursor:default;" onclick="$(this).parent().find(':checkbox').prop('checked', true);">{{ text_select_all }}</a> / <a style="cursor:default;" onclick="$(this).parent().find(':checkbox').prop('checked', false);">{{ text_unselect_all }}</a></div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-currency"><span data-bs-toggle="tooltip" title="{{ help_currency }}">{{ entry_currency }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_currency" id="input-currency" class="form-control">
 				{% for currency in currencies %} 
@@ -317,7 +317,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-in-stock"><span data-toggle="tooltip" title="{{ help_in_stock }}">{{ entry_in_stock }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-in-stock"><span data-bs-toggle="tooltip" title="{{ help_in_stock }}">{{ entry_in_stock }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_in_stock" id="input-in-stock" class="form-control">
 				{% for stock_status in stock_statuses %} 
@@ -331,7 +331,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-out-of-stock"><span data-toggle="tooltip" title="{{ help_out_of_stock }}">{{ entry_out_of_stock }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-out-of-stock"><span data-bs-toggle="tooltip" title="{{ help_out_of_stock }}">{{ entry_out_of_stock }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_out_of_stock" id="input-out-of-stock" class="form-control">
 				{% for stock_status in stock_statuses %} 
@@ -345,7 +345,7 @@
             </div>
           </div>
 		  <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-quantity-status"><span data-toggle="tooltip" title="{{ help_quantity_status }}">{{ entry_quantity_status }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-quantity-status"><span data-bs-toggle="tooltip" title="{{ help_quantity_status }}">{{ entry_quantity_status }}</span></label>
             <div class="col-sm-10">
               <select name="feed_yandex_market_quantity_status" id="input-quantity-status" class="form-control">
                 {% if feed_yandex_market_quantity_status %} 
@@ -359,7 +359,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-data-feed">{{ entry_data_feed }}</label>
+            <label class="col-sm-2 col-form-label" for="input-data-feed">{{ entry_data_feed }}</label>
             <div class="col-sm-10">
               <textarea rows="5" readonly id="input-data-feed" class="form-control">{{ data_feed }}</textarea>
             </div>

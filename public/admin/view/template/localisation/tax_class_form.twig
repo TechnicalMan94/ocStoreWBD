@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-tax-class" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-tax-class" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,20 +14,20 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_form }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-tax-class">
           <fieldset>
             <legend>{{ text_tax_class }}</legend>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-title">{{ entry_title }}</label>
+              <label class="col-sm-2 col-form-label" for="input-title">{{ entry_title }}</label>
               <div class="col-sm-10">
                 <input type="text" name="title" value="{{ title }}" placeholder="{{ entry_title }}" id="input-title" class="form-control" />
                 {% if error_title %}
@@ -35,7 +35,7 @@
                 {% endif %} </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-description">{{ entry_description }}</label>
+              <label class="col-sm-2 col-form-label" for="input-description">{{ entry_description }}</label>
               <div class="col-sm-10">
                 <input type="text" name="description" value="{{ description }}" placeholder="{{ entry_description }}" id="input-description" class="form-control" />
                 {% if error_description %}
@@ -126,7 +126,7 @@
                   
                   </select></td>
                 <td class="text-left"><input type="text" name="tax_rule[{{ tax_rule_row }}][priority]" value="{{ tax_rule.priority }}" placeholder="{{ entry_priority }}" class="form-control" /></td>
-                <td class="text-left"><button type="button" onclick="$('#tax-rule-row{{ tax_rule_row }}').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="$('#tax-rule-row{{ tax_rule_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
               </tr>
               {% set tax_rule_row = tax_rule_row + 1 %}
               {% endfor %}
@@ -135,7 +135,7 @@
               <tfoot>
                 <tr>
                   <td colspan="3"></td>
-                  <td class="text-left"><button type="button" onclick="addRule();" data-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                  <td class="text-left"><button type="button" onclick="addRule();" data-bs-toggle="tooltip" title="{{ button_rule_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -160,7 +160,7 @@ function addRule() {
     html += '    <option value="store">{{ text_store }}</option>';
     html += '  </select></td>';
 	html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#tax-rule tbody').append(html);

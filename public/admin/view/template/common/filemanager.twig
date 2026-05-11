@@ -1,21 +1,21 @@
 <div id="filemanager" class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title">{{ heading_title }}</h4>
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-5"><a href="{{ parent }}" data-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="{{ refresh }}" data-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
-          <button type="button" data-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
-          <button type="button" data-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
-          <button type="button" data-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+        <div class="col-sm-5"><a href="{{ parent }}" data-bs-toggle="tooltip" title="{{ button_parent }}" id="button-parent" class="btn btn-light"><i class="bi bi-arrow-up"></i></a> <a href="{{ refresh }}" data-bs-toggle="tooltip" title="{{ button_refresh }}" id="button-refresh" class="btn btn-light"><i class="bi bi-arrow-clockwise"></i></a>
+          <button type="button" data-bs-toggle="tooltip" title="{{ button_upload }}" id="button-upload" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+          <button type="button" data-bs-toggle="tooltip" title="{{ button_folder }}" id="button-folder" class="btn btn-light"><i class="bi bi-folder"></i></button>
+          <button type="button" data-bs-toggle="tooltip" title="{{ button_delete }}" id="button-delete" class="btn btn-danger"><i class="bi bi-trash"></i></button>
         </div>
         <div class="col-sm-7">
           <div class="input-group">
             <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
             <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            <button type="button" data-bs-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="bi bi-search"></i></button>
             </span></div>
         </div>
       </div>
@@ -25,7 +25,7 @@
         {% for image in image %}
         <div class="col-sm-3 col-xs-6 text-center">
           {% if image.type == 'directory' %}
-          <div class="text-center"><a href="{{ image.href }}" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
+          <div class="text-center"><a href="{{ image.href }}" class="directory" style="vertical-align: middle;"><i class="bi bi-folder fs-1"></i></a></div>
           <label>
             <input type="checkbox" name="path[]" value="{{ image.path }}" />
             {{ image.name }}</label>
@@ -135,11 +135,11 @@ $('#button-upload').on('click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+					$('#button-upload i').replaceWith('<i class="bi bi-arrow-clockwise fa-spin"></i>');
 					$('#button-upload').prop('disabled', true);
 				},
 				complete: function() {
-					$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-upload i').replaceWith('<i class="bi bi-upload"></i>');
 					$('#button-upload').prop('disabled', false);
 				},
 				success: function(json) {
@@ -169,7 +169,7 @@ $('#button-folder').popover({
 	content: function() {
 		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+		html += '  <span class="input-group-btn"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></span>';
 		html += '</div>';
 
 		return html;

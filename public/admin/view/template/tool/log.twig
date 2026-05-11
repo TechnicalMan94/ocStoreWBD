@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="{{ download }}" data-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="fa fa-download"></i></a>
-        <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ clear }}' : false;" data-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
+      <div class="float-end">
+        <a href="{{ download }}" data-bs-toggle="tooltip" title="{{ button_download }}" class="btn btn-primary"><i class="bi bi-download"></i></a>
+        <a onclick="confirm('{{ text_confirm }}') ? location.href='{{ clear }}' : false;" data-bs-toggle="tooltip" title="{{ button_clear }}" class="btn btn-danger"><i class="bi bi-eraser"></i></a>
       </div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
@@ -16,20 +16,20 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> {{ text_list }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-exclamation-triangle"></i> {{ text_list }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <textarea wrap="off" rows="15" readonly class="form-control">{{ log }}</textarea>
       </div>
     </div>

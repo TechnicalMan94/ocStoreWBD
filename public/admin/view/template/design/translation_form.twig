@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-translation" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-translation" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,18 +15,18 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_form }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-translation" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>
+            <label class="col-sm-2 col-form-label" for="input-store">{{ entry_store }}</label>
             <div class="col-sm-10">
               <select name="store_id" id="input-store" class="form-control">
                 <option value="0">{{ text_default }}</option>
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>
+            <label class="col-sm-2 col-form-label" for="input-language">{{ entry_language }}</label>
             <div class="col-sm-10">
               <select name="language_id" id="input-language" class="form-control">
                 {% for language in languages %}
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-route">{{ entry_route }}</label>
+            <label class="col-sm-2 col-form-label" for="input-route">{{ entry_route }}</label>
             <div class="col-sm-10">
               <select name="route" id="input-route" class="form-control">
                 {% if route %}
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-key">{{ entry_key }}</label>
+            <label class="col-sm-2 col-form-label" for="input-key">{{ entry_key }}</label>
             <div class="col-sm-10">
               <select name="key" id="input-key" class="form-control">
                 {% if key %}
@@ -79,13 +79,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-default">{{ entry_default }}</label>
+            <label class="col-sm-2 col-form-label" for="input-default">{{ entry_default }}</label>
             <div class="col-sm-10">
               <textarea name="default" placeholder="{{ entry_default }}" rows="5" id="input-default" class="form-control" disabled="disabled">{% if default %}{{ default }}{% endif %}</textarea>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-value">{{ entry_value }}</label>
+            <label class="col-sm-2 col-form-label" for="input-value">{{ entry_value }}</label>
             <div class="col-sm-10">
               <textarea name="value" rows="5" placeholder="{{ entry_value }}" id="input-value" class="form-control">{{ value }}</textarea>
             </div>

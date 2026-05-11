@@ -21,26 +21,26 @@
                         <td class="text-left">
                             {% for status in issue.destination_statuses %}
                                 {% if status.approvalPending %}
-                                    {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="label label-warning">{{ text_label_pending }}</span><br />
+                                    {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="badge text-bg-warning">{{ text_label_pending }}</span><br />
                                 {% else %}
                                     {% if status.approvalStatus == 'approved' %}
-                                        {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="label label-success">{{ text_label_approved }}</span><br />
+                                        {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="badge text-bg-success">{{ text_label_approved }}</span><br />
                                     {% elseif status.approvalStatus == 'disapproved' %}
-                                        {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="label label-danger">{{ text_label_disapproved }}</span><br />
+                                        {{ status.destination }}{{ status.destination ? ': ' : '' }}<span class="badge text-bg-danger">{{ text_label_disapproved }}</span><br />
                                     {% endif %}
                                 {% endif %}
                             {% else %}
-                                <span class="label label-warning">{{ text_label_pending }}</span>
+                                <span class="badge text-bg-warning">{{ text_label_pending }}</span>
                             {% endfor %}
                         </td>
                         <td class="text-left">
                             {% for quality_issue in issue.data_quality_issues %}
                                 {% if quality_issue.severity == 'critical' %}
-                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="label label-danger">{{ text_label_critical }}</span>
+                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="badge text-bg-danger">{{ text_label_critical }}</span>
                                 {% elseif quality_issue.severity == 'error' %}
-                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="label label-danger">{{ text_label_error }}</span>
+                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="badge text-bg-danger">{{ text_label_error }}</span>
                                 {% elseif quality_issue.severity == 'suggestion' %}
-                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="label label-info">{{ text_label_suggestion }}</span>
+                                    {{ quality_issue.destination }}{{ quality_issue.destination ? ': ' : '' }}<span class="badge text-bg-info">{{ text_label_suggestion }}</span>
                                 {% endif %}
                                 {{ quality_issue.detail }}
                                 {% if not loop.last %}
@@ -52,7 +52,7 @@
                         </td>
                         <td class="text-left">
                             {% for item_issue in issue.item_level_issues %}
-                                <strong>{{ item_issue.servability }}</strong> {{ item_issue.detail }} <a href="{{ item_issue.documentation }}" target="_blank">{{ text_learn_more }} <i class="fa fa-external-link"></i></a>
+                                <strong>{{ item_issue.servability }}</strong> {{ item_issue.detail }} <a href="{{ item_issue.documentation }}" target="_blank">{{ text_learn_more }} <i class="bi bi-box-arrow-up-right"></i></a>
                                 {% if not loop.last %}
                                     <hr />
                                 {% endif %}

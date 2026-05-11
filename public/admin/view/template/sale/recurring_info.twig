@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end"><a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -14,11 +14,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_recurring_detail }}</h3>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_recurring_detail }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <table class="table table-bordered">
               <tr>
                 <td>{{ text_order_recurring_id }}</td>
@@ -53,11 +53,11 @@
         </div>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_order_detail }}</h3>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_order_detail }}</h3>
           </div>
-          <div class="panel-body">
+          <div class="card-body">
             <table class="table table-bordered">
               <tr>
                 <td>{{ text_order_id }}</td>
@@ -88,11 +88,11 @@
         </div>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_product_detail }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_product_detail }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -109,11 +109,11 @@
         </table>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_transaction }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-list-ul"></i> {{ text_transaction }}</h3>
       </div>
-      <div class="panel-body"> {{ buttons }}
+      <div class="card-body"> {{ buttons }}
         <table class="table table-bordered">
           <thead>
             <tr>

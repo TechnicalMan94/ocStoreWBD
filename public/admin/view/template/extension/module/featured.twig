@@ -2,9 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <div class="float-end">
+        <button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-arrow-left"></i></a></div>
       <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
@@ -15,18 +15,18 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
     </div>
     {% endif %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_edit }}</h3>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
             <div class="col-sm-10">
               <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
               {% if error_name %}
@@ -35,12 +35,12 @@
             </div>
           </div>          
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
+            <label class="col-sm-2 col-form-label" for="input-product"><span data-bs-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
               <div id="featured-product" class="well well-sm" style="height: 150px; overflow: auto;">
                 {% for product in products %}
-                <div id="featured-product{{ product.product_id }}"><i class="fa fa-minus-circle"></i> {{ product.name }}
+                <div id="featured-product{{ product.product_id }}"><i class="bi bi-dash-circle"></i> {{ product.name }}
                   <input type="hidden" name="product[]" value="{{ product.product_id }}" />
                 </div>
                 {% endfor %}
@@ -48,13 +48,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-limit">{{ entry_limit }}</label>
+            <label class="col-sm-2 col-form-label" for="input-limit">{{ entry_limit }}</label>
             <div class="col-sm-10">
               <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-width">{{ entry_width }}</label>
+            <label class="col-sm-2 col-form-label" for="input-width">{{ entry_width }}</label>
             <div class="col-sm-10">
               <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
               {% if error_width %}
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-height">{{ entry_height }}</label>
+            <label class="col-sm-2 col-form-label" for="input-height">{{ entry_height }}</label>
             <div class="col-sm-10">
               <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
               {% if error_height %}
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">
                 {% if status %}
@@ -91,7 +91,7 @@
   </div>
   <script>
 // Reorderable drag-and-drop lists
-$('#featured-product div input').before(' <i class="fa fa-hand-grab-o handle"></i> ');
+$('#featured-product div input').before(' <i class="bi bi-grip-vertical handle"></i> ');
 $('#featured-product').sortable({
   handle: '.handle',
   chosenClass: 'handle-active',
@@ -116,11 +116,11 @@ $('input[name=\'product_name\']').autocomplete({
 		
 		$('#featured-product' + item['value']).remove();
 		
-		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
+		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="bi bi-dash-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
 	}
 });
 	
-$('#featured-product').delegate('.fa-minus-circle', 'click', function() {
+$('#featured-product').delegate('.bi-dash-circle', 'click', function() {
 	$(this).parent().remove();
 });
 </script></div>
