@@ -43,5 +43,5 @@ Allow: *.ttf
 Allow: *.woff
 Allow: *.woff2
 
-# При включенном SeoPro, раскомментировать строку Sitemap и подставить Ваш адрес сайта
+# Раскомментировать строку Sitemap и подставить Ваш адрес сайта
 # Sitemap: https://site.com/sitemap.xml

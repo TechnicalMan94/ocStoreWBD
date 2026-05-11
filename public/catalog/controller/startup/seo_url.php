@@ -1,34 +1,18 @@
 <?php
-// *	@source		See SOURCE.txt for source and other copyright.
-// *	@license	GNU General Public License version 3; see LICENSE.txt
-
 class ControllerStartupSeoUrl extends Controller {
-	
-	//seopro start
-		private $seo_pro;
-		public function __construct($registry) {
-			parent::__construct($registry);	
-			$this->seo_pro = new SeoPro($registry);
-		}
-	//seopro end
-	
 	public function index() {
-
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
 
-	
 		// Decode URL
+		if (!isset($this->request->get['_route_'])) {
+			$this->request->get['_route_'] = $this->getRoute();
+		}
+
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
-			
-		//seopro prepare route
-		if($this->config->get('config_seo_pro')){		
-			$parts = $this->seo_pro->prepareRoute($parts);
-		}
-		//seopro prepare route end
 
 			// remove any empty arrays from trailing
 			if (utf8_strlen(end($parts)) == 0) {
@@ -65,9 +49,7 @@ class ControllerStartupSeoUrl extends Controller {
 						$this->request->get['route'] = $query->row['query'];
 					}
 				} else {
-					if(!$this->config->get('config_seo_pro')){		
-						$this->request->get['route'] = 'error/not_found';
-					}
+					$this->request->get['route'] = 'error/not_found';
 
 					break;
 				}
@@ -85,37 +67,16 @@ class ControllerStartupSeoUrl extends Controller {
 				}
 			}
 		}
-		
-		//seopro validate
-		if($this->config->get('config_seo_pro')){		
-			$this->seo_pro->validate();
-		}
-	//seopro validate
-		
 	}
 
 	public function rewrite($link) {
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 
-		if($this->config->get('config_seo_pro')){		
-		$url = null;
-			} else {
 		$url = '';
-		}
 
 		$data = array();
 
 		parse_str($url_info['query'], $data);
-		
-		//seo_pro baseRewrite
-		if($this->config->get('config_seo_pro')){		
-			list($url, $data, $postfix) =  $this->seo_pro->baseRewrite($data, (int)$this->config->get('config_language_id'));	
-		}
-		
-		
-
-		
-		//seo_pro baseRewrite
 
 		foreach ($data as $key => $value) {
 			if (isset($data['route'])) {
@@ -147,7 +108,6 @@ class ControllerStartupSeoUrl extends Controller {
 			}
 		}
 
-		//seo_pro add blank url
 		unset($data['route']);
 
 		$query = '';
@@ -161,25 +121,41 @@ class ControllerStartupSeoUrl extends Controller {
 				$query = '?' . str_replace('&', '&amp;', trim($query, '&'));
 			}
 		}
-		
-		if($this->config->get('config_seo_pro')) {		
-			$condition = ($url !== null);
-		} else {
-			$condition = $url;
-		}
 
-		if ($condition) {
-			if($this->config->get('config_seo_pro')){		
-				if($this->config->get('config_page_postfix') && $postfix) {
-					$url .= $this->config->get('config_page_postfix');
-				} elseif($this->config->get('config_seopro_addslash') || !empty( $query)) {
-					$url .= '/';
-				} 
-			}
-
+		if ($url) {
 			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
 		} else {
 			return $link;
 		}
+	}
+
+	private function getRoute() {
+		if (isset($this->request->get['_route_'])) {
+			return $this->request->get['_route_'];
+		}
+
+		$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+
+		// Strip query string
+		if (($pos = strpos($request_uri, '?')) !== false) {
+			$request_uri = substr($request_uri, 0, $pos);
+		}
+
+		// Strip script name (e.g. /index.php)
+		$script_name = $_SERVER['SCRIPT_NAME'] ?? '';
+		$base = rtrim(dirname($script_name), '/');
+		if ($base !== '/' && $base !== '') {
+			if (strpos($request_uri, $base) === 0) {
+				$request_uri = substr($request_uri, strlen($base));
+			}
+		}
+
+		$path = trim($request_uri, '/');
+
+		if ($path === '' || $path === 'index.php') {
+			return '';
+		}
+
+		return $path;
 	}
 }

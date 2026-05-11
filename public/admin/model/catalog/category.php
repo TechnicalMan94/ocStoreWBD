@@ -126,10 +126,6 @@ class ModelCatalogCategory extends Model {
 		}
 
 		$this->cache->delete('category');
-		
-		if($this->config->get('config_seo_pro')){		
-			$this->cache->delete('seopro');
-		}
 	}
 	public function addCategory($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET ".(!empty($data['category_id']) ? "category_id = '".(int)$data['category_id']."', " : "")."parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', date_modified = NOW(), date_added = NOW()");
@@ -151,10 +147,6 @@ class ModelCatalogCategory extends Model {
         $this->db->query("UPDATE " . DB_PREFIX . "category SET status = '" . (int)$status . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
         
 		$this->cache->delete('category');
-		
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
 		
     }
 
@@ -179,10 +171,6 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE category_id = '" . (int)$category_id . "'");
 
 		$this->cache->delete('category');
-		
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
 	}
 
 	public function repairCategories($parent_id = 0) {

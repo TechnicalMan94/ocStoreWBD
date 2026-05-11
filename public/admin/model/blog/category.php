@@ -41,10 +41,7 @@ class ModelBlogCategory extends Model {
 			}
 		}
 		$this->cache->delete('blog_category');
-		
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
+
 		return $blog_category_id;
 	}
 	public function editCategory($blog_category_id, $data) {
@@ -117,10 +114,6 @@ class ModelBlogCategory extends Model {
 			}
 		}
 		$this->cache->delete('category');
-		
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
 	}
 	
 	public function editCategoryStatus($blog_category_id, $status) {
@@ -141,10 +134,6 @@ class ModelBlogCategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "article_to_blog_category WHERE blog_category_id = '" . (int)$blog_category_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "seo_url WHERE query = 'blog_category_id=" . (int)$blog_category_id . "'");
 		$this->cache->delete('blog_category');
-		
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
 	}
 	public function repairCategories($parent_id = 0) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "blog_category WHERE parent_id = '" . (int)$parent_id . "'");

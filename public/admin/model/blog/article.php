@@ -80,9 +80,6 @@ class ModelBlogArticle extends Model {
 			}
 		}
 		
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
 
 		$this->cache->delete('article');
 
@@ -186,9 +183,6 @@ class ModelBlogArticle extends Model {
 		
 		$this->cache->delete('article');
 
-		if($this->config->get('config_seo_pro')){		
-		$this->cache->delete('seopro');
-		}
 
 	}
 	
