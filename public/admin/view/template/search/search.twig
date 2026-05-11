@@ -1,6 +1,6 @@
 <form id="oc-search" class="navbar-form" role="search">
   <div class="input-group">
-    <div class="input-group-btn">
+    
       <a class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#">
         <i class="bi bi-search"></i>
         <i class="bi bi-caret-down-fill"></i>
@@ -11,7 +11,7 @@
         <li><a onclick="setOption('customers', '{{ text_customers_placeholder }}'); return false;"><i class="bi bi-people"></i><span>{{ text_customers }}</span></a></li>
         <li><a onclick="setOption('orders', '{{ text_orders_placeholder }}'); return false;"><i class="bi bi-credit-card"></i><span>{{ text_orders }}</span></a></li>
       </ul>
-    </div>
+    
     <input id="oc-search-input" type="text" class="form-control" placeholder="{{ text_search_placeholder }}" name="query" autocomplete="off" />
     <input id="oc-search-option" type="hidden" name="search-option" value="catalog" />
     <div id="loader-search"><img src="view/image/loader-search.gif" alt="" /></div>

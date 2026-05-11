@@ -2,7 +2,11 @@
 <div class="container">
   <ul class="breadcrumb">
     {% for breadcrumb in breadcrumbs %}
+    {% if breadcrumb.href %}
     <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% else %}
+    <li>{{ breadcrumb.text }}</li>
+    {% endif %}
     {% endfor %}
   </ul>
   <div class="row">{{ column_left }}

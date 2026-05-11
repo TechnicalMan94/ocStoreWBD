@@ -1504,7 +1504,6 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (45, 5, 0, 'product/manufacturer'),
 (52, 12, 0, 'product/compare'),
 (53, 13, 0, 'product/search'),
-(57, 14, 0, 'blog/latest'),
 (58, 15, 0, 'blog/category'),
 (56, 16, 0, 'blog/article'),
 (64, 15, 0, 'service/category'),

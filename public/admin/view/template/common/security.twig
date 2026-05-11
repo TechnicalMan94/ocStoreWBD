@@ -21,7 +21,7 @@
             <h6>{{ text_automatic }}</h6>
             <div class="form-group">
               <div class="input-group">
-                <div class="input-group-btn dropdown">
+                
                   <button type="button" id="button-path" data-bs-toggle="dropdown" class="btn btn-light">{{ document_root }} <i class="bi bi-caret-down-fill"></i></button>
                   <ul class="dropdown-menu">
                     {% for path in paths %}
@@ -32,11 +32,11 @@
                     {% endif %}
                     {% endfor %}
                   </ul>
-                </div>
+                
                 <input type="text" name="directory" value="storage" placeholder="{{ entry_directory }}" class="form-control" />
-                <div class="input-group-btn">
+                
                   <button type="button" id="button-move" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="bi bi-exclamation-triangle"></i> {{ button_move }}</button>
-                </div>
+                
               </div>
               <input type="hidden" name="path" value="{{ document_root }}" />
             </div>

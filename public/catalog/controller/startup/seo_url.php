@@ -45,7 +45,31 @@ class ControllerStartupSeoUrl extends Controller {
 						$this->request->get['information_id'] = $url[1];
 					}
 
-					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id') {
+					if ($url[0] == 'service_category_id') {
+						if (!isset($this->request->get['service_category_id'])) {
+							$this->request->get['service_category_id'] = $url[1];
+						} else {
+							$this->request->get['service_category_id'] .= '_' . $url[1];
+						}
+					}
+
+					if ($url[0] == 'service_id') {
+						$this->request->get['service_id'] = $url[1];
+					}
+
+					if ($url[0] == 'blog_category_id') {
+						if (!isset($this->request->get['blog_category_id'])) {
+							$this->request->get['blog_category_id'] = $url[1];
+						} else {
+							$this->request->get['blog_category_id'] .= '_' . $url[1];
+						}
+					}
+
+					if ($url[0] == 'article_id') {
+						$this->request->get['article_id'] = $url[1];
+					}
+
+					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id' && $url[0] != 'service_category_id' && $url[0] != 'service_id' && $url[0] != 'blog_category_id' && $url[0] != 'article_id') {
 						$this->request->get['route'] = $query->row['query'];
 					}
 				} else {
@@ -64,6 +88,14 @@ class ControllerStartupSeoUrl extends Controller {
 					$this->request->get['route'] = 'product/manufacturer/info';
 				} elseif (isset($this->request->get['information_id'])) {
 					$this->request->get['route'] = 'information/information';
+				} elseif (isset($this->request->get['service_id'])) {
+					$this->request->get['route'] = 'service/service';
+				} elseif (isset($this->request->get['service_category_id'])) {
+					$this->request->get['route'] = 'service/category';
+				} elseif (isset($this->request->get['article_id'])) {
+					$this->request->get['route'] = 'blog/article';
+				} elseif (isset($this->request->get['blog_category_id'])) {
+					$this->request->get['route'] = 'blog/category';
 				} elseif ($this->request->get['_route_'] === '') {
 					$this->request->get['route'] = 'common/home';
 				}
@@ -102,6 +134,32 @@ class ControllerStartupSeoUrl extends Controller {
 				if ($canonical_path) {
 					$data['path'] = $canonical_path;
 				}
+			} elseif ($data['route'] == 'service/service' && isset($data['service_id'])) {
+				$canonical_path = $this->getServicePath($data['service_id']);
+
+				if ($canonical_path) {
+					$data['service_category_id'] = $canonical_path;
+					$data = $this->moveKeyAfterRoute($data, 'service_category_id');
+				}
+			} elseif ($data['route'] == 'service/category' && isset($data['service_category_id'])) {
+				$canonical_path = $this->getServiceCategoryPath($this->getLastPathId($data['service_category_id']));
+
+				if ($canonical_path) {
+					$data['service_category_id'] = $canonical_path;
+				}
+			} elseif ($data['route'] == 'blog/article' && isset($data['article_id'])) {
+				$canonical_path = $this->getArticlePath($data['article_id']);
+
+				if ($canonical_path) {
+					$data['blog_category_id'] = $canonical_path;
+					$data = $this->moveKeyAfterRoute($data, 'blog_category_id');
+				}
+			} elseif ($data['route'] == 'blog/category' && isset($data['blog_category_id'])) {
+				$canonical_path = $this->getBlogCategoryPath($this->getLastPathId($data['blog_category_id']));
+
+				if ($canonical_path) {
+					$data['blog_category_id'] = $canonical_path;
+				}
 			}
 		}
 
@@ -123,7 +181,23 @@ class ControllerStartupSeoUrl extends Controller {
 					}
 				}
 
-				if (isset($data['route']) && (($data['route'] == 'product/product' && $key == 'product_id') || ($data['route'] == 'product/manufacturer/info' && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id'))) {
+				if (isset($data['route']) && $data['route'] == 'service/service' && $key == 'service_id') {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'service_id=" . (int)$value . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+					if ($query->num_rows && $query->row['keyword']) {
+						$url .= '/' . $query->row['keyword'];
+						$seo = true;
+						unset($data[$key]);
+					}
+				} elseif (isset($data['route']) && $data['route'] == 'blog/article' && $key == 'article_id') {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'article_id=" . (int)$value . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+					if ($query->num_rows && $query->row['keyword']) {
+						$url .= '/' . $query->row['keyword'];
+						$seo = true;
+						unset($data[$key]);
+					}
+				} elseif (isset($data['route']) && (($data['route'] == 'product/product' && $key == 'product_id') || ($data['route'] == 'product/manufacturer/info' && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id'))) {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					if ($query->num_rows && $query->row['keyword']) {
@@ -145,6 +219,40 @@ class ControllerStartupSeoUrl extends Controller {
 							$url = '';
 							$seo = false;
 
+							break;
+						}
+					}
+
+					unset($data[$key]);
+				} elseif ($key == 'service_category_id') {
+					$categories = explode('_', $value);
+
+					foreach ($categories as $category) {
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'service_category_id=" . (int)$category . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+						if ($query->num_rows && $query->row['keyword']) {
+							$url .= '/' . $query->row['keyword'];
+							$seo = true;
+						} else {
+							$url = '';
+							$seo = false;
+							break;
+						}
+					}
+
+					unset($data[$key]);
+				} elseif ($key == 'blog_category_id') {
+					$categories = explode('_', $value);
+
+					foreach ($categories as $category) {
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'blog_category_id=" . (int)$category . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+						if ($query->num_rows && $query->row['keyword']) {
+							$url .= '/' . $query->row['keyword'];
+							$seo = true;
+						} else {
+							$url = '';
+							$seo = false;
 							break;
 						}
 					}
@@ -238,6 +346,42 @@ class ControllerStartupSeoUrl extends Controller {
 
 	private function getCategoryPath($category_id) {
 		$query = $this->db->query("SELECT GROUP_CONCAT(cp.path_id ORDER BY cp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c ON (cp.path_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (cp.path_id = c2s.category_id) WHERE cp.category_id = '" . (int)$category_id . "' AND c.status = '1' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		return $query->row['path'] ?? '';
+	}
+
+	private function getServicePath($service_id) {
+		$service_id = (int)$service_id;
+
+		$query = $this->db->query("SELECT s2sc.service_category_id FROM " . DB_PREFIX . "service_to_service_category s2sc LEFT JOIN " . DB_PREFIX . "service_category sc ON (s2sc.service_category_id = sc.service_category_id) LEFT JOIN " . DB_PREFIX . "service_category_to_store sc2s ON (s2sc.service_category_id = sc2s.service_category_id) WHERE s2sc.service_id = '" . $service_id . "' AND sc.status = '1' AND sc2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY s2sc.main_service_category DESC, sc.sort_order ASC LIMIT 1");
+
+		if ($query->num_rows) {
+			return $this->getServiceCategoryPath($query->row['service_category_id']);
+		}
+
+		return '';
+	}
+
+	private function getServiceCategoryPath($service_category_id) {
+		$query = $this->db->query("SELECT GROUP_CONCAT(scp.path_id ORDER BY scp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "service_category_path scp LEFT JOIN " . DB_PREFIX . "service_category sc ON (scp.path_id = sc.service_category_id) LEFT JOIN " . DB_PREFIX . "service_category_to_store sc2s ON (scp.path_id = sc2s.service_category_id) WHERE scp.service_category_id = '" . (int)$service_category_id . "' AND sc.status = '1' AND sc2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		return $query->row['path'] ?? '';
+	}
+
+	private function getArticlePath($article_id) {
+		$article_id = (int)$article_id;
+
+		$query = $this->db->query("SELECT a2bc.blog_category_id FROM " . DB_PREFIX . "article_to_blog_category a2bc LEFT JOIN " . DB_PREFIX . "blog_category bc ON (a2bc.blog_category_id = bc.blog_category_id) LEFT JOIN " . DB_PREFIX . "blog_category_to_store bc2s ON (a2bc.blog_category_id = bc2s.blog_category_id) WHERE a2bc.article_id = '" . $article_id . "' AND bc.status = '1' AND bc2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY a2bc.main_blog_category DESC LIMIT 1");
+
+		if ($query->num_rows) {
+			return $this->getBlogCategoryPath($query->row['blog_category_id']);
+		}
+
+		return '';
+	}
+
+	private function getBlogCategoryPath($blog_category_id) {
+		$query = $this->db->query("SELECT GROUP_CONCAT(bcp.path_id ORDER BY bcp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "blog_category_path bcp LEFT JOIN " . DB_PREFIX . "blog_category bc ON (bcp.path_id = bc.blog_category_id) LEFT JOIN " . DB_PREFIX . "blog_category_to_store bc2s ON (bcp.path_id = bc2s.blog_category_id) WHERE bcp.blog_category_id = '" . (int)$blog_category_id . "' AND bc.status = '1' AND bc2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		return $query->row['path'] ?? '';
 	}

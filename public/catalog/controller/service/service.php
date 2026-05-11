@@ -15,20 +15,7 @@ class ControllerServiceService extends Controller {
 			'href'      => $this->url->link('common/home'),			
 			'separator' => false
 		);
-		
-		$configblog_name = $this->config->get('configservice_name');
-		
-		if (!empty($configblog_name)) {
-			$name = $this->config->get('configservice_name');
-		} else {
-			$name = $this->language->get('text_blog');
-		}
-		
-		$data['breadcrumbs'][] = array(
-			'text' => $name,
-			'href' => $this->url->link('service/category')
-		);
-		
+
 		$this->load->model('service/category');	
 		
 		

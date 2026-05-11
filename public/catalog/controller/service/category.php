@@ -61,19 +61,6 @@ class ControllerServiceCategory extends Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
-		
-		$configblog_name = $this->config->get('configservice_name');
-		
-		if (!empty($configblog_name)) {
-			$name = $this->config->get('configservice_name');
-		} else {
-			$name = $this->language->get('text_blog');
-		}
-		
-		$data['breadcrumbs'][] = array(
-			'text' => $name,
-			'href' => $this->url->link('service/category')
-		);
 
 		if (isset($this->request->get['service_category_id'])) {
 			$url = '';

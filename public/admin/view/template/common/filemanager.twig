@@ -14,9 +14,9 @@
         <div class="col-sm-7">
           <div class="input-group">
             <input type="text" name="search" value="{{ filter_name }}" placeholder="{{ entry_search }}" class="form-control">
-            <span class="input-group-btn">
+            
             <button type="button" data-bs-toggle="tooltip" title="{{ button_search }}" id="button-search" class="btn btn-primary"><i class="bi bi-search"></i></button>
-            </span></div>
+            </div>
         </div>
       </div>
       <hr />
@@ -169,7 +169,7 @@ $('#button-folder').popover({
 	content: function() {
 		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></span>';
+		html += '  <button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button>';
 		html += '</div>';
 
 		return html;

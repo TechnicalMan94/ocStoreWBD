@@ -15,10 +15,6 @@ class ControllerBlogMenu extends Controller {
 			$data['text_blog'] = $this->language->get('text_blog');
 		}
 
-		$data['text_all'] = $this->language->get('text_all');
-
-		$data['blog'] = $this->url->link('blog/latest');
-
 		// Menu
 		$this->load->model('blog/category');
 
@@ -51,7 +47,7 @@ class ControllerBlogMenu extends Controller {
 				$filter_data = array(
 						'filter_blog_category_id'  => $category['blog_category_id']
 					);
-				
+
 				$data['categories'][] = array(
 					'name'     => $category['name'] . ($this->config->get('configblog_article_count') ? ' (' . $this->model_blog_article->getTotalArticles($filter_data) . ')' : ''),
 					'children' => $children_data,
@@ -60,7 +56,11 @@ class ControllerBlogMenu extends Controller {
 				);
 			}
 		}
-		
+
+		if (!$data['categories']) {
+			return '';
+		}
+
 		return $this->load->view('blog/menu', $data);
 	}
 }
