@@ -172,6 +172,43 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
+			// Services
+			$service = array();
+
+			if ($this->user->hasPermission('access', 'service/service')) {
+				$service[] = array(
+					'name'	   => $this->language->get('text_service_service'),
+					'href'     => $this->url->link('service/service', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'service/category')) {
+				$service[] = array(
+					'name'	   => $this->language->get('text_service_category'),
+					'href'     => $this->url->link('service/category', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'service/field')) {
+				$service[] = array(
+					'name'	   => $this->language->get('text_service_field'),
+					'href'     => $this->url->link('service/field', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}
+
+			if ($service) {
+				$data['menus'][] = array(
+					'id'       => 'menu-service',
+					'icon'	   => 'fa-briefcase',
+					'name'	   => $this->language->get('text_service'),
+					'href'     => '',
+					'children' => $service
+				);
+			}
+
 			// Extension
 			$marketplace = array();
 			
