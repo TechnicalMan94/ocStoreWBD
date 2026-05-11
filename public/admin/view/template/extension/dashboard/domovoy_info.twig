@@ -58,27 +58,6 @@
                                 </label>
                             {% endif %}</div> {{ entry_theme_cache }}
                     </td>
-                    <td>
-                        <button type="button" value="sass" data-toggle="tooltip" title="{{ button_refresh }}"
-                                class="btn btn-warning"><i class="fa fa-refresh"></i></button>
-                        <div class="btn-group" data-toggle="buttons">{% if developer_sass %}
-                                <label class="btn btn-success active">
-                                    <input type="radio" name="developer_sass" value="1" autocomplete="off" checked>
-                                    {{ button_on }}</label>
-                            {% else %}
-                                <label class="btn btn-success">
-                                    <input type="radio" name="developer_sass" value="1" autocomplete="off">
-                                    {{ button_on }}</label>
-                            {% endif %}
-                            {% if not developer_sass %}
-                                <label class="btn btn-danger active">
-                                    <input type="radio" name="developer_sass" value="0" autocomplete="off" checked>
-                                    {{ button_off }}</label>
-                            {% else %}
-                                <label class="btn btn-danger">
-                                    <input type="radio" name="developer_sass" value="0" autocomplete="off">
-                                    {{ button_off }}</label>
-                            {% endif %}</div> {{ entry_sass }}</td>
                     <td class="text-right">{{ entry_modification_cache }} <a id="odmod-refresh" data-toggle="tooltip"
                                                                              title="{{ button_refresh }}"
                                                                              class="btn btn-warning"><i
@@ -266,17 +245,17 @@
     });
     </script>
 <script>
-    $('#domovoy input[name=\'developer_theme\'], input[name=\'developer_sass\']').on('change', function () {
+    $('#domovoy input[name=\'developer_theme\']').on('change', function () {
         $.ajax({
             url: 'index.php?route=common/developer/edit&user_token={{ user_token }}',
             type: 'post',
-            data: $('input[name=\'developer_theme\']:checked, input[name=\'developer_sass\']:checked'),
+            data: $('input[name=\'developer_theme\']:checked'),
             dataType: 'json',
             beforeSend: function () {
-                $('input[name=\'developer_theme\'], input[name=\'developer_sass\']').prop('disabled', true);
+                $('input[name=\'developer_theme\']').prop('disabled', true);
             },
             complete: function () {
-                $('input[name=\'developer_theme\'], input[name=\'developer_sass\']').prop('disabled', false);
+                $('input[name=\'developer_theme\']').prop('disabled', false);
             },
             success: function (json) {
                 $('.alert-dismissible').remove();

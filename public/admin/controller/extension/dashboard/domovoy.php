@@ -160,7 +160,6 @@ class ControllerExtensionDashboardDomovoy extends Controller
         $data['user_token'] = $this->session->data['user_token'];
 
         $data['developer_theme'] = $this->config->get('developer_theme');
-        $data['developer_sass'] = $this->config->get('developer_sass');
 
         $eval = false;
 

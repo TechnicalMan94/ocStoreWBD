@@ -6,7 +6,6 @@ class ControllerCommonDeveloper extends Controller {
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['developer_theme'] = $this->config->get('developer_theme');
-		$data['developer_sass'] = $this->config->get('developer_sass');
 
 		$eval = false;
 
@@ -77,10 +76,6 @@ class ControllerCommonDeveloper extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function sass() {
-		// Устаревшая функция удалена
 	}
 
 	public function systemcache() {
