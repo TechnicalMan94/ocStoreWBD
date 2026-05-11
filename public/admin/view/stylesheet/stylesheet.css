@@ -263,8 +263,7 @@ a:hover, a:focus {
 
 #menu li a.parent:after {
     font-family: "bootstrap-icons";
-    float: right;
-    margin-right: 8px;
+    margin-left: auto;
 }
 
 #menu li a.parent:after {
@@ -286,6 +285,8 @@ a:hover, a:focus {
     color: #b3cbdd;
     padding-left: 20px;
     border-bottom: 0px solid #585858;
+    display: flex;
+    align-items: center;
 }
 
 #menu > li > a:hover {
@@ -337,6 +338,8 @@ a:hover, a:focus {
 
 #menu li ul a {
     padding-left: 20px;
+    display: flex;
+    align-items: center;
 }
 
 #menu li li ul a {

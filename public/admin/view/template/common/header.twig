@@ -32,7 +32,7 @@
 </head>
 <body>
 <div id="container">
-<header id="header" class="navbar navbar-expand-lg align-items-center">
+<header id="header" class="navbar navbar-expand-lg align-items-center z-3">
   <div class="container-fluid align-items-center">
     <div id="header-logo" class="navbar-header"><a href="{{ home }}" class="navbar-brand"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}" /></a></div>
     {% if logged %}<a href="#" id="button-menu" class="d-md-none"><span class="bi bi-list"></span></a>
@@ -52,7 +52,7 @@
       {{ search }}
     </div>
     <ul class="nav navbar-nav ms-auto">
-      <li class="dropdown"><a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="rounded-circle" />{{ firstname }} {{ lastname }} <i class="bi bi-caret-down-fill"></i></a>
+      <li class="dropdown"><a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><img src="{{ image }}" alt="{{ firstname }} {{ lastname }}" title="{{ username }}" id="user-profile" class="rounded-circle" />{{ firstname }} {{ lastname }}</a>
         <ul class="dropdown-menu dropdown-menu-right">
           <li><a href="{{ profile }}"><i class="bi bi-person-circle"></i> {{ text_profile }}</a></li>
           <li role="separator" class="divider"></li>
