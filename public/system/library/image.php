@@ -124,7 +124,7 @@ class Image
 				imagewebp($this->image, $file);
 			}
 
-			imagedestroy($this->image);
+			$this->destroy($this->image);
 		}
 	}
 
@@ -187,7 +187,7 @@ class Image
 		imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
 
 		imagecopyresampled($this->image, $image_old, $xpos, $ypos, 0, 0, $new_width, $new_height, $this->width, $this->height);
-		imagedestroy($image_old);
+		$this->destroy($image_old);
 
 		$this->width = $width;
 		$this->height = $height;
@@ -242,7 +242,7 @@ class Image
 		imagesavealpha($this->image, true);
 		imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());
 
-		imagedestroy($watermark->getImage());
+		$this->destroy($watermark->getImage());
 	}
 
 	/**
@@ -297,7 +297,7 @@ class Image
 			$this->height
 		);
 
-		imagedestroy($image_old);
+		$this->destroy($image_old);
 
 		$this->width = $width;
 		$this->height = $height;
@@ -347,6 +347,16 @@ class Image
 	private function merge($merge, $x = 0, $y = 0, $opacity = 100)
 	{
 		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
+	}
+
+	/**
+	 * @param	mixed	$image
+	 */
+	private function destroy($image)
+	{
+		if (PHP_VERSION_ID < 80000 && is_resource($image)) {
+			imagedestroy($image);
+		}
 	}
 
 	/**

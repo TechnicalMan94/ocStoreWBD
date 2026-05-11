@@ -51,7 +51,10 @@ class ControllerExtensionCaptchaBasic extends Controller {
 
 		imagejpeg($image);
 
-		imagedestroy($image);
+		if (PHP_VERSION_ID < 80000 && is_resource($image)) {
+			imagedestroy($image);
+		}
+
 		exit();
 	}
 }
