@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-6">
     <fieldset id="account">
-      <legend>{{ text_your_details }}</legend>
+      <h6>{{ text_your_details }}</h6>
       <div class="form-group" style="display: {% if customer_groups|length > 1 %} block {% else %} none {% endif %};">
         <label class="control-label">{{ entry_customer_group }}</label>
         {% for customer_group in customer_groups %}
@@ -150,7 +150,7 @@
       {% endfor %}
     </fieldset>
     <fieldset>
-      <legend>{{ text_your_password }}</legend>
+      <h6>{{ text_your_password }}</h6>
       <div class="form-group required">
         <label class="control-label" for="input-payment-password">{{ entry_password }}</label>
         <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-payment-password" class="form-control" />
@@ -163,7 +163,7 @@
   </div>
   <div class="col-sm-6">
     <fieldset id="address">
-      <legend>{{ text_your_address }}</legend>
+      <h6>{{ text_your_address }}</h6>
       <div class="form-group">
         <label class="control-label" for="input-payment-company">{{ entry_company }}</label>
         <input type="text" name="company" value="" placeholder="{{ entry_company }}" id="input-payment-company" class="form-control" />

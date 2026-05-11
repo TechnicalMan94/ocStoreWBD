@@ -14,13 +14,13 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     <div class="card">
@@ -348,7 +348,7 @@
             </div>
             <div class="tab-pane" id="tab-option">
               <fieldset>
-                <legend>{{ text_product }}</legend>
+                <h6>{{ text_product }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_product_count }}">{{ entry_product_count }}</span></label>
                   <div class="col-sm-10">
@@ -386,7 +386,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_review }}</legend>
+                <h6>{{ text_review }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_review }}">{{ entry_review }}</span></label>
                   <div class="col-sm-10">
@@ -427,7 +427,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_voucher }}</legend>
+                <h6>{{ text_voucher }}</h6>
                 <div class="form-group required">
                   <label class="col-sm-2 col-form-label" for="input-voucher-min"><span data-bs-toggle="tooltip" title="{{ help_voucher_min }}">{{ entry_voucher_min }}</span></label>
                   <div class="col-sm-10">
@@ -446,7 +446,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_tax }}</legend>
+                <h6>{{ text_tax }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label">{{ entry_tax }}</label>
                   <div class="col-sm-10">
@@ -524,7 +524,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_account }}</legend>
+                <h6>{{ text_account }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_customer_online }}">{{ entry_customer_online }}</span></label>
                   <div class="col-sm-10">
@@ -669,7 +669,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_checkout }}</legend>
+                <h6>{{ text_checkout }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-invoice-prefix"><span data-bs-toggle="tooltip" title="{{ help_invoice_prefix }}">{{ entry_invoice_prefix }}</span></label>
                   <div class="col-sm-10">
@@ -834,7 +834,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_stock }}</legend>
+                <h6>{{ text_stock }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_stock_display }}">{{ entry_stock_display }}</span></label>
                   <div class="col-sm-10">
@@ -894,7 +894,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_affiliate }}</legend>
+                <h6>{{ text_affiliate }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-affiliate-group">{{ entry_affiliate_group }}</label>
                   <div class="col-sm-10">
@@ -982,7 +982,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_return }}</legend>
+                <h6>{{ text_return }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-return"><span data-bs-toggle="tooltip" title="{{ help_return }}">{{ entry_return }}</span></label>
                   <div class="col-sm-10">
@@ -1026,7 +1026,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_captcha }}</legend>
+                <h6>{{ text_captcha }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_captcha }}">{{ entry_captcha }}</span></label>
                   <div class="col-sm-10">
@@ -1080,7 +1080,7 @@
                 </div>
               </div>
               <fieldset>
-                <legend>{{ text_product }}</legend>
+                <h6>{{ text_product }}</h6>
                 <div class="form-group required">
                   <label class="col-sm-2 col-form-label" for="input-catalog-limit"><span data-bs-toggle="tooltip" title="{{ help_product_limit }}">{{ entry_product_limit }}</span></label>
                   <div class="col-sm-10">
@@ -1101,7 +1101,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ entry_image }}</legend>
+                <h6>{{ entry_image }}</h6>
                 {% set image_sizes = [
                   {'key': 'category', 'label': entry_image_category},
                   {'key': 'manufacturer', 'label': entry_image_manufacturer},
@@ -1138,7 +1138,7 @@
             </div>
             <div class="tab-pane" id="tab-mail">
               <fieldset>
-                <legend>{{ text_general }}</legend>
+                <h6>{{ text_general }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-mail-engine"><span data-bs-toggle="tooltip" title="{{ help_mail_engine }}">{{ entry_mail_engine }}</span></label>
                   <div class="col-sm-10">
@@ -1204,7 +1204,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_mail_alert }}</legend>
+                <h6>{{ text_mail_alert }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_mail_alert }}">{{ entry_mail_alert }}</span></label>
                   <div class="col-sm-10">
@@ -1231,7 +1231,7 @@
             </div>
             <div class="tab-pane" id="tab-server">
               <fieldset>
-                <legend>{{ text_general }}</legend>
+                <h6>{{ text_general }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_maintenance }}">{{ entry_maintenance }}</span></label>
                   <div class="col-sm-10">
@@ -1284,7 +1284,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_security }}</legend>
+                <h6>{{ text_security }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label"><span data-bs-toggle="tooltip" title="{{ help_secure }}">{{ entry_secure }}</span></label>
                   <div class="col-sm-10">
@@ -1352,7 +1352,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_upload }}</legend>
+                <h6>{{ text_upload }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-file-max-size"><span data-bs-toggle="tooltip" title="{{ help_file_max_size }}">{{ entry_file_max_size }}</span></label>
                   <div class="col-sm-10">
@@ -1373,7 +1373,7 @@
                 </div>
               </fieldset>
               <fieldset>
-                <legend>{{ text_error }}</legend>
+                <h6>{{ text_error }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label">{{ entry_error_display }}</label>
                   <div class="col-sm-10">

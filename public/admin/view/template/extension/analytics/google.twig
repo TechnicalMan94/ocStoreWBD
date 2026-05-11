@@ -15,8 +15,8 @@
   </div>
   <div class="container-fluid">
     {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     <div class="card">
@@ -25,8 +25,8 @@
       </div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-analytics" class="form-horizontal">
-          <div class="alert alert-info"><i class="bi bi-info-circle"></i> {{ text_signup }}
-            <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+          <div role="alert" class="alert alert-info"><i class="bi bi-info-circle"></i> {{ text_signup }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
           <div class="form-group">
             <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>

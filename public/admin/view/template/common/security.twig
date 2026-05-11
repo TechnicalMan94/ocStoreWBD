@@ -6,10 +6,10 @@
         <h4 class="modal-title text-danger"><i class="bi bi-exclamation-triangle"></i> {{ heading_title }}</h4>
       </div>
       <div class="modal-body">
-        <div class="alert alert-info"><i class="bi bi-exclamation-circle"></i> {{text_security }}</div>
+        <div role="alert" class="alert alert-info"><i class="bi bi-exclamation-circle"></i> {{text_security }}</div>
         <form class="form-horizontal">
           <fieldset>
-            <legend>{{ text_choose }}</legend>
+            <h6>{{ text_choose }}</h6>
             <div class="form-group">
               <select name="type" id="input-type" class="form-control">
                 <option value="automatic">{{ text_automatic }}</option>
@@ -18,7 +18,7 @@
             </div>
           </fieldset>
           <fieldset id="collapse-automatic" class="collapse">
-            <legend>{{ text_automatic }}</legend>
+            <h6>{{ text_automatic }}</h6>
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-btn dropdown">
@@ -42,7 +42,7 @@
             </div>
           </fieldset>
           <fieldset id="collapse-manual" class="collapse">
-            <legend>{{ text_manual }}</legend>
+            <h6>{{ text_manual }}</h6>
             <div class="form-group">
               <div style="height: 300px; overflow-y: scroll;" class="form-control" disabled="disabled"></div>
             </div>
@@ -103,11 +103,11 @@ $('#button-move').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#modal-security .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#modal-security .modal-body').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 
 			if (json['success']) {
-				$('#modal-security .modal-body').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#modal-security .modal-body').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

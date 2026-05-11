@@ -1,9 +1,9 @@
 {% if error %}
-<div class="alert alert-danger alert-dismissible">{{ error }}</div>
+<div role="alert" class="alert alert-danger alert-dismissible">{{ error }}</div>
 {% endif %}
 {% if success %}
-<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
-  <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 {% endif %}
 <table class="table table-bordered">

@@ -12,13 +12,13 @@
     </div>
   </div>
   <div class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     {% if success %}
-    <div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> {{ success }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     <div class="row">
@@ -150,13 +150,13 @@ $('#customer-approval').on('click', '.btn-success, .btn-danger', function(e) {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#customer-approval').before('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#customer-approval').before('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 
 			if (json['success']) {
 				$('#customer-approval').load('index.php?route=customer/customer_approval/customer_approval&user_token={{ user_token }}');
 
-				$('#customer-approval').before('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#customer-approval').before('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

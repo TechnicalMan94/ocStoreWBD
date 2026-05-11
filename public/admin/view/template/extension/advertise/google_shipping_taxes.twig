@@ -20,13 +20,13 @@
             {{ steps }}
         {% endif %}
         {% if success %}
-            <div class="alert alert-success alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
             </div>
         {% endif %}
         {% if error %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
             </div>
@@ -47,7 +47,7 @@
             <div class="card-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
                     <fieldset>
-                        <legend>{{ text_shipping_transit_times }}</legend>
+                        <h6>{{ text_shipping_transit_times }}</h6>
                         <div class="form-group required">
                             <label for="input-min-transit-time" class="col-sm-3 col-form-label">{{ entry_min_transit_time }}</label>
                             <div class="col-sm-9">
@@ -68,7 +68,7 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>{{ text_shipping_services }}</legend>
+                        <h6>{{ text_shipping_services }}</h6>
                         <div class="form-group">
                             <div class="col-sm-3">
                                 <label>
@@ -112,7 +112,7 @@
                                 {% endif %}
                                 {% for carrier in available_carriers %}
                                     <fieldset class="margin-top-10">
-                                        <legend>{{ carrier.name }} ({{ carrier.country }})</legend>
+                                        <h6>{{ carrier.name }} ({{ carrier.country }})</h6>
                                         {% for service in carrier.services %}
                                             <label class="label-block">
                                                 <input type="checkbox" name="advertise_google_shipping_taxes[carrier][{{ carrier.code }}][{{ service.code }}]" value="1" {{ advertise_google_shipping_taxes.carrier[carrier.code][service.code] == '1' ? 'checked' }} /> {{ service.name }}
@@ -132,7 +132,7 @@
                         </div>
                     </fieldset>
                     <fieldset class="margin-top-10">
-                        <legend>{{ text_taxes }}</legend>
+                        <h6>{{ text_taxes }}</h6>
                         <div class="form-group">
                             <div class="col-sm-3">
                                 <label>
@@ -149,7 +149,7 @@
                                     </select>
                                 </div>
                                 <fieldset class="margin-top-10">
-                                    <legend>{{ text_active_states }}</legend>
+                                    <h6>{{ text_active_states }}</h6>
                                     {% for id, state in states %}
                                         <label class="label-block">
                                             <input type="checkbox" name="advertise_google_shipping_taxes[tax][]" value="{{ id }}" {{ id in advertise_google_shipping_taxes.tax ? 'checked' }} /> {{ state }}

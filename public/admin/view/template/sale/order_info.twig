@@ -219,7 +219,7 @@
             <div id="history"></div>
             <br/>
             <fieldset>
-              <legend>{{ text_history_add }}</legend>
+              <h6>{{ text_history_add }}</h6>
               <form class="form-horizontal">
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-order-status">{{ entry_order_status }}</label>
@@ -390,7 +390,7 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
 			  }
 
 			  if (json['invoice_no']) {
@@ -420,11 +420,11 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
 			  }
 
 			  if (json['success']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
 
 				  $('#button-reward-add').replaceWith('<button id="button-reward-remove" data-bs-toggle="tooltip" title="{{ button_reward_remove }}" class="btn btn-danger btn-xs"><i class="bi bi-dash-circle"></i></button>');
 			  }
@@ -450,11 +450,11 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
 			  }
 
 			  if (json['success']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
 
 				  $('#button-reward-remove').replaceWith('<button id="button-reward-add" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="bi bi-plus-circle"></i></button>');
 			  }
@@ -480,11 +480,11 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
 			  }
 
 			  if (json['success']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
 
 				  $('#button-commission-add').replaceWith('<button id="button-commission-remove" data-bs-toggle="tooltip" title="{{ button_commission_remove }}" class="btn btn-danger btn-xs"><i class="bi bi-dash-circle"></i></button>');
 			  }
@@ -510,11 +510,11 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + '</div>');
 			  }
 
 			  if (json['success']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + '</div>');
 
 				  $('#button-commission-remove').replaceWith('<button id="button-commission-add" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="bi bi-plus-circle"></i></button>');
 			  }
@@ -537,10 +537,10 @@
 		  $('.alert').remove();
 		  if (json['error']) {
 			  if (json['error']['key']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="bi bi-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger"><i class="bi bi-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			  }
 			  if (json['error']['ip']) {
-				  $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="bi bi-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="{{ text_loading }}" class="btn btn-danger btn-xs float-end"><i class="bi bi-plus-lg"></i>{{ button_ip_add }}</button></div>');
+				  $('#content > .container-fluid').prepend('<div role="alert" class="alert alert-danger"><i class="bi bi-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="{{ text_loading }}" class="btn btn-danger btn-xs float-end"><i class="bi bi-plus-lg"></i>{{ button_ip_add }}</button></div>');
 			  }
 		  }
 		  if (json['token']) {
@@ -576,13 +576,13 @@
 			  $('.alert-dismissible').remove();
 
 			  if (json['error']) {
-				  $('#history').before('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				  $('#history').before('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			  }
 
 			  if (json['success']) {
 				  $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
-				  $('#history').before('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				  $('#history').before('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 				  $('textarea[name=\'comment\']').val('');
 			  }

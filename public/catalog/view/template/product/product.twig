@@ -281,7 +281,7 @@
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
             {% if minimum > 1 %}
-            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
+            <div role="alert" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
             {% endif %}</div>
           {% if review_status %}
           <div class="rating">
@@ -410,7 +410,7 @@ $('#button-cart').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.breadcrumb').after('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div role="alert" class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$('#cart > button').html('<span id="cart-total"><i class="fa fa-shopping-cart"></i> ' + json['total'] + '</span>');
 
@@ -523,11 +523,11 @@ $('#button-review').on('click', function() {
 			$('.alert-dismissible').remove();
 
 			if (json['error']) {
-				$('#review').after('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#review').after('<div role="alert" class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 
 			if (json['success']) {
-				$('#review').after('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#review').after('<div role="alert" class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');

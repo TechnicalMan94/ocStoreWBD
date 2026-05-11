@@ -21,19 +21,19 @@
         {% endif %}
         <div id="alerts">
             {% if success %}
-                <div class="alert alert-success alert-dismissible" role="alert">
+                <div role="alert" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                     <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
                 </div>
             {% endif %}
             {% if error %}
-                <div class="alert alert-danger alert-dismissible" role="alert">
+                <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                     <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
                 </div>
             {% endif %}
             {% if warning %}
-                <div class="alert alert-warning alert-dismissible" role="alert">
+                <div role="alert" class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><i class="bi bi-x-lg"></i></button>
                     <i class="bi bi-info-circle"></i>&nbsp;{{ warning }}
                 </div>
@@ -111,7 +111,7 @@
                                                 </table>
                                             </div>
                                         {% else %}
-                                            <div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> {{ text_no_targets }}</div>
+                                            <div role="alert" class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> {{ text_no_targets }}</div>
                                         {% endif %}
                                     </div>
                                     <div>
@@ -134,7 +134,7 @@
                             </div-->
                             <hr />
                             {% if not from_dashboard %}
-                            <div class="alert alert-info text-left">
+                            <div role="alert" class="alert alert-info text-left">
                                 <div class="checkbox">
                                     <label><input type="checkbox" class="acknowledge" /> {{ text_acknowledge_add_campaign_1 }}</label>
                                 </div>
@@ -263,7 +263,7 @@
                     <div class="form-group" data-error-type="error_roas">
                         <label for="input-roas" class="col-sm-3 col-form-label">{{ entry_roas }}</label>
                         <div class="col-sm-9">
-                            <div class="alert alert-info"><i class="bi bi-info-circle"></i> {{ help_roas }}</div>
+                            <div role="alert" class="alert alert-info"><i class="bi bi-info-circle"></i> {{ help_roas }}</div>
                             <div id="warning-roas" class="alert alert-warning" style="display: none;"><i class="bi bi-exclamation-triangle"></i> {roas_warning}</div>
                             <div class="input-group">
                                 <input type="number" class="form-control" id="input-roas" name="roas" value="{roas}" min="0" />
@@ -274,7 +274,7 @@
                     <div class="form-group required" data-error-type="error_budget">
                         <label for="input-budget" class="col-sm-3 col-form-label">{{ entry_budget }}</label>
                         <div class="col-sm-9">
-                            <div class="alert alert-info"><i class="bi bi-info-circle"></i> {{ help_budget }}</div>
+                            <div role="alert" class="alert alert-info"><i class="bi bi-info-circle"></i> {{ help_budget }}</div>
                             <div id="warning-budget" class="alert alert-warning" style="display: none;"><i class="bi bi-exclamation-triangle"></i> {{ warning_budget }}</div>
                             <div class="input-group">
                                 <div class="input-group-text"><i class="bi bi-currency-dollar"></i></div>
@@ -286,7 +286,7 @@
                     <div class="form-group required" data-error-type="error_feed">
                         <label class="col-sm-3 col-form-label">{{ entry_feed }}</label>
                         <div class="col-sm-9">
-                            <div class="alert alert-info"><i class="bi bi-info-circle"></i> {{ help_feed }}</div>
+                            <div role="alert" class="alert alert-info"><i class="bi bi-info-circle"></i> {{ help_feed }}</div>
                             <div id="feeds">{feeds}</div>
                             <div>
                                 <button id="button-feed-add" class="btn btn-success"><i class="bi bi-plus-lg"></i> {{ button_add_feed }}</button>
@@ -322,7 +322,7 @@
     </div>
 </script>
 <script type="text/template" id="template-alert">
-    <div class="alert alert-{type} alert-dismissible" role="alert">
+    <div role="alert" class="alert alert-{type} alert-dismissible" role="alert">
         <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
         <i class="bi bi-{icon}" aria-hidden="true"></i>&nbsp;{message}
     </div>
@@ -472,7 +472,7 @@
             type: 'GET',
             dataType: 'json',
             beforeSend: function() {
-                $(selector.target.container).html('<div class="alert alert-info text-center">{{ text_loading }}</div>');
+                $(selector.target.container).html('<div role="alert" class="alert alert-info text-center">{{ text_loading }}</div>');
             },
             complete: callback,
             error: function(jqXHR, textStatus, errorThrown) {
@@ -499,7 +499,7 @@
                             }));
                         });
                     } else {
-                        $(selector.target.container).html('<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> {{ text_no_targets }}</div>');
+                        $(selector.target.container).html('<div role="alert" class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> {{ text_no_targets }}</div>');
                     }
                 }
             }
@@ -632,7 +632,7 @@
         if (confirm("{{ text_confirm }}")) {
             var target_id = $(this).attr('data-target-id');
 
-            $(selector.target.container).html('<div class="alert alert-info text-center">{{ text_loading_please_wait }}</div>');
+            $(selector.target.container).html('<div role="alert" class="alert alert-info text-center">{{ text_loading_please_wait }}</div>');
 
             campaignCreateTestPromise.then(function() {
                 $.ajax({

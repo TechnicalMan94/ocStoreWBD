@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if error_warning %}
-  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  <div role="alert" class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
@@ -21,7 +21,7 @@
       <p>{{ text_email }}</p>
       <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
-          <legend>{{ text_your_email }}</legend>
+          <h6>{{ text_your_email }}</h6>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email">{{ entry_email }}</label>
             <div class="col-sm-10">

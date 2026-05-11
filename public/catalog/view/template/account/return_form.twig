@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if error_warning %}
-  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  <div role="alert" class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   {% endif %}
   <div class="row"> {{ column_left }}
     {% if column_left and column_right %}
@@ -21,7 +21,7 @@
       <p>{{ text_description }}</p>
       <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
-          <legend>{{ text_order }}</legend>
+          <h6>{{ text_order }}</h6>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname">{{ entry_firstname }}</label>
             <div class="col-sm-10">
@@ -74,7 +74,7 @@
           </div>
         </fieldset>
         <fieldset>
-          <legend>{{ text_product }}</legend>
+          <h6>{{ text_product }}</h6>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-product">{{ entry_product }}</label>
             <div class="col-sm-10">

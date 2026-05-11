@@ -38,7 +38,7 @@
 
 <!-- The ads -->
 <div class="col-lg-9 order-lg-1 col-md-12">
-    <div class="alert alert-info">
+    <div role="alert" class="alert alert-info">
         {{ text_ads_intro }}
     </div>
     <hr />
@@ -156,19 +156,19 @@
     }
 </style>
 <script id="template-success" type="text/template">
-    <div class="alert alert-success alert-dismissible" role="alert">
+    <div role="alert" class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
         <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{message}
     </div>
 </script>
 <script id="template-error" type="text/template">
-    <div class="alert alert-danger alert-dismissible" role="alert">
+    <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
         <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{message}
     </div>
 </script>
 <script id="template-warning" type="text/template">
-    <div class="alert alert-warning alert-dismissible" role="alert">
+    <div role="alert" class="alert alert-warning alert-dismissible" role="alert">
         <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
         <i class="bi bi-info-circle" aria-hidden="true"></i>&nbsp;{message}
     </div>
@@ -341,9 +341,9 @@
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 if ($(selector.ad_wrap).height() == 0) {
-                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">{{ error_adblock }}</div></td></tr>');
+                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div role="alert" class="alert alert-danger">{{ error_adblock }}</div></td></tr>');
                 } else {
-                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">' + textStatus + ': ' + errorThrown + '</div></td></tr>');
+                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div role="alert" class="alert alert-danger">' + textStatus + ': ' + errorThrown + '</div></td></tr>');
                 }
             },
             success: function(data) {
@@ -353,7 +353,7 @@
                     $(selector.pagination).empty();
                     $(selector.showing).empty();
 
-                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div class="alert alert-danger">' + data.error + '</div></td></tr>');
+                    $(selector.list).html('<tr><td colspan="' + $(selector.head).find('th').length + '"><div role="alert" class="alert alert-danger">' + data.error + '</div></td></tr>');
                 } else {
                     if (data.products.length) {
                         $(data.products).each(function(index, product) {
@@ -474,10 +474,10 @@
         var deselection_text = '{{ text_selection_all }}'.replace(/{total}/, total_items);
 
         if (selected_all_pages) {
-            $(selector.selection_container).html('<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ' + deselection_text + '</div>');
+            $(selector.selection_container).html('<div role="alert" class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ' + deselection_text + '</div>');
         } else {
             if (selected > 0 && total_pages > 1) {
-                $(selector.selection_container).html('<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ' + selection_text + '</div>');
+                $(selector.selection_container).html('<div role="alert" class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> ' + selection_text + '</div>');
             } else {
                 $(selector.selection_container).empty();
             }

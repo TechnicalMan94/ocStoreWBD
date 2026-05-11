@@ -21,7 +21,7 @@
     </div>
     <div class="container-fluid">
         {% if success %}
-            <div class="alert alert-success alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><i class="bi bi-x-lg"></i></button>
                 <i class="bi bi-check-circle"></i>&nbsp;{{ success }}
             </div>
@@ -30,14 +30,14 @@
             <i class="bi bi-exclamation-triangle"></i>&nbsp;{{ error_adblock }}
         </div>
         {% if error %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><i class="bi bi-x-lg"></i></button>
                 <i class="bi bi-exclamation-triangle"></i>&nbsp;{{ error }}
             </div>
         {% endif %}
         <div id="warning-container">
             {% if warning %}
-                <div class="alert alert-warning alert-dismissible" role="alert">
+                <div role="alert" class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><i class="bi bi-x-lg"></i></button>
                     <i class="bi bi-info-circle"></i>&nbsp;{{ warning }}
                 </div>

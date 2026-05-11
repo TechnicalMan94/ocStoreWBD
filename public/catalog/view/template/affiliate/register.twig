@@ -6,7 +6,7 @@
     {% endfor %}
   </ul>
   {% if error_warning %}
-  <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+  <div role="alert" class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
   {% endif %}
   <div class="row">{{ column_left }}
     {% if column_left and column_right %}
@@ -22,7 +22,7 @@
       <p>{{ text_signup }}</p>
       <form action="{{ action }}" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset id="account">
-          <legend>{{ text_your_details }}</legend>
+          <h6>{{ text_your_details }}</h6>
           <div class="form-group required" style="display: {% if customer_groups|length > 1 %} block {% else %} none {% endif %};">
             <label class="col-sm-2 control-label">{{ entry_customer_group }}</label>
             <div class="col-sm-10">{% for customer_group in customer_groups %}
@@ -246,7 +246,7 @@
           {% endfor %}
         </fieldset>
         <fieldset id="affiliate">
-          <legend>{{ text_your_affiliate }}</legend>
+          <h6>{{ text_your_affiliate }}</h6>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-company">{{ entry_company }}</label>
             <div class="col-sm-10">
@@ -524,7 +524,7 @@
             {% endfor %} </div>
         </fieldset>
         <fieldset>
-          <legend>{{ text_your_password }}</legend>
+          <h6>{{ text_your_password }}</h6>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-password">{{ entry_password }}</label>
             <div class="col-sm-10">

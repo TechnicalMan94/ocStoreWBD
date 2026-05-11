@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     <div class="card">
@@ -25,7 +25,7 @@
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-custom-field" class="form-horizontal">
                       <fieldset>
-              <legend>{{ text_custom_field }}</legend>
+              <h6>{{ text_custom_field }}</h6>
           
           <div class="form-group required">
             <label class="col-sm-2 col-form-label">{{ entry_name }}</label>
@@ -360,7 +360,7 @@
           <br />
           <div id="custom-field-value">
             <fieldset>
-              <legend>{{ text_value }}</legend>
+              <h6>{{ text_value }}</h6>
               <table class="table table-striped table-bordered table-hover">
                 <thead>
                   <tr>

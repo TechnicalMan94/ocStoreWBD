@@ -18,13 +18,13 @@
     <div class="container-fluid">
         {{ steps }}
         {% if success %}
-            <div class="alert alert-success alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <i class="bi bi-check-circle" aria-hidden="true"></i>&nbsp;{{ success }}
             </div>
         {% endif %}
         {% if error %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
             </div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
 
-                    <div class="alert alert-info text-left">
+                    <div role="alert" class="alert alert-info text-left">
                         {{ text_merchant_website_claim }}
                         <hr />
                         <div class="checkbox">

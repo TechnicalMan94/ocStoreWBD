@@ -9,13 +9,13 @@
     }
 </style>
 <form id="form-popup-product">
-    <div class="alert alert-info">
+    <div role="alert" class="alert alert-info">
         {{ text_info_popup_product }}
     </div>
 
     <div class="form-horizontal">
         {% if error %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
             </div>
@@ -172,7 +172,7 @@
         </div>
 
         {% if error %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
+            <div role="alert" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="{{ text_close }}"><span aria-hidden="true"><i class="bi bi-x-lg"></i></span></button>
                 <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>&nbsp;{{ error }}
             </div>

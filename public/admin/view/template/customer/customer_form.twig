@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="container-fluid"> {% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     <div class="card">
@@ -52,7 +52,7 @@
                   <div class="tab-content">
                     <div class="tab-pane active" id="tab-customer">
                       <fieldset>
-                        <legend>{{ text_account }}</legend>
+                        <h6>{{ text_account }}</h6>
                         <div class="form-group">
                           <label class="col-sm-2 col-form-label" for="input-customer-group">{{ entry_customer_group }}</label>
                           <div class="col-sm-10">
@@ -237,7 +237,7 @@
                         {% endfor %}
                       </fieldset>
                       <fieldset>
-                        <legend>{{ text_password }}</legend>
+                        <h6>{{ text_password }}</h6>
                         <div class="form-group required">
                           <label class="col-sm-2 col-form-label" for="input-password">{{ entry_password }}</label>
                           <div class="col-sm-10">
@@ -256,7 +256,7 @@
                         </div>
                       </fieldset>
                       <fieldset>
-                        <legend>{{ text_other }}</legend>
+                        <h6>{{ text_other }}</h6>
                         <div class="form-group">
                           <label class="col-sm-2 col-form-label" for="input-newsletter">{{ entry_newsletter }}</label>
                           <div class="col-sm-10">
@@ -538,7 +538,7 @@
             </div>
             <div class="tab-pane" id="tab-affiliate">
               <fieldset>
-                <legend>{{ text_affiliate }}</legend>
+                <h6>{{ text_affiliate }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-company">{{ entry_company }}</label>
                   <div class="col-sm-10">
@@ -704,7 +704,7 @@
                 {% endfor %}
               </fieldset>
               <fieldset>
-                <legend>{{ text_payment }}</legend>
+                <h6>{{ text_payment }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-tax">{{ entry_tax }}</label>
                   <div class="col-sm-10">
@@ -815,12 +815,12 @@
             {% if customer_id %}
             <div class="tab-pane" id="tab-history">
               <fieldset>
-                <legend>{{ text_history }}</legend>
+                <h6>{{ text_history }}</h6>
                 <div id="history"></div>
               </fieldset>
               <br />
               <fieldset>
-                <legend>{{ text_history_add }}</legend>
+                <h6>{{ text_history_add }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-comment">{{ entry_comment }}</label>
                   <div class="col-sm-10">
@@ -834,12 +834,12 @@
             </div>
             <div class="tab-pane" id="tab-transaction">
               <fieldset>
-                <legend>{{ text_transaction }}</legend>
+                <h6>{{ text_transaction }}</h6>
                 <div id="transaction"></div>
               </fieldset>
               <br />
               <fieldset>
-                <legend>{{ text_transaction_add }}</legend>
+                <h6>{{ text_transaction_add }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-transaction-description">{{ entry_description }}</label>
                   <div class="col-sm-10">
@@ -859,12 +859,12 @@
             </div>
             <div class="tab-pane" id="tab-reward">
               <fieldset>
-                <legend>{{ text_reward }}</legend>
+                <h6>{{ text_reward }}</h6>
                 <div id="reward"></div>
               </fieldset>
               <br />
               <fieldset>
-                <legend>{{ text_reward_add }}</legend>
+                <h6>{{ text_reward_add }}</h6>
                 <div class="form-group">
                   <label class="col-sm-2 col-form-label" for="input-reward-description">{{ entry_description }}</label>
                   <div class="col-sm-10">
@@ -885,7 +885,7 @@
             {% endif %}
             <div class="tab-pane" id="tab-ip">
               <fieldset>
-                <legend>{{ text_ip }}</legend>
+                <h6>{{ text_ip }}</h6>
                 <div id="ip"></div>
               </fieldset>
             </div>
@@ -1219,11 +1219,11 @@
         $('.alert-dismissible').remove();
 
         if (json['error']) {
-           $('#tab-history').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+           $('#tab-history').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
 
         if (json['success']) {
-          $('#tab-history').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+          $('#tab-history').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
           $('#history').load('index.php?route=customer/customer/history&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -1263,11 +1263,11 @@
         $('.alert-dismissible').remove();
 
         if (json['error']) {
-           $('#tab-transaction').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+           $('#tab-transaction').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
 
         if (json['success']) {
-          $('#tab-transaction').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+          $('#tab-transaction').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
           $('#transaction').load('index.php?route=customer/customer/transaction&user_token={{ user_token }}&customer_id={{ customer_id }}');
 
@@ -1308,11 +1308,11 @@
         $('.alert-dismissible').remove();
 
         if (json['error']) {
-           $('#tab-reward').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+           $('#tab-reward').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
 
         if (json['success']) {
-          $('#tab-reward').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+          $('#tab-reward').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
           $('#reward').load('index.php?route=customer/customer/reward&user_token={{ user_token }}&customer_id={{ customer_id }}');
 

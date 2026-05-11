@@ -16,8 +16,8 @@
     </div>
   </div>
   <div id="marketplace-extension-info" class="container-fluid">{% if error_warning %}
-    <div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
-      <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
     {% endif %}
     <div class="card">
@@ -43,7 +43,7 @@
               <div id="tab-documentation" class="tab-pane">{{ documentation }}</div>
               <div id="tab-download" class="tab-pane">
                 <fieldset>
-                  <legend>{{ text_progress }}</legend>
+                  <h6>{{ text_progress }}</h6>
                   <div id="progress">
                     <div class="progress">
                       <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
@@ -53,7 +53,7 @@
                   <hr />
                 </fieldset>
                 <fieldset>
-                  <legend>{{ text_available }}</legend>
+                  <h6>{{ text_available }}</h6>
                   <table class="table table-bordered">
                     <thead>
                     <th>{{ text_name }}</th>
@@ -88,7 +88,7 @@
               </div>
               <div id="tab-comment" class="tab-pane">
                 <fieldset>
-                  <legend>{{ text_comment_add }}</legend>
+                  <h6>{{ text_comment_add }}</h6>
                   <div class="form-group">
                     <textarea name="comment" rows="5" placeholder="{{ text_write }}" id="input-comment" class="form-control"></textarea>
                   </div>
@@ -98,7 +98,7 @@
                 </fieldset>
                 <br />
                 <fieldset>
-                  <legend>{{ text_comment }}</legend>
+                  <h6>{{ text_comment }}</h6>
                   <div id="comment"></div>
                 </fieldset>
               </div>
@@ -232,11 +232,11 @@ $('body').on('click', '#modal-purchase #button-purchase', function(e) {
 			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#modal-purchase .modal-body').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#modal-purchase .modal-body').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 				$('#modal-purchase').modal('hide');
 				
@@ -273,7 +273,7 @@ $('#tab-download').on('click', '.btn-primary', function(e) {
 			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#tab-download').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button</div>');
+				$('#tab-download').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button</div>');
 			}
 
 			if (json['redirect']) {
@@ -397,11 +397,11 @@ $('#button-comment').on('click', function() {
 			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$('#tab-comment').prepend('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#tab-comment').prepend('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 			
 			if (json['success']) {
-				$('#tab-comment').prepend('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$('#tab-comment').prepend('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 				$('#comment').load('index.php?route=marketplace/marketplace/comment&user_token={{ user_token }}&extension_id={{ extension_id }}');
 			
@@ -468,11 +468,11 @@ $('#comment').on('click', '.btn-primary', function(e) {
 			$('.alert-dismissible').remove();
 			
 			if (json['error']) {
-				$(element).parents('.reply-input-box').before('<div class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$(element).parents('.reply-input-box').before('<div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 			}
 			
 			if (json['success']) {
-				$(element).parents('.reply-input-box').before('<div class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-bs-dismiss="alert">&times;</button></div>');
+				$(element).parents('.reply-input-box').before('<div role="alert" class="alert alert-success alert-dismissible"><i class="bi bi-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
 				$(element).parents('.reply-input-box').parents('.media').find('.reply-refresh').last().trigger('click');
 			
