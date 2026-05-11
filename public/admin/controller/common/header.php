@@ -82,6 +82,8 @@ class ControllerCommonHeader extends Controller {
 					'href' => $result['url']
 				);
 			}
+
+			$data['language'] = $this->load->controller('common/language');
 		}
 
 		$data['search'] = $this->load->controller('search/search');

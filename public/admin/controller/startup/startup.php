@@ -24,12 +24,45 @@ class ControllerStartupStartup extends Controller {
 		$this->config->set('template_cache', $this->config->get('developer_theme'));
 				
 		// Language
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE code = '" . $this->db->escape($this->config->get('config_admin_language')) . "'");
-		
-		if ($query->num_rows) {
-			$this->config->set('config_language_id', $query->row['language_id']);
+		$code = '';
+
+		$this->load->model('localisation/language');
+
+		$languages = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->session->data['admin_language'])) {
+			$code = $this->session->data['admin_language'];
 		}
-		
+
+		if (isset($this->request->cookie['admin_language']) && (!isset($languages[$code]) || !$languages[$code]['status'])) {
+			$code = $this->request->cookie['admin_language'];
+		}
+
+		if (!isset($languages[$code]) || !$languages[$code]['status']) {
+			$code = $this->config->get('config_admin_language');
+		}
+
+		if (!isset($languages[$code])) {
+			$code = $this->config->get('config_language');
+		}
+
+		if (!isset($languages[$code])) {
+			$code = key($languages);
+		}
+
+		if ($code && isset($languages[$code])) {
+			if (!isset($this->session->data['admin_language']) || $this->session->data['admin_language'] != $code) {
+				$this->session->data['admin_language'] = $code;
+			}
+
+			if (!isset($this->request->cookie['admin_language']) || $this->request->cookie['admin_language'] != $code) {
+				setcookie('admin_language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+			}
+
+			$this->config->set('config_admin_language', $code);
+			$this->config->set('config_language_id', $languages[$code]['language_id']);
+		}
+
 		// Language
 		$language = new Language($this->config->get('config_admin_language'));
 		$language->load($this->config->get('config_admin_language'));

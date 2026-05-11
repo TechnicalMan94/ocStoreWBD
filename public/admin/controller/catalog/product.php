@@ -1336,14 +1336,31 @@ class ControllerCatalogProduct extends Controller {
 		// Variants
 		$this->load->model('catalog/variant');
 
-		$data['variant_groups'] = $this->model_catalog_variant->getAllVariantGroupsWithValues();
-
 		if (isset($this->request->post['product_variant'])) {
-			$data['product_variants'] = $this->request->post['product_variant'];
+			$variants = $this->request->post['product_variant'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$data['product_variants'] = $this->model_catalog_product->getProductVariants($this->request->get['product_id']);
+			$variants = $this->model_catalog_product->getProductVariants($this->request->get['product_id']);
 		} else {
-			$data['product_variants'] = array();
+			$variants = array();
+		}
+
+		$data['product_variants'] = array();
+
+		foreach ($variants as $variant_id) {
+			$variant_info = $this->model_catalog_variant->getVariantValue($variant_id);
+
+			if ($variant_info) {
+				$name = $variant_info['group_name'] . ' &gt; ' . $variant_info['name'];
+
+				if ($variant_info['keyword']) {
+					$name .= ' (' . $variant_info['keyword'] . ')';
+				}
+
+				$data['product_variants'][] = array(
+					'variant_id' => $variant_info['variant_id'],
+					'name'       => $name
+				);
+			}
 		}
 
 		// Attributes

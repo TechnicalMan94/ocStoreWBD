@@ -1,0 +1,25 @@
+{% if languages|length > 1 %}
+<li class="dropdown">
+  <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-admin-language">
+    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" title="{{ text_language }}">
+      {% for language in languages %}
+      {% if language.code == code %}
+      <img src="language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" />
+      {% endif %}
+      {% endfor %}
+      <span class="d-none d-lg-inline">{{ text_language }}</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+      {% for language in languages %}
+      <li>
+        <button type="button" name="{{ language.code }}" class="dropdown-item admin-language-select{% if language.code == code %} active{% endif %}">
+          <img src="language/{{ language.code }}/{{ language.code }}.png" alt="{{ language.name }}" title="{{ language.name }}" /> {{ language.name }}
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <input type="hidden" name="code" value="" />
+    <input type="hidden" name="redirect" value="{{ redirect }}" />
+  </form>
+</li>
+{% endif %}

@@ -198,6 +198,41 @@ class ControllerCatalogVariant extends Controller {
 		$this->response->setOutput($this->load->view('catalog/variant_form', $data));
 	}
 
+	public function autocomplete() {
+		$json = array();
+
+		if (isset($this->request->get['filter_name'])) {
+			$this->load->model('catalog/variant');
+
+			$filter_data = array(
+				'filter_name'   => $this->request->get['filter_name'],
+				'filter_status' => 1,
+				'start'         => 0,
+				'limit'         => $this->config->get('config_limit_autocomplete')
+			);
+
+			$results = $this->model_catalog_variant->getVariantValuesByFilter($filter_data);
+
+			foreach ($results as $result) {
+				$name = $result['group_name'] . ' &gt; ' . $result['name'];
+
+				if ($result['keyword']) {
+					$name .= ' (' . $result['keyword'] . ')';
+				}
+
+				$json[] = array(
+					'variant_id' => $result['variant_id'],
+					'name'       => strip_tags(html_entity_decode($name, ENT_QUOTES, 'UTF-8')),
+					'group'      => strip_tags(html_entity_decode($result['group_name'], ENT_QUOTES, 'UTF-8')),
+					'keyword'    => $result['keyword']
+				);
+			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/variant')) {
 			$this->error['warning'] = $this->language->get('error_permission');

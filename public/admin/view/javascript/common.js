@@ -172,6 +172,15 @@ $(document).ready(function() {
 		$("form[id*='form-']").submit();
 	});
 
+	// Language
+	$('#form-admin-language .admin-language-select').on('click', function(e) {
+		e.preventDefault();
+
+		$('#form-admin-language input[name=\'code\']').val($(this).attr('name'));
+
+		$('#form-admin-language').submit();
+	});
+
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().parent();

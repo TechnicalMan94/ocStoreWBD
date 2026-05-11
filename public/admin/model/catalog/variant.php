@@ -94,6 +94,44 @@ class ModelCatalogVariant extends Model {
 		return $query->rows;
 	}
 
+	public function getVariantValue($variant_id) {
+		$query = $this->db->query("SELECT v.*, vg.name AS group_name, vg.keyword AS group_keyword, vg.sort_order AS group_sort_order FROM `" . DB_PREFIX . "variant` v LEFT JOIN `" . DB_PREFIX . "variant_group` vg ON (v.variant_group_id = vg.variant_group_id) WHERE v.variant_id = '" . (int)$variant_id . "'");
+
+		return $query->row;
+	}
+
+	public function getVariantValuesByFilter($data = array()) {
+		$sql = "SELECT v.*, vg.name AS group_name, vg.keyword AS group_keyword, vg.sort_order AS group_sort_order FROM `" . DB_PREFIX . "variant` v LEFT JOIN `" . DB_PREFIX . "variant_group` vg ON (v.variant_group_id = vg.variant_group_id) WHERE 1";
+
+		if (!empty($data['filter_name'])) {
+			$filter_name = $this->db->escape((string)$data['filter_name']);
+
+			$sql .= " AND (v.name LIKE '%" . $filter_name . "%' OR v.keyword LIKE '%" . $filter_name . "%' OR vg.name LIKE '%" . $filter_name . "%' OR vg.keyword LIKE '%" . $filter_name . "%')";
+		}
+
+		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+			$sql .= " AND v.status = '" . (int)$data['filter_status'] . "' AND vg.status = '" . (int)$data['filter_status'] . "'";
+		}
+
+		$sql .= " ORDER BY vg.sort_order ASC, vg.name ASC, v.sort_order ASC, v.name ASC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}
+
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}
+
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
 	public function getAllVariantGroupsWithValues($active_only = false) {
 		$sql = "SELECT vg.variant_group_id, vg.name AS group_name, vg.keyword AS group_keyword, vg.sort_order AS group_sort_order, vg.status AS group_status, v.variant_id, v.name, v.keyword, v.sort_order, v.status FROM `" . DB_PREFIX . "variant_group` vg LEFT JOIN `" . DB_PREFIX . "variant` v ON (vg.variant_group_id = v.variant_group_id)";
 
