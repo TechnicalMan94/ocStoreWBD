@@ -13,7 +13,10 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->request->post['config_theme'] = 'default';
+
 			$this->model_setting_setting->editSetting('config', $this->request->post);
+			$this->model_setting_setting->editSetting('theme_default', $this->request->post);
 
 			if ($this->config->get('config_currency_auto')) {
 				$this->load->model('localisation/currency');
@@ -127,11 +130,15 @@ class ControllerSettingSetting extends Controller {
 			$data['error_limit_admin'] = '';
 		}
 
-        if (isset($this->error['limit_autocomplete'])) {
+		if (isset($this->error['limit_autocomplete'])) {
             $data['error_limit_autocomplete'] = $this->error['limit_autocomplete'];
         } else {
             $data['error_limit_autocomplete'] = '';
         }
+
+		foreach (array('product_limit', 'product_description_length', 'image_category', 'image_manufacturer', 'image_thumb', 'image_popup', 'image_product', 'image_additional', 'image_related', 'image_compare', 'image_wishlist', 'image_cart', 'image_location') as $key) {
+			$data['error_' . $key] = isset($this->error[$key]) ? $this->error[$key] : '';
+		}
 
 		if (isset($this->error['encryption'])) {
 			$data['error_encryption'] = $this->error['encryption'];
@@ -170,6 +177,45 @@ class ControllerSettingSetting extends Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
+		$theme_setting_info = $this->model_setting_setting->getSetting('theme_default');
+
+		$theme_setting_defaults = array(
+			'theme_default_product_limit' => 15,
+			'theme_default_product_description_length' => 100,
+			'theme_default_image_category_width' => 80,
+			'theme_default_image_category_height' => 80,
+			'theme_default_image_manufacturer_width' => 80,
+			'theme_default_image_manufacturer_height' => 80,
+			'theme_default_image_thumb_width' => 228,
+			'theme_default_image_thumb_height' => 228,
+			'theme_default_image_popup_width' => 500,
+			'theme_default_image_popup_height' => 500,
+			'theme_default_image_product_width' => 228,
+			'theme_default_image_product_height' => 228,
+			'theme_default_image_additional_width' => 74,
+			'theme_default_image_additional_height' => 74,
+			'theme_default_image_related_width' => 80,
+			'theme_default_image_related_height' => 80,
+			'theme_default_image_compare_width' => 90,
+			'theme_default_image_compare_height' => 90,
+			'theme_default_image_wishlist_width' => 47,
+			'theme_default_image_wishlist_height' => 47,
+			'theme_default_image_cart_width' => 47,
+			'theme_default_image_cart_height' => 47,
+			'theme_default_image_location_width' => 268,
+			'theme_default_image_location_height' => 50
+		);
+
+		foreach ($theme_setting_defaults as $key => $default) {
+			if (isset($this->request->post[$key])) {
+				$data[$key] = $this->request->post[$key];
+			} elseif (isset($theme_setting_info[$key])) {
+				$data[$key] = $theme_setting_info[$key];
+			} else {
+				$data[$key] = $default;
+			}
+		}
+
 		if (isset($this->request->post['config_meta_title'])) {
 			$data['config_meta_title'] = $this->request->post['config_meta_title'];
 		} else {
@@ -188,31 +234,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_meta_keyword'] = $this->config->get('config_meta_keyword');
 		}
 
-		if (isset($this->request->post['config_theme'])) {
-			$data['config_theme'] = $this->request->post['config_theme'];
-		} else {
-			$data['config_theme'] = $this->config->get('config_theme');
-		}
+		$data['config_theme'] = 'default';
 
 		if ($this->request->server['HTTPS']) {
 			$data['store_url'] = HTTPS_CATALOG;
 		} else {
 			$data['store_url'] = HTTP_CATALOG;
-		}
-
-		$data['themes'] = array();
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getInstalled('theme');
-
-		foreach ($extensions as $code) {
-			$this->load->language('extension/theme/' . $code, 'extension');
-
-			$data['themes'][] = array(
-				'text'  => $this->language->get('extension')->get('heading_title'),
-				'value' => $code
-			);
 		}
 
 		if (isset($this->request->post['config_layout_id'])) {
@@ -1068,8 +1095,60 @@ class ControllerSettingSetting extends Controller {
 			$this->error['limit_admin'] = $this->language->get('error_limit');
 		}
 
-		if (!$this->request->post['config_limit_autocomplete']) {
-			$this->error['limit_autocomplete'] = $this->language->get('error_limit');
+        if (!$this->request->post['config_limit_autocomplete']) {
+            $this->error['limit_autocomplete'] = $this->language->get('error_limit');
+        }
+
+		if (!$this->request->post['theme_default_product_limit']) {
+			$this->error['product_limit'] = $this->language->get('error_limit');
+		}
+
+		if (!$this->request->post['theme_default_product_description_length']) {
+			$this->error['product_description_length'] = $this->language->get('error_limit');
+		}
+
+		if (!$this->request->post['theme_default_image_category_width'] || !$this->request->post['theme_default_image_category_height']) {
+			$this->error['image_category'] = $this->language->get('error_image_category');
+		}
+
+		if (!$this->request->post['theme_default_image_manufacturer_width'] || !$this->request->post['theme_default_image_manufacturer_height']) {
+			$this->error['image_manufacturer'] = $this->language->get('error_image_manufacturer');
+		}
+
+		if (!$this->request->post['theme_default_image_thumb_width'] || !$this->request->post['theme_default_image_thumb_height']) {
+			$this->error['image_thumb'] = $this->language->get('error_image_thumb');
+		}
+
+		if (!$this->request->post['theme_default_image_popup_width'] || !$this->request->post['theme_default_image_popup_height']) {
+			$this->error['image_popup'] = $this->language->get('error_image_popup');
+		}
+
+		if (!$this->request->post['theme_default_image_product_width'] || !$this->request->post['theme_default_image_product_height']) {
+			$this->error['image_product'] = $this->language->get('error_image_product');
+		}
+
+		if (!$this->request->post['theme_default_image_additional_width'] || !$this->request->post['theme_default_image_additional_height']) {
+			$this->error['image_additional'] = $this->language->get('error_image_additional');
+		}
+
+		if (!$this->request->post['theme_default_image_related_width'] || !$this->request->post['theme_default_image_related_height']) {
+			$this->error['image_related'] = $this->language->get('error_image_related');
+		}
+
+		if (!$this->request->post['theme_default_image_compare_width'] || !$this->request->post['theme_default_image_compare_height']) {
+			$this->error['image_compare'] = $this->language->get('error_image_compare');
+		}
+
+		if (!$this->request->post['theme_default_image_wishlist_width'] || !$this->request->post['theme_default_image_wishlist_height']) {
+			$this->error['image_wishlist'] = $this->language->get('error_image_wishlist');
+		}
+
+		if (!$this->request->post['theme_default_image_cart_width'] || !$this->request->post['theme_default_image_cart_height']) {
+			$this->error['image_cart'] = $this->language->get('error_image_cart');
+		}
+
+		if (!$this->request->post['theme_default_image_location_width'] || !$this->request->post['theme_default_image_location_height']) {
+			$this->error['image_location'] = $this->language->get('error_image_location');
 		}
 
 		if ($this->request->post['config_login_attempts'] < 1) {
@@ -1118,15 +1197,8 @@ class ControllerSettingSetting extends Controller {
 			$server = HTTP_CATALOG;
 		}
 
-		// This is only here for compatibility with old themes.
-		if ($this->request->get['theme'] == 'theme_default') {
-			$theme = $this->config->get('theme_default_directory');
-		} else {
-			$theme = basename($this->request->get['theme']);
-		}
-
-		if (is_file(DIR_CATALOG . 'view/theme/' . $theme . '/image/' . $theme . '.png')) {
-			$this->response->setOutput($server . 'catalog/view/theme/' . $theme . '/image/' . $theme . '.png');
+		if (is_file(DIR_CATALOG . 'view/image/default.png')) {
+			$this->response->setOutput($server . 'catalog/view/image/default.png');
 		} else {
 			$this->response->setOutput($server . 'image/no_image.png');
 		}

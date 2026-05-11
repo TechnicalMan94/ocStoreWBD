@@ -25,7 +25,7 @@ class ControllerInstallStep3 extends Controller {
 			$output .= 'define(\'DIR_STORAGE\', \'' . addslashes(dirname(DIR_OPENCART)) . '/storage/\');' . "\n";
 
 			$output .= 'define(\'DIR_LANGUAGE\', DIR_APPLICATION . \'language/\');' . "\n";
-			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/theme/\');' . "\n";
+			$output .= 'define(\'DIR_TEMPLATE\', DIR_APPLICATION . \'view/\');' . "\n";
 			$output .= 'define(\'DIR_CONFIG\', DIR_SYSTEM . \'config/\');' . "\n";
 			$output .= 'define(\'DIR_CACHE\', DIR_STORAGE . \'cache/\');' . "\n";
 			$output .= 'define(\'DIR_DOWNLOAD\', DIR_STORAGE . \'download/\');' . "\n";

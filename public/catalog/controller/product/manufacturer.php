@@ -109,7 +109,7 @@ class ControllerProductManufacturer extends Controller {
                 $this->document->setRobots('noindex,follow');
             }
 		} else {
-			$limit = (int)$this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
+			$limit = (int)$this->config->get('theme_default_product_limit');
 		}
 
 		$data['breadcrumbs'] = array();
@@ -150,7 +150,7 @@ class ControllerProductManufacturer extends Controller {
 
 
 			if ($manufacturer_info['image']) {
-				$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_manufacturer_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_manufacturer_height'));
+				$data['thumb'] = $this->model_tool_image->resize($manufacturer_info['image'], $this->config->get('theme_default_image_manufacturer_width'), $this->config->get('theme_default_image_manufacturer_height'));
 			} else {
 				$data['thumb'] = '';
 			}
@@ -198,9 +198,9 @@ class ControllerProductManufacturer extends Controller {
 
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+					$image = $this->model_tool_image->resize($result['image'], $this->config->get('theme_default_image_product_width'), $this->config->get('theme_default_image_product_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_product_height'));
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_default_image_product_width'), $this->config->get('theme_default_image_product_height'));
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -233,7 +233,7 @@ class ControllerProductManufacturer extends Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
+					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_default_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
@@ -319,7 +319,7 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['limits'] = array();
 
-			$limits = array_unique(array($this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'), 25, 50, 75, 100));
+			$limits = array_unique(array($this->config->get('theme_default_product_limit'), 25, 50, 75, 100));
 
 			sort($limits);
 

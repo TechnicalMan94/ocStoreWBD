@@ -61,27 +61,7 @@
                   <textarea name="config_meta_keyword" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword" class="form-control">{{ config_meta_keyword }}</textarea>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-theme">{{ entry_theme }}</label>
-                <div class="col-sm-10">
-                  <select name="config_theme" id="input-theme" class="form-control">
-                    
-                    {% for theme in themes %}
-                    {% if theme.value == config_theme %}
-                    
-                    <option value="{{ theme.value }}" selected="selected">{{ theme.text }}</option>
-                    
-                    {% else %}
-                    
-                    <option value="{{ theme.value }}">{{ theme.text }}</option>
-                    
-                    {% endif %}
-                    {% endfor %}
-                  
-                  </select>
-                  <br />
-                  <img src="" alt="" id="theme" class="img-thumbnail" /></div>
-              </div>
+              <input type="hidden" name="config_theme" value="default" />
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-layout">{{ entry_layout }}</label>
                 <div class="col-sm-10">
@@ -1099,6 +1079,62 @@
                   <input type="hidden" name="config_icon" value="{{ config_icon }}" id="input-icon" />
                 </div>
               </div>
+              <fieldset>
+                <legend>{{ text_product }}</legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="{{ help_product_limit }}">{{ entry_product_limit }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="theme_default_product_limit" value="{{ theme_default_product_limit }}" placeholder="{{ entry_product_limit }}" id="input-catalog-limit" class="form-control" />
+                    {% if error_product_limit %}
+                    <div class="text-danger">{{ error_product_limit }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-description-limit"><span data-toggle="tooltip" title="{{ help_product_description_length }}">{{ entry_product_description_length }}</span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="theme_default_product_description_length" value="{{ theme_default_product_description_length }}" placeholder="{{ entry_product_description_length }}" id="input-description-limit" class="form-control" />
+                    {% if error_product_description_length %}
+                    <div class="text-danger">{{ error_product_description_length }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset>
+                <legend>{{ entry_image }}</legend>
+                {% set image_sizes = [
+                  {'key': 'category', 'label': entry_image_category},
+                  {'key': 'manufacturer', 'label': entry_image_manufacturer},
+                  {'key': 'thumb', 'label': entry_image_thumb},
+                  {'key': 'popup', 'label': entry_image_popup},
+                  {'key': 'product', 'label': entry_image_product},
+                  {'key': 'additional', 'label': entry_image_additional},
+                  {'key': 'related', 'label': entry_image_related},
+                  {'key': 'compare', 'label': entry_image_compare},
+                  {'key': 'wishlist', 'label': entry_image_wishlist},
+                  {'key': 'cart', 'label': entry_image_cart},
+                  {'key': 'location', 'label': entry_image_location}
+                ] %}
+                {% for image_size in image_sizes %}
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-image-{{ image_size.key }}-width">{{ image_size.label }}</label>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <input type="text" name="theme_default_image_{{ image_size.key }}_width" value="{{ attribute(_context, 'theme_default_image_' ~ image_size.key ~ '_width') }}" placeholder="{{ entry_width }}" id="input-image-{{ image_size.key }}-width" class="form-control" />
+                      </div>
+                      <div class="col-sm-6">
+                        <input type="text" name="theme_default_image_{{ image_size.key }}_height" value="{{ attribute(_context, 'theme_default_image_' ~ image_size.key ~ '_height') }}" placeholder="{{ entry_height }}" class="form-control" />
+                      </div>
+                    </div>
+                    {% set error_key = 'error_image_' ~ image_size.key %}
+                    {% if attribute(_context, error_key) %}
+                    <div class="text-danger">{{ attribute(_context, error_key) }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-mail">
               <fieldset>
@@ -1627,29 +1663,7 @@
         </form>
       </div>
     </div>
-  </div>
-  <script>
-$('select[name=\'config_theme\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/theme&user_token={{ user_token }}&theme=' + this.value,
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'config_theme\']').prop('disabled', true);
-		},
-		complete: function() {
-			$('select[name=\'config_theme\']').prop('disabled', false);
-		},
-		success: function(html) {
-			$('#theme').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-$('select[name=\'config_theme\']').trigger('change');
-</script> 
+  </div> 
   <script>
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({

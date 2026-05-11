@@ -298,31 +298,7 @@ class ControllerSettingStore extends Controller {
 			$data['config_meta_keyword'] = '';
 		}
 
-		if (isset($this->request->post['config_theme'])) {
-			$data['config_theme'] = $this->request->post['config_theme'];
-		} elseif (isset($store_info['config_theme'])) {
-			$data['config_theme'] = $store_info['config_theme'];
-		} else {
-			$data['config_theme'] = '';
-		}
-
-		$data['themes'] = array();
-
-		// Create a new language container so we don't pollute the current one
-		$language = new Language($this->config->get('config_language'));
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getInstalled('theme');
-
-		foreach ($extensions as $code) {
-			$this->load->language('extension/theme/' . $code, 'extension');
-
-			$data['themes'][] = array(
-				'text'  => $this->language->get('extension')->get('heading_title'),
-				'value' => $code
-			);
-		}
+		$data['config_theme'] = 'default';
 
 		if (isset($this->request->post['config_layout_id'])) {
 			$data['config_layout_id'] = $this->request->post['config_layout_id'];

@@ -35,6 +35,11 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         array (
             'Medoo\\' => 6,
         ),
+        'I' =>
+        array (
+            'Intervention\\Image\\' => 19,
+            'Intervention\\Gif\\' => 17,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -57,6 +62,14 @@ class ComposerStaticInita8cb75283b86ff94542c6f1327c4ce59
         'Medoo\\' =>
         array (
             0 => __DIR__ . '/..' . '/catfan/medoo/src',
+        ),
+        'Intervention\\Image\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src',
+        ),
+        'Intervention\\Gif\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/intervention/gif/src',
         ),
     );
 

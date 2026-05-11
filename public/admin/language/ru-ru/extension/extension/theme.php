@@ -3,14 +3,14 @@
 // *	@license	GNU General Public License version 3; see LICENSE.txt
 
 // Heading
-$_['heading_title']    = 'Шаблоны';
+$_['heading_title']    = 'Оформление';
 
 // Text
 $_['text_success']     = 'Настройки успешно изменены!';
-$_['text_list']        = 'Список шаблонов';
+$_['text_list']        = 'Список настроек оформления';
 
 // Column
-$_['column_name']      = 'Название шаблона';
+$_['column_name']      = 'Название';
 $_['column_status']    = 'Статус';
 $_['column_action']    = 'Действие';
 

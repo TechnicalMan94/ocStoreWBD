@@ -82,7 +82,7 @@ class ControllerExtensionFeedYandexTurbo extends Controller {
 			$output .= '<price>' . number_format($this->currency->convert($this->tax->calculate($product['price'], $product['tax_class_id']), $shop_currency, $offers_currency), $decimal, '.', '') . '</price>';
 			$output .= '<currencyId>' . $offers_currency . '</currencyId>' . $this->eol;
 			$output .= '<categoryId>' . $product['category_id'] . '</categoryId>' . $this->eol;
-			$output .= '<picture>' . $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_popup_height')) . '</picture>' . $this->eol;
+			$output .= '<picture>' . $this->model_tool_image->resize($product['image'], $this->config->get('theme_default_image_popup_width'), $this->config->get('theme_default_image_popup_height')) . '</picture>' . $this->eol;
 			$output .= '<name><![CDATA[' . $this->prepareField($product['name']) . ']]></name>' . $this->eol;
 			$output .= '<description><![CDATA[' . $this->prepareField($product['description']) . ']]></description>' . $this->eol; 
 			$output .= '</offer>' . $this->eol;

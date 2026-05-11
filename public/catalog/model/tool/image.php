@@ -3,41 +3,15 @@ class ModelToolImage extends Model
 {
 	public function resize($filename, $width, $height, $mode = 'resize')
 	{
-		if (!is_file(DIR_IMAGE . $filename) || substr(str_replace('\\', '/', realpath(DIR_IMAGE . $filename)), 0, strlen(DIR_IMAGE)) != str_replace('\\', '/', DIR_IMAGE)) {
+		$image_new = resize_image($filename, $width, $height, $mode);
+
+		if (!$image_new) {
 			return;
 		}
 
-		if ($this->config->get('config_webp_support')) {
-			$extension = 'webp';
-		} else {
-			$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		if (substr($image_new, 0, strlen(DIR_IMAGE)) == DIR_IMAGE) {
+			return $image_new;
 		}
-
-		$image_old = $filename;
-		$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int) $width . 'x' . (int) $height . '.' . $extension;
-
-		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
-			list($width_orig, $height_orig, $image_type) = getimagesize(DIR_IMAGE . $image_old);
-
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_WEBP))) {
-				return DIR_IMAGE . $image_old;
-			}
-
-			
-			if (!is_dir(dirname($image_new))) {
-				mkdir(dirname($image_new), 0755, true);
-			}
-
-			if ($width_orig != $width || $height_orig != $height) {
-				$image = new Image(DIR_IMAGE . $image_old);
-				$image->{$mode}($width, $height);
-				$image->save(DIR_IMAGE . $image_new);
-			} else {
-				copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
-			}
-		}
-
-		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatic changing space " " to +
 
 		if ($this->request->server['HTTPS']) {
 			return $this->config->get('config_ssl') . 'image/' . $image_new;

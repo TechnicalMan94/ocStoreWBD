@@ -56,9 +56,9 @@ class ControllerCommonCart extends Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
-				$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize($product['image'], $this->config->get('theme_default_image_cart_width'), $this->config->get('theme_default_image_cart_height'));
 			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_width'), $this->config->get('theme_' . $this->config->get('config_theme') . '_image_cart_height'));
+				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('theme_default_image_cart_width'), $this->config->get('theme_default_image_cart_height'));
 			}
 
 			$option_data = array();

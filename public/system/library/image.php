@@ -8,6 +8,9 @@
  * @link		https://www.opencart.com
  */
 
+use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\ImageInterface as InterventionImageInterface;
+
 /**
  * Image class
  */
@@ -27,10 +30,6 @@ class Image
 	 */
 	public function __construct($file)
 	{
-		if (!extension_loaded('gd')) {
-			exit('Error: PHP GD is not installed!');
-		}
-
 		if (is_file($file)) {
 			$this->file = $file;
 
@@ -40,16 +39,7 @@ class Image
 			$this->height = $info[1];
 			$this->bits = isset($info['bits']) ? $info['bits'] : '';
 			$this->mime = isset($info['mime']) ? $info['mime'] : '';
-
-			if ($this->mime == 'image/gif') {
-				$this->image = imagecreatefromgif($file);
-			} elseif ($this->mime == 'image/png') {
-				$this->image = imagecreatefrompng($file);
-			} elseif ($this->mime == 'image/jpeg') {
-				$this->image = imagecreatefromjpeg($file);
-			} elseif ($this->mime == 'image/webp') {
-				$this->image = imagecreatefromwebp($file);
-			}
+			$this->image = $this->manager()->read($file);
 		} else {
 			error_log('Error: Could not load image ' . $file . '!');
 		}
@@ -64,7 +54,7 @@ class Image
 	}
 
 	/**
-	 * @return	array
+	 * @return	InterventionImageInterface
 	 */
 	public function getImage()
 	{
@@ -72,7 +62,7 @@ class Image
 	}
 
 	/**
-	 * @return	string
+	 * @return	int
 	 */
 	public function getWidth()
 	{
@@ -80,7 +70,7 @@ class Image
 	}
 
 	/**
-	 * @return	string
+	 * @return	int
 	 */
 	public function getHeight()
 	{
@@ -109,22 +99,20 @@ class Image
 	 */
 	public function save($file, int $quality = 90)
 	{
-		$info = pathinfo($file);
+		if (!$this->image instanceof InterventionImageInterface) {
+			return;
+		}
 
-		$extension = strtolower($info['extension']);
+		$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION) ?: 'webp');
 
-		if (is_object($this->image) || is_resource($this->image)) {
-			if ($extension == 'jpeg' || $extension == 'jpg') {
-				imagejpeg($this->image, $file, $quality);
-			} elseif ($extension == 'png') {
-				imagepng($this->image, $file);
-			} elseif ($extension == 'gif') {
-				imagegif($this->image, $file);
-			} elseif ($extension == 'webp') {
-				imagewebp($this->image, $file);
-			}
-
-			$this->destroy($this->image);
+		if ($extension == 'jpeg' || $extension == 'jpg') {
+			$this->image->toJpeg($quality)->save($file);
+		} elseif ($extension == 'png') {
+			$this->image->toPng()->save($file);
+		} elseif ($extension == 'gif') {
+			$this->image->toGif()->save($file);
+		} else {
+			$this->image->toWebp($quality)->save($file);
 		}
 	}
 
@@ -135,62 +123,19 @@ class Image
 	 */
 	public function resize(int $width = 0, int $height = 0, $default = '')
 	{
-		if (!$this->width || !$this->height) {
+		if (!$this->image instanceof InterventionImageInterface || !$this->width || !$this->height || !$width || !$height) {
 			return;
 		}
-
-		$xpos = 0;
-		$ypos = 0;
-		$scale = 1;
-
-		$scale_w = $width / $this->width;
-		$scale_h = $height / $this->height;
 
 		if ($default == 'w') {
-			$scale = $scale_w;
+			$this->image->scale($width, null);
 		} elseif ($default == 'h') {
-			$scale = $scale_h;
+			$this->image->scale(null, $height);
 		} else {
-			$scale = min($scale_w, $scale_h);
+			$this->image->contain($width, $height, $this->background());
 		}
 
-		if ($scale == 1 && $scale_h == $scale_w && ($this->mime != 'image/png' && $this->mime != 'image/webp')) {
-			return;
-		}
-
-		$new_width = (int) ($this->width * $scale);
-		$new_height = (int) ($this->height * $scale);
-		$xpos = (int) (($width - $new_width) / 2);
-		$ypos = (int) (($height - $new_height) / 2);
-
-		$image_old = $this->image;
-		$this->image = imagecreatetruecolor($width, $height);
-
-		if ($this->mime == 'image/png') {
-			imagealphablending($this->image, false);
-			imagesavealpha($this->image, true);
-
-			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
-
-			imagecolortransparent($this->image, $background);
-		} else if ($this->mime == 'image/webp') {
-			imagealphablending($this->image, false);
-			imagesavealpha($this->image, true);
-
-			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
-
-			imagecolortransparent($this->image, $background);
-		} else {
-			$background = imagecolorallocate($this->image, 255, 255, 255);
-		}
-
-		imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
-
-		imagecopyresampled($this->image, $image_old, $xpos, $ypos, 0, 0, $new_width, $new_height, $this->width, $this->height);
-		$this->destroy($image_old);
-
-		$this->width = $width;
-		$this->height = $height;
+		$this->syncDimensions();
 	}
 
 	/**
@@ -199,108 +144,37 @@ class Image
 	 */
 	public function watermark($watermark, $position = 'bottomright')
 	{
-		switch ($position) {
-			case 'topleft':
-				$watermark_pos_x = 0;
-				$watermark_pos_y = 0;
-				break;
-			case 'topcenter':
-				$watermark_pos_x = intval(($this->width - $watermark->getWidth()) / 2);
-				$watermark_pos_y = 0;
-				break;
-			case 'topright':
-				$watermark_pos_x = $this->width - $watermark->getWidth();
-				$watermark_pos_y = 0;
-				break;
-			case 'middleleft':
-				$watermark_pos_x = 0;
-				$watermark_pos_y = intval(($this->height - $watermark->getHeight()) / 2);
-				break;
-			case 'middlecenter':
-				$watermark_pos_x = intval(($this->width - $watermark->getWidth()) / 2);
-				$watermark_pos_y = intval(($this->height - $watermark->getHeight()) / 2);
-				break;
-			case 'middleright':
-				$watermark_pos_x = $this->width - $watermark->getWidth();
-				$watermark_pos_y = intval(($this->height - $watermark->getHeight()) / 2);
-				break;
-			case 'bottomleft':
-				$watermark_pos_x = 0;
-				$watermark_pos_y = $this->height - $watermark->getHeight();
-				break;
-			case 'bottomcenter':
-				$watermark_pos_x = intval(($this->width - $watermark->getWidth()) / 2);
-				$watermark_pos_y = $this->height - $watermark->getHeight();
-				break;
-			case 'bottomright':
-				$watermark_pos_x = $this->width - $watermark->getWidth();
-				$watermark_pos_y = $this->height - $watermark->getHeight();
-				break;
-		}
-
-		imagealphablending($this->image, true);
-		imagesavealpha($this->image, true);
-		imagecopy($this->image, $watermark->getImage(), $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark->getWidth(), $watermark->getHeight());
-
-		$this->destroy($watermark->getImage());
-	}
-
-	/**
-	 * @param	int		$top_x
-	 * @param	int		$top_y
-	 * @param	int		$bottom_x
-	 * @param	int		$bottom_y
-	 */
-	public function crop(int $width, int $height)
-	{
-		if (!$this->width || !$this->height) {
+		if (!$this->image instanceof InterventionImageInterface || !$watermark instanceof Image) {
 			return;
 		}
 
-		// Вычисляем коэффициенты масштабирования
-		$scale_w = $width / $this->width;
-		$scale_h = $height / $this->height;
+		$positions = [
+			'topleft' => 'top-left',
+			'topcenter' => 'top',
+			'topright' => 'top-right',
+			'middleleft' => 'left',
+			'middlecenter' => 'center',
+			'middleright' => 'right',
+			'bottomleft' => 'bottom-left',
+			'bottomcenter' => 'bottom',
+			'bottomright' => 'bottom-right'
+		];
 
-		// Берём большее значение, чтобы картинка покрывала всю область
-		$scale = max($scale_w, $scale_h);
+		$this->image->place($watermark->getImage(), $positions[$position] ?? 'bottom-right');
+	}
 
-		$new_width = (int) ($this->width * $scale);
-		$new_height = (int) ($this->height * $scale);
-
-		// Создаём новое изображение с нужным размером
-		$image_old = $this->image;
-		$this->image = imagecreatetruecolor($width, $height);
-
-		// Прозрачность для PNG/WebP
-		if ($this->mime == 'image/png' || $this->mime == 'image/webp') {
-			imagealphablending($this->image, false);
-			imagesavealpha($this->image, true);
-			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
-			imagecolortransparent($this->image, $background);
+	/**
+	 * @param	int		$width
+	 * @param	int		$height
+	 */
+	public function crop(int $width, int $height)
+	{
+		if (!$this->image instanceof InterventionImageInterface || !$this->width || !$this->height || !$width || !$height) {
+			return;
 		}
 
-		// Сдвиги для обрезки (центрируем)
-		$xpos = (int) (($width - $new_width) / 2);
-		$ypos = (int) (($height - $new_height) / 2);
-
-		// Копируем и масштабируем картинку
-		imagecopyresampled(
-			$this->image,
-			$image_old,
-			$xpos,
-			$ypos,
-			0,
-			0,
-			$new_width,
-			$new_height,
-			$this->width,
-			$this->height
-		);
-
-		$this->destroy($image_old);
-
-		$this->width = $width;
-		$this->height = $height;
+		$this->image->cover($width, $height);
+		$this->syncDimensions();
 	}
 
 	/**
@@ -309,79 +183,53 @@ class Image
 	 */
 	public function rotate($degree, $color = 'FFFFFF')
 	{
-		$rgb = $this->html2rgb($color);
-
-		$this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
-
-		$this->width = imagesx($this->image);
-		$this->height = imagesy($this->image);
-	}
-
-	private function filter()
-	{
-		$args = func_get_args();
-
-		call_user_func_array('imagefilter', $args);
-	}
-
-	/**
-	 * @param	string	$text
-	 * @param	int		$x
-	 * @param	int		$y
-	 * @param	int		$size
-	 * @param	string	$color
-	 */
-	private function text($text, $x = 0, $y = 0, $size = 5, $color = '000000')
-	{
-		$rgb = $this->html2rgb($color);
-
-		imagestring($this->image, $size, $x, $y, $text, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
-	}
-
-	/**
-	 * @param	object	$merge
-	 * @param	object	$x
-	 * @param	object	$y
-	 * @param	object	$opacity
-	 */
-	private function merge($merge, $x = 0, $y = 0, $opacity = 100)
-	{
-		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);
-	}
-
-	/**
-	 * @param	mixed	$image
-	 */
-	private function destroy($image)
-	{
-		if (PHP_VERSION_ID < 80000 && is_resource($image)) {
-			imagedestroy($image);
+		if (!$this->image instanceof InterventionImageInterface) {
+			return;
 		}
+
+		$this->image->rotate((float)$degree, $this->normaliseColor($color));
+		$this->syncDimensions();
+	}
+
+	/**
+	 * @return	ImageManager
+	 */
+	private function manager()
+	{
+		static $manager;
+
+		if (!$manager) {
+			$manager = ImageManager::gd();
+		}
+
+		return $manager;
+	}
+
+	/**
+	 * @return	string
+	 */
+	private function background()
+	{
+		return in_array($this->mime, ['image/png', 'image/webp']) ? 'transparent' : 'ffffff';
+	}
+
+	private function syncDimensions()
+	{
+		$this->width = $this->image->width();
+		$this->height = $this->image->height();
 	}
 
 	/**
 	 * @param	string	$color
 	 *
-	 * @return	array
+	 * @return	string
 	 */
-	private function html2rgb($color)
+	private function normaliseColor($color)
 	{
-		if ($color[0] == '#') {
-			$color = substr($color, 1);
+		if (isset($color[0]) && $color[0] == '#') {
+			return substr($color, 1);
 		}
 
-		if (strlen($color) == 6) {
-			list($r, $g, $b) = [$color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]];
-		} elseif (strlen($color) == 3) {
-			list($r, $g, $b) = [$color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]];
-		} else {
-			return false;
-		}
-
-		$r = hexdec($r);
-		$g = hexdec($g);
-		$b = hexdec($b);
-
-		return [$r, $g, $b];
+		return $color;
 	}
 }

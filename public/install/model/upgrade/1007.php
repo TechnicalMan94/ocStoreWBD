@@ -14,8 +14,6 @@ class ModelUpgrade1007 extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "extension` SET `type` = 'theme', `code` = 'theme_default'");
 			
 			// Setting
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_directory', `value` = 'default'");
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `code` = 'theme_default', `key` = 'theme_default_status', `value` = '1'");		
 		}
 				
 		// Setting

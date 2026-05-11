@@ -477,11 +477,7 @@ class ControllerMarketplaceModification extends Controller {
 					$recovery = $modification;
 				}
 
-                if ($this->config->get('config_theme') == 'default') {
-                    $theme = $this->config->get('theme_default_directory');
-                } else {
-                    $theme = $this->config->get('config_theme');
-                }
+                $theme = 'default';
 
                 $store_id = (int)$this->config->get('config_store_id');
 

@@ -44,7 +44,7 @@ class ControllerAccountDownload extends Controller {
 
 		$download_total = $this->model_account_download->getTotalDownloads();
 
-		$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'), $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit'));
+		$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('theme_default_product_limit'), $this->config->get('theme_default_product_limit'));
 
 		foreach ($results as $result) {
 			if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
@@ -82,7 +82,7 @@ class ControllerAccountDownload extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $download_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('theme_' . $this->config->get('config_theme') . '_product_limit');
+		$pagination->limit = $this->config->get('theme_default_product_limit');
 		$pagination->url = $this->url->link('account/download', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
