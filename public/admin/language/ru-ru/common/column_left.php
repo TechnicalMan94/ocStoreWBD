@@ -51,6 +51,7 @@ $_['text_manufacturer']                = 'Производители';
 $_['text_navigation']           	   = 'Навигация';
 $_['text_module']                      = 'Модули';
 $_['text_option']                      = 'Опции';
+$_['text_variant']                     = 'Варианты';
 $_['text_opencartforum']               = 'OpenCartForum магазин';
 $_['text_order']                       = 'Заказы';
 $_['text_order_status']                = 'Статус заказов';

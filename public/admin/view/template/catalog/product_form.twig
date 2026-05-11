@@ -30,6 +30,7 @@
             <li><a href="#tab-links" data-bs-toggle="tab">{{ tab_links }}</a></li>
             <li><a href="#tab-attribute" data-bs-toggle="tab">{{ tab_attribute }}</a></li>
             <li><a href="#tab-option" data-bs-toggle="tab">{{ tab_option }}</a></li>
+            <li><a href="#tab-variant" data-bs-toggle="tab">{{ tab_variant }}</a></li>
             <li><a href="#tab-recurring" data-bs-toggle="tab">{{ tab_recurring }}</a></li>
             <li><a href="#tab-discount" data-bs-toggle="tab">{{ tab_discount }}</a></li>
             <li><a href="#tab-special" data-bs-toggle="tab">{{ tab_special }}</a></li>
@@ -803,6 +804,31 @@
                     {% endfor %} </div>
                 </div>
               </div>
+            </div>
+            <div class="tab-pane" id="tab-variant">
+              {% if variant_groups %}
+                {% for variant_group in variant_groups %}
+                  <fieldset>
+                    <legend>{{ variant_group.name }}{% if variant_group.keyword %} <small class="text-muted">{ {{ variant_group.keyword }} }</small>{% endif %}</legend>
+                    {% if variant_group.values %}
+                      <div class="well well-sm" style="max-height: 220px; overflow: auto;">
+                        {% for variant_value in variant_group.values %}
+                          <div class="checkbox">
+                            <label>
+                              <input type="checkbox" name="product_variant[]" value="{{ variant_value.variant_id }}" {% if variant_value.variant_id in product_variants %}checked="checked"{% endif %} />
+                              {{ variant_value.name }} <span class="text-muted">({{ variant_value.keyword }})</span>
+                            </label>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <p class="text-muted">{{ text_no_results }}</p>
+                    {% endif %}
+                  </fieldset>
+                {% endfor %}
+              {% else %}
+                <p class="text-muted">{{ text_variant_empty }}</p>
+              {% endif %}
             </div>
             <div class="tab-pane" id="tab-recurring">
               <div class="table-responsive">

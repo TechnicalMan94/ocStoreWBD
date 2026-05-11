@@ -132,6 +132,9 @@
             <div>
               <div class="caption">
                 <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+                {% if product.variants %}
+                <p class="text-muted">{% for variant in product.variants %}{{ variant.group_name }}: {{ variant.name }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+                {% endif %}
                 <p>{{ product.description }}</p>
                 {% if product.price %}
                 <p class="price"> {% if not product.special %}
@@ -145,7 +148,7 @@
                   {% endfor %} </div>
                 {% endif %} </div>
               <div class="button-group">
-                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+                <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ product.variant_key }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
                 <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
                 <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
               </div>

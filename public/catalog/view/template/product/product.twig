@@ -277,9 +277,19 @@
               <label class="control-label" for="input-quantity">{{ entry_qty }}</label>
               <input type="text" name="quantity" value="{{ minimum }}" size="2" id="input-quantity" class="form-control" />
               <input type="hidden" name="product_id" value="{{ product_id }}" />
+              {% if variant_key %}
+              <input type="hidden" name="variant_key" value="{{ variant_key }}" />
+              {% endif %}
               <br />
               <button type="button" id="button-cart" data-loading-text="{{ text_loading }}" class="btn btn-primary btn-lg btn-block">{{ button_cart }}</button>
             </div>
+            {% if variants %}
+            <ul class="list-unstyled">
+              {% for variant in variants %}
+              <li>{{ variant.group_name }}: {{ variant.name }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
             {% if minimum > 1 %}
             <div role="alert" class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_minimum }}</div>
             {% endif %}</div>
@@ -312,6 +322,9 @@
             <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
             <div class="caption">
               <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+              {% if product.variants %}
+              <p class="text-muted">{% for variant in product.variants %}{{ variant.group_name }}: {{ variant.name }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+              {% endif %}
               <p>{{ product.description }}</p>
               {% if product.rating %}
               <div class="rating"> {% for j in 1..5 %}
@@ -325,7 +338,7 @@
                 {% if product.tax %} <span class="price-tax">{{ text_tax }} {{ product.tax }}</span> {% endif %} </p>
               {% endif %} </div>
             <div class="button-group">
-              <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
+              <button type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}', '{{ product.variant_key }}');"><span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span> <i class="fa fa-shopping-cart"></i></button>
               <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
               <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
             </div>

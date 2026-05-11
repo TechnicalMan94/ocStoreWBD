@@ -201,6 +201,55 @@ CREATE TABLE `oc_cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+--
+-- Table structure for table `oc_variant_group`
+--
+
+DROP TABLE IF EXISTS `oc_variant_group`;
+CREATE TABLE `oc_variant_group` (
+  `variant_group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`variant_group_id`),
+  UNIQUE KEY `keyword` (`keyword`),
+  KEY `sort_order` (`sort_order`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `oc_variant`
+--
+
+DROP TABLE IF EXISTS `oc_variant`;
+CREATE TABLE `oc_variant` (
+  `variant_id` int(11) NOT NULL AUTO_INCREMENT,
+  `variant_group_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `sort_order` int(3) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`variant_id`),
+  UNIQUE KEY `keyword` (`keyword`),
+  KEY `variant_group_id` (`variant_group_id`),
+  KEY `sort_order` (`sort_order`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `oc_product_variant`
+--
+
+DROP TABLE IF EXISTS `oc_product_variant`;
+CREATE TABLE `oc_product_variant` (
+  `product_id` int(11) NOT NULL,
+  `variant_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`variant_id`),
+  KEY `variant_id` (`variant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
 
 --
 -- Table structure for table `oc_category`

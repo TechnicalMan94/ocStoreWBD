@@ -1,0 +1,121 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-variant" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="bi bi-save"></i></button>
+        <a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-light"><i class="bi bi-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div role="alert" class="alert alert-danger alert-dismissible"><i class="bi bi-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_form }}</h3>
+      </div>
+      <div class="card-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-variant">
+          <div class="row mb-3 required">
+            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              {% if error_name %}
+              <div class="text-danger">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="input-keyword"><span data-bs-toggle="tooltip" title="{{ help_keyword }}">{{ entry_keyword }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="keyword" value="{{ keyword }}" placeholder="{{ entry_keyword }}" id="input-keyword" class="form-control" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-control">
+                <option value="1" {% if status %}selected="selected"{% endif %}>{{ text_enabled }}</option>
+                <option value="0" {% if not status %}selected="selected"{% endif %}>{{ text_disabled }}</option>
+              </select>
+            </div>
+          </div>
+          <fieldset>
+            <legend>{{ entry_value }}</legend>
+            <div class="table-responsive">
+              <table id="variant-value" class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left">{{ entry_value_name }}</td>
+                    <td class="text-left">{{ entry_value_keyword }}</td>
+                    <td class="text-right">{{ entry_sort_order }}</td>
+                    <td class="text-left">{{ entry_status }}</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% set variant_value_row = 0 %}
+                  {% for variant_value in variant_values %}
+                  <tr id="variant-value-row{{ variant_value_row }}">
+                    <td class="text-left"><input type="hidden" name="variant_value[{{ variant_value_row }}][variant_id]" value="{{ variant_value.variant_id }}" />
+                      <input type="text" name="variant_value[{{ variant_value_row }}][name]" value="{{ variant_value.name }}" placeholder="{{ entry_value_name }}" class="form-control" /></td>
+                    <td class="text-left"><input type="text" name="variant_value[{{ variant_value_row }}][keyword]" value="{{ variant_value.keyword }}" placeholder="{{ entry_value_keyword }}" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="variant_value[{{ variant_value_row }}][sort_order]" value="{{ variant_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
+                    <td class="text-left"><select name="variant_value[{{ variant_value_row }}][status]" class="form-control">
+                        <option value="1" {% if variant_value.status %}selected="selected"{% endif %}>{{ text_enabled }}</option>
+                        <option value="0" {% if not variant_value.status %}selected="selected"{% endif %}>{{ text_disabled }}</option>
+                      </select></td>
+                    <td class="text-right"><button type="button" onclick="$('#variant-value-row{{ variant_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+                  </tr>
+                  {% set variant_value_row = variant_value_row + 1 %}
+                  {% endfor %}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="4"></td>
+                    <td class="text-right"><button type="button" onclick="addVariantValue();" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var variant_value_row = {{ variant_value_row }};
+
+function addVariantValue() {
+	var html = '';
+
+	html += '<tr id="variant-value-row' + variant_value_row + '">';
+	html += '  <td class="text-left"><input type="hidden" name="variant_value[' + variant_value_row + '][variant_id]" value="" /><input type="text" name="variant_value[' + variant_value_row + '][name]" value="" placeholder="{{ entry_value_name }}" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="variant_value[' + variant_value_row + '][keyword]" value="" placeholder="{{ entry_value_keyword }}" class="form-control" /></td>';
+	html += '  <td class="text-right"><input type="text" name="variant_value[' + variant_value_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+	html += '  <td class="text-left"><select name="variant_value[' + variant_value_row + '][status]" class="form-control"><option value="1" selected="selected">{{ text_enabled }}</option><option value="0">{{ text_disabled }}</option></select></td>';
+	html += '  <td class="text-right"><button type="button" onclick="$(\'#variant-value-row' + variant_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
+	html += '</tr>';
+
+	$('#variant-value tbody').append(html);
+	variant_value_row++;
+}
+</script>
+{{ footer }}

@@ -13,7 +13,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 			foreach ($products as $product) {
 				if ($product['image']) {
 					$output .= '<url>';
-					$output .= '  <loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
+					$output .= '  <loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id'] . (!empty($product['variant_key']) ? '&variant_key=' . $product['variant_key'] : '')) . '</loc>';
 					$output .= '  <changefreq>weekly</changefreq>';
 					$output .= '  <lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>';
 					$output .= '  <priority>1.0</priority>';
@@ -45,7 +45,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 				foreach ($products as $product) {
 					$output .= '<url>';
-					$output .= '  <loc>' . $this->url->link('product/product', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&product_id=' . $product['product_id']) . '</loc>';
+					$output .= '  <loc>' . $this->url->link('product/product', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&product_id=' . $product['product_id'] . (!empty($product['variant_key']) ? '&variant_key=' . $product['variant_key'] : '')) . '</loc>';
 					$output .= '  <changefreq>weekly</changefreq>';
 					$output .= '  <priority>1.0</priority>';
 					$output .= '</url>';
@@ -93,7 +93,7 @@ class ControllerExtensionFeedGoogleSitemap extends Controller {
 
 			foreach ($products as $product) {
 				$output .= '<url>';
-				$output .= '  <loc>' . $this->url->link('product/product', 'path=' . $new_path . '&product_id=' . $product['product_id']) . '</loc>';
+				$output .= '  <loc>' . $this->url->link('product/product', 'path=' . $new_path . '&product_id=' . $product['product_id'] . (!empty($product['variant_key']) ? '&variant_key=' . $product['variant_key'] : '')) . '</loc>';
 				$output .= '  <changefreq>weekly</changefreq>';
 				$output .= '  <priority>1.0</priority>';
 				$output .= '</url>';

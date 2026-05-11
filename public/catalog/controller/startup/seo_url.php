@@ -73,9 +73,16 @@ class ControllerStartupSeoUrl extends Controller {
 						$this->request->get['route'] = $query->row['query'];
 					}
 				} else {
-					$this->request->get['route'] = 'error/not_found';
+					$variant_route = $this->getProductVariantRoute($part);
 
-					break;
+					if ($variant_route) {
+						$this->request->get['product_id'] = $variant_route['product_id'];
+						$this->request->get['variant_key'] = $variant_route['variant_key'];
+					} else {
+						$this->request->get['route'] = 'error/not_found';
+
+						break;
+					}
 				}
 			}
 
@@ -201,10 +208,11 @@ class ControllerStartupSeoUrl extends Controller {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					if ($query->num_rows && $query->row['keyword']) {
-						$url .= '/' . $query->row['keyword'];
+						$url .= '/' . $query->row['keyword'] . (($data['route'] == 'product/product' && !empty($data['variant_key'])) ? '-' . $data['variant_key'] : '');
 						$seo = true;
 
 						unset($data[$key]);
+						unset($data['variant_key']);
 					}
 				} elseif ($key == 'path') {
 					$categories = explode('_', $value);
@@ -303,6 +311,58 @@ class ControllerStartupSeoUrl extends Controller {
 		if ($this->normalizeUrl($current) != $this->normalizeUrl($canonical)) {
 			$this->response->redirect($canonical, 301);
 		}
+	}
+
+	private function getProductVariantRoute($keyword) {
+		$query = $this->db->query("SELECT su.query, su.keyword FROM " . DB_PREFIX . "seo_url su LEFT JOIN " . DB_PREFIX . "product p ON (su.query = CONCAT('product_id=', p.product_id)) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE su.store_id = '" . (int)$this->config->get('config_store_id') . "' AND su.language_id = '" . (int)$this->config->get('config_language_id') . "' AND su.query LIKE 'product_id=%' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY LENGTH(su.keyword) DESC");
+
+		foreach ($query->rows as $row) {
+			if (strpos($keyword, $row['keyword'] . '-') !== 0) {
+				continue;
+			}
+
+			$product_id = (int)str_replace('product_id=', '', $row['query']);
+			$variant_key = substr($keyword, strlen($row['keyword']) + 1);
+
+			if ($this->isProductVariantKey($product_id, $variant_key)) {
+				return array(
+					'product_id'  => $product_id,
+					'variant_key' => $variant_key
+				);
+			}
+		}
+
+		return false;
+	}
+
+	private function isProductVariantKey($product_id, $variant_key) {
+		$query = $this->db->query("SELECT vg.variant_group_id, vg.sort_order AS group_sort_order, v.variant_id, v.keyword, v.sort_order FROM " . DB_PREFIX . "product_variant pv LEFT JOIN `" . DB_PREFIX . "variant` v ON (pv.variant_id = v.variant_id) LEFT JOIN `" . DB_PREFIX . "variant_group` vg ON (v.variant_group_id = vg.variant_group_id) WHERE pv.product_id = '" . (int)$product_id . "' AND v.status = '1' AND vg.status = '1' ORDER BY vg.sort_order ASC, vg.name ASC, v.sort_order ASC, v.name ASC");
+
+		$groups = array();
+
+		foreach ($query->rows as $row) {
+			$groups[$row['variant_group_id']][] = $row['keyword'];
+		}
+
+		if (!$groups) {
+			return false;
+		}
+
+		$keys = array('');
+
+		foreach ($groups as $keywords) {
+			$new_keys = array();
+
+			foreach ($keys as $key) {
+				foreach ($keywords as $keyword) {
+					$new_keys[] = trim($key . '-' . $keyword, '-');
+				}
+			}
+
+			$keys = $new_keys;
+		}
+
+		return in_array($variant_key, $keys);
 	}
 
 	private function getProductPath($product_id) {

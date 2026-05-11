@@ -145,6 +145,14 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_variant` WHERE product_id = '" . (int)$product_id . "'");
+
+		if (isset($data['product_variant'])) {
+			foreach ((array)$data['product_variant'] as $variant_id) {
+				$this->db->query("INSERT IGNORE INTO `" . DB_PREFIX . "product_variant` SET product_id = '" . (int)$product_id . "', variant_id = '" . (int)$variant_id . "'");
+			}
+		}
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int)$product_id . "'");
 
@@ -248,6 +256,7 @@ class ModelCatalogProduct extends Model {
 			$data['product_reward'] = $this->getProductRewards($product_id);
 			$data['product_special'] = $this->getProductSpecials($product_id);
 			$data['product_category'] = $this->getProductCategories($product_id);
+			$data['product_variant'] = $this->getProductVariants($product_id);
 			$data['product_download'] = $this->getProductDownloads($product_id);
 			$data['product_layout'] = $this->getProductLayouts($product_id);
 			$data['product_store'] = $this->getProductStores($product_id);
@@ -266,6 +275,7 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_image WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_option_value WHERE product_id = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_variant WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related WHERE related_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_related_article WHERE product_id = '" . (int)$product_id . "'");
@@ -462,6 +472,18 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_filter_data;
+	}
+
+	public function getProductVariants($product_id) {
+		$product_variant_data = array();
+
+		$query = $this->db->query("SELECT variant_id FROM `" . DB_PREFIX . "product_variant` WHERE product_id = '" . (int)$product_id . "'");
+
+		foreach ($query->rows as $result) {
+			$product_variant_data[] = $result['variant_id'];
+		}
+
+		return $product_variant_data;
 	}
 
 	public function getProductAttributes($product_id) {

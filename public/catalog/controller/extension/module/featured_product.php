@@ -50,6 +50,7 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 		if (!empty($results)) {
 			
 			foreach ($results as $product) {
+				foreach ($this->model_catalog_product->expandProductVariants(array($product)) as $product) {
 
 				if ($product) {
 					if ($product['image']) {
@@ -85,6 +86,8 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 
 					$data['products'][] = array(
 						'product_id'  => $product['product_id'],
+						'variant_key' => $product['variant_key'] ?? '',
+						'variants'    => $product['variants'] ?? array(),
 						'thumb'       => $image,
 						'name'        => $product['name'],
 						'description' => utf8_substr(strip_tags(html_entity_decode($product['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('theme_default_product_description_length')) . '..',
@@ -92,8 +95,9 @@ class ControllerExtensionModuleFeaturedProduct extends Controller {
 						'special'     => $special,
 						'tax'         => $tax,
 						'rating'      => $rating,
-						'href'        => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+						'href'        => $this->url->link('product/product', 'product_id=' . $product['product_id'] . (!empty($product['variant_key']) ? '&variant_key=' . $product['variant_key'] : ''))
 					);
+				}
 				}
 			}
 		}

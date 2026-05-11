@@ -146,7 +146,7 @@ class ControllerCheckoutCart extends Controller {
 					'reward'    => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
 					'price'     => $price,
 					'total'     => $total,
-					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
+					'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'] . (!empty($product['variant_key']) ? '&variant_key=' . $product['variant_key'] : ''))
 				);
 			}
 
@@ -276,7 +276,8 @@ class ControllerCheckoutCart extends Controller {
 
 		$this->load->model('catalog/product');
 
-		$product_info = $this->model_catalog_product->getProduct($product_id);
+		$variant_key = $this->request->post['variant_key'] ?? '';
+		$product_info = $this->model_catalog_product->getProduct($product_id, $variant_key);
 
 		if ($product_info) {
 			if (isset($this->request->post['quantity'])) {
@@ -289,6 +290,14 @@ class ControllerCheckoutCart extends Controller {
 				$option = array_filter($this->request->post['option']);
 			} else {
 				$option = array();
+			}
+
+			if ($variant_key) {
+				$combination = $this->model_catalog_product->getProductVariantCombinationByKey($product_id, $variant_key);
+
+				if ($combination) {
+					$option['__variant'] = array_column($combination, 'variant_id');
+				}
 			}
 
 			$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
@@ -322,7 +331,7 @@ class ControllerCheckoutCart extends Controller {
 			if (!$json) {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id'] . ($variant_key ? '&variant_key=' . $variant_key : '')), $product_info['name'], $this->url->link('checkout/cart'));
 
 				// Unset all shipping and payment methods
 				unset($this->session->data['shipping_method']);

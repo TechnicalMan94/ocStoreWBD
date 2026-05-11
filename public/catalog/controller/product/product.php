@@ -162,6 +162,7 @@ class ControllerProductProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
+			$variant_url = !empty($product_info['variant_key']) ? '&variant_key=' . $product_info['variant_key'] : '';
 			$url = '';
 
 			if (isset($this->request->get['path'])) {
@@ -214,7 +215,7 @@ class ControllerProductProduct extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $product_info['name'],
-				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
+				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'] . $variant_url)
 			);
 
 			if ($product_info['meta_title']) {
@@ -235,7 +236,7 @@ class ControllerProductProduct extends Controller {
 			
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
-			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
+			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id'] . $variant_url), 'canonical');
 			$this->document->addScript('catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific-popup.css');
 			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment/moment.min.js');
@@ -379,6 +380,8 @@ class ControllerProductProduct extends Controller {
 
 			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$data['rating'] = (int)$product_info['rating'];
+			$data['variant_key'] = $product_info['variant_key'] ?? '';
+			$data['variants'] = $product_info['variants'] ?? array();
 
 			// Captcha
 			if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
@@ -387,7 +390,7 @@ class ControllerProductProduct extends Controller {
 				$data['captcha'] = '';
 			}
 
-			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id']);
+			$data['share'] = $this->url->link('product/product', 'product_id=' . (int)$this->request->get['product_id'] . $variant_url);
 
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
@@ -430,6 +433,8 @@ class ControllerProductProduct extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
+					'variant_key' => $result['variant_key'] ?? '',
+					'variants'    => $result['variants'] ?? array(),
 					'thumb'       => $image,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_default_product_description_length')) . '..',
@@ -438,7 +443,7 @@ class ControllerProductProduct extends Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . (!empty($result['variant_key']) ? '&variant_key=' . $result['variant_key'] : ''))
 				);
 			}
 

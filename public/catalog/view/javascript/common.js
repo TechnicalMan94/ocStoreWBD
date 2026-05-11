@@ -137,11 +137,11 @@ $(document).ready(function() {
 
 // Cart add remove functions
 var cart = {
-	'add': function(product_id, quantity) {
+	'add': function(product_id, quantity, variant_key) {
 		$.ajax({
 			url: 'index.php?route=checkout/cart/add',
 			type: 'post',
-			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
+			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1) + (typeof(variant_key) != 'undefined' && variant_key ? '&variant_key=' + encodeURIComponent(variant_key) : ''),
 			dataType: 'json',
 			beforeSend: function() {
 				$('#cart > button').button('loading');

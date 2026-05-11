@@ -53,8 +53,14 @@ class Cart {
 				$option_weight = 0;
 
 				$option_data = array();
+				$variant_ids = array();
 
 				foreach (json_decode($cart['option']) as $product_option_id => $value) {
+					if ($product_option_id == '__variant') {
+						$variant_ids = is_array($value) ? $value : (array)$value;
+						continue;
+					}
+
 					$option_query = $this->db->query("SELECT po.product_option_id, po.option_id, od.name, o.type FROM " . DB_PREFIX . "product_option po LEFT JOIN `" . DB_PREFIX . "option` o ON (po.option_id = o.option_id) LEFT JOIN " . DB_PREFIX . "option_description od ON (o.option_id = od.option_id) WHERE po.product_option_id = '" . (int)$product_option_id . "' AND po.product_id = '" . (int)$cart['product_id'] . "' AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					if ($option_query->num_rows) {
@@ -170,6 +176,36 @@ class Cart {
 					}
 				}
 
+				$variant_replace = array();
+				$variant_keywords = array();
+
+				if ($variant_ids) {
+					$variant_data = $this->getVariantData($cart['product_id'], $variant_ids);
+
+					foreach ($variant_data as $variant) {
+						$variant_replace['{' . $variant['group_keyword'] . '}'] = $variant['name'];
+						$variant_keywords[] = $variant['keyword'];
+
+						$option_data[] = array(
+							'product_option_id'       => 0,
+							'product_option_value_id' => $variant['variant_id'],
+							'option_id'               => 0,
+							'option_value_id'         => $variant['variant_id'],
+							'name'                    => $variant['group_name'],
+							'value'                   => $variant['name'],
+							'type'                    => 'variant',
+							'quantity'                => '',
+							'subtract'                => '',
+							'price'                   => '',
+							'price_prefix'            => '',
+							'points'                  => '',
+							'points_prefix'           => '',
+							'weight'                  => '',
+							'weight_prefix'           => ''
+						);
+					}
+				}
+
 				$price = $product_query->row['price'];
 
 				// Product Discounts
@@ -245,7 +281,8 @@ class Cart {
 				$product_data[] = array(
 					'cart_id'         => $cart['cart_id'],
 					'product_id'      => $product_query->row['product_id'],
-					'name'            => $product_query->row['name'],
+					'variant_key'     => implode('-', $variant_keywords),
+					'name'            => $this->cleanVariantText(strtr($product_query->row['name'], $variant_replace)),
 					'model'           => $product_query->row['model'],
 					'shipping'        => $product_query->row['shipping'],
 					'image'           => $product_query->row['image'],
@@ -284,6 +321,30 @@ class Cart {
 		} else {
 			$this->db->query("UPDATE " . DB_PREFIX . "cart SET quantity = (quantity + " . (int)$quantity . ") WHERE api_id = '" . (isset($this->session->data['api_id']) ? (int)$this->session->data['api_id'] : 0) . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "' AND product_id = '" . (int)$product_id . "' AND recurring_id = '" . (int)$recurring_id . "' AND `option` = '" . $this->db->escape(json_encode($option)) . "'");
 		}
+	}
+
+	private function getVariantData($product_id, $variant_ids) {
+		$ids = array();
+
+		foreach ($variant_ids as $variant_id) {
+			$ids[] = (int)$variant_id;
+		}
+
+		if (!$ids) {
+			return array();
+		}
+
+		$query = $this->db->query("SELECT vg.name AS group_name, vg.keyword AS group_keyword, vg.sort_order AS group_sort_order, v.variant_id, v.name, v.keyword, v.sort_order FROM `" . DB_PREFIX . "variant` v LEFT JOIN `" . DB_PREFIX . "variant_group` vg ON (v.variant_group_id = vg.variant_group_id) LEFT JOIN `" . DB_PREFIX . "product_variant` pv ON (v.variant_id = pv.variant_id) WHERE pv.product_id = '" . (int)$product_id . "' AND v.variant_id IN (" . implode(',', $ids) . ") AND v.status = '1' AND vg.status = '1' ORDER BY vg.sort_order ASC, vg.name ASC, v.sort_order ASC, v.name ASC");
+
+		return $query->rows;
+	}
+
+	private function cleanVariantText($text) {
+		$text = preg_replace('/\{[a-z0-9_\-]+\}/i', '', $text);
+		$text = preg_replace('/[ \t]+/', ' ', $text);
+		$text = preg_replace('/\s+([,.!?;:])/u', '$1', $text);
+
+		return trim($text);
 	}
 
 	public function update($cart_id, $quantity) {

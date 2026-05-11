@@ -1333,6 +1333,19 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
+		// Variants
+		$this->load->model('catalog/variant');
+
+		$data['variant_groups'] = $this->model_catalog_variant->getAllVariantGroupsWithValues();
+
+		if (isset($this->request->post['product_variant'])) {
+			$data['product_variants'] = $this->request->post['product_variant'];
+		} elseif (isset($this->request->get['product_id'])) {
+			$data['product_variants'] = $this->model_catalog_product->getProductVariants($this->request->get['product_id']);
+		} else {
+			$data['product_variants'] = array();
+		}
+
 		// Attributes
 		$this->load->model('catalog/attribute');
 
