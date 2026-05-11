@@ -4,8 +4,7 @@ storage/modification/*
 storage/logs/*
 storage/download/*
 storage/upload/*
-public/config.php
-public/admin/config.php
+public/system/config/database.php
 public/image/cache/*
 .vscode
 .claude
