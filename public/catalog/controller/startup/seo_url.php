@@ -20,7 +20,7 @@ class ControllerStartupSeoUrl extends Controller {
 			}
 
 			foreach ($parts as $part) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE keyword = '" . $this->db->escape($part) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 				if ($query->num_rows) {
 					$url = explode('=', $query->row['query']);
@@ -64,8 +64,14 @@ class ControllerStartupSeoUrl extends Controller {
 					$this->request->get['route'] = 'product/manufacturer/info';
 				} elseif (isset($this->request->get['information_id'])) {
 					$this->request->get['route'] = 'information/information';
+				} elseif ($this->request->get['_route_'] === '') {
+					$this->request->get['route'] = 'common/home';
 				}
 			}
+		}
+
+		if ($this->config->get('config_seo_url')) {
+			$this->redirectToCanonicalSeoUrl();
 		}
 	}
 
@@ -76,15 +82,53 @@ class ControllerStartupSeoUrl extends Controller {
 
 		$data = array();
 
-		parse_str($url_info['query'], $data);
+		if (isset($url_info['query'])) {
+			parse_str($url_info['query'], $data);
+		}
+
+		$seo = false;
+
+		if (isset($data['route'])) {
+			if ($data['route'] == 'product/product' && isset($data['product_id'])) {
+				$canonical_path = $this->getProductPath($data['product_id']);
+
+				if ($canonical_path) {
+					$data['path'] = $canonical_path;
+					$data = $this->moveKeyAfterRoute($data, 'path');
+				}
+			} elseif ($data['route'] == 'product/category' && isset($data['path'])) {
+				$canonical_path = $this->getCategoryPath($this->getLastPathId($data['path']));
+
+				if ($canonical_path) {
+					$data['path'] = $canonical_path;
+				}
+			}
+		}
 
 		foreach ($data as $key => $value) {
 			if (isset($data['route'])) {
-				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
+				if ($key == 'route') {
+					if (!in_array($value, array('product/product', 'product/category', 'product/manufacturer/info', 'information/information'))) {
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+						if ($query->num_rows) {
+							if ($query->row['keyword']) {
+								$url .= '/' . $query->row['keyword'];
+							}
+
+							$seo = true;
+
+							unset($data[$key]);
+						}
+					}
+				}
+
+				if (isset($data['route']) && (($data['route'] == 'product/product' && $key == 'product_id') || ($data['route'] == 'product/manufacturer/info' && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id'))) {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					if ($query->num_rows && $query->row['keyword']) {
 						$url .= '/' . $query->row['keyword'];
+						$seo = true;
 
 						unset($data[$key]);
 					}
@@ -96,8 +140,10 @@ class ControllerStartupSeoUrl extends Controller {
 
 						if ($query->num_rows && $query->row['keyword']) {
 							$url .= '/' . $query->row['keyword'];
+							$seo = true;
 						} else {
 							$url = '';
+							$seo = false;
 
 							break;
 						}
@@ -122,11 +168,103 @@ class ControllerStartupSeoUrl extends Controller {
 			}
 		}
 
-		if ($url) {
+		if ($url || $seo) {
 			return $url_info['scheme'] . '://' . $url_info['host'] . (isset($url_info['port']) ? ':' . $url_info['port'] : '') . str_replace('/index.php', '', $url_info['path']) . $url . $query;
 		} else {
 			return $link;
 		}
+	}
+
+	private function redirectToCanonicalSeoUrl() {
+		if (!isset($this->request->server['REQUEST_METHOD']) || $this->request->server['REQUEST_METHOD'] != 'GET') {
+			return;
+		}
+
+		if (empty($this->request->get['route']) || $this->request->get['route'] == 'error/not_found') {
+			return;
+		}
+
+		$route = $this->request->get['route'];
+		$args = $this->request->get;
+
+		unset($args['route'], $args['_route_']);
+
+		$canonical = html_entity_decode($this->url->link($route, $args), ENT_QUOTES, 'UTF-8');
+		$current = $this->getCurrentUrl();
+
+		if ($this->normalizeUrl($current) != $this->normalizeUrl($canonical)) {
+			$this->response->redirect($canonical, 301);
+		}
+	}
+
+	private function getProductPath($product_id) {
+		$product_id = (int)$product_id;
+
+		$query = $this->db->query("SELECT p2c.category_id, MAX(cp.level) AS path_depth FROM " . DB_PREFIX . "product_to_category p2c LEFT JOIN " . DB_PREFIX . "category c ON (p2c.category_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_path cp ON (p2c.category_id = cp.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (p2c.category_id = c2s.category_id) WHERE p2c.product_id = '" . $product_id . "' AND c.status = '1' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "' GROUP BY p2c.category_id, p2c.main_category, c.sort_order ORDER BY p2c.main_category DESC, path_depth DESC, c.sort_order ASC, p2c.category_id ASC LIMIT 1");
+
+		if ($query->num_rows) {
+			return $this->getCategoryPath($query->row['category_id']);
+		}
+
+		return '';
+	}
+
+	private function moveKeyAfterRoute($data, $key) {
+		if (!isset($data[$key])) {
+			return $data;
+		}
+
+		$value = $data[$key];
+		unset($data[$key]);
+
+		$result = array();
+
+		foreach ($data as $data_key => $data_value) {
+			$result[$data_key] = $data_value;
+
+			if ($data_key == 'route') {
+				$result[$key] = $value;
+			}
+		}
+
+		return $result;
+	}
+
+	private function getLastPathId($path) {
+		$parts = explode('_', (string)$path);
+
+		return (int)array_pop($parts);
+	}
+
+	private function getCategoryPath($category_id) {
+		$query = $this->db->query("SELECT GROUP_CONCAT(cp.path_id ORDER BY cp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "category_path cp LEFT JOIN " . DB_PREFIX . "category c ON (cp.path_id = c.category_id) LEFT JOIN " . DB_PREFIX . "category_to_store c2s ON (cp.path_id = c2s.category_id) WHERE cp.category_id = '" . (int)$category_id . "' AND c.status = '1' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		return $query->row['path'] ?? '';
+	}
+
+	private function getCurrentUrl() {
+		$scheme = (!empty($this->request->server['HTTPS']) && ($this->request->server['HTTPS'] == 'on' || $this->request->server['HTTPS'] == '1')) ? 'https' : 'http';
+		$host = $this->request->server['HTTP_HOST'] ?? ($this->request->server['SERVER_NAME'] ?? '');
+
+		return $scheme . '://' . $host . ($this->request->server['REQUEST_URI'] ?? '/');
+	}
+
+	private function normalizeUrl($url) {
+		$parts = parse_url(str_replace('&amp;', '&', $url));
+
+		if (!$parts) {
+			return $url;
+		}
+
+		$path = isset($parts['path']) ? rtrim($parts['path'], '/') : '';
+		$query = array();
+
+		if (isset($parts['query'])) {
+			parse_str($parts['query'], $query);
+			ksort($query);
+		}
+
+		return strtolower($parts['scheme'] ?? '') . '://' . strtolower($parts['host'] ?? '') . (isset($parts['port']) ? ':' . $parts['port'] : '') . ($path ?: '/') . ($query ? '?' . http_build_query($query) : '');
 	}
 
 	private function getRoute() {
