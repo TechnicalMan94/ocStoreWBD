@@ -162,6 +162,14 @@ class ControllerProductProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
+			$variant_key = $this->request->get['variant_key'] ?? '';
+
+			if ($this->model_catalog_product->hasProductVariants($product_id) && ($variant_key === '' || empty($product_info['variant_key']) || $product_info['variant_key'] != $variant_key)) {
+				$product_info = false;
+			}
+		}
+
+		if ($product_info) {
 			$variant_url = !empty($product_info['variant_key']) ? '&variant_key=' . $product_info['variant_key'] : '';
 			$url = '';
 

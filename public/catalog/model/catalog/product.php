@@ -127,6 +127,12 @@ class ModelCatalogProduct extends Model {
 		return $groups;
 	}
 
+	public function hasProductVariants($product_id) {
+		$query = $this->db->query("SELECT pv.product_id FROM " . DB_PREFIX . "product_variant pv LEFT JOIN `" . DB_PREFIX . "variant` v ON (pv.variant_id = v.variant_id) LEFT JOIN `" . DB_PREFIX . "variant_group` vg ON (v.variant_group_id = vg.variant_group_id) WHERE pv.product_id = '" . (int)$product_id . "' AND v.status = '1' AND vg.status = '1' LIMIT 1");
+
+		return (bool)$query->num_rows;
+	}
+
 	public function getProductVariantCombinations($product_id) {
 		$groups = $this->getProductVariantGroups($product_id);
 
