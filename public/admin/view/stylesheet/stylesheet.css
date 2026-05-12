@@ -1269,7 +1269,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 /* Bootstrap 5 admin polish */
-body {
+html {
     font-size: 13px;
 }
 
