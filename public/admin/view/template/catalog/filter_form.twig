@@ -55,9 +55,10 @@
                 </tr>
               </thead>
               <tbody>
-              
+
               {% set filter_row = 0 %}
               {% for filter in filters %}
+              {% block filter_item %}
               <tr id="filter-row{{ filter_row }}">
                 <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[{{ filter_row }}][filter_id]" value="{{ filter.filter_id }}" />
                   {% for language in languages %}
@@ -71,10 +72,11 @@
                 <td class="text-right text-nowrap"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>
                 <td class="text-right text-nowrap"><button type="button" onclick="$('#filter-row{{ filter_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
               </tr>
+              {% endblock %}
               {% set filter_row = filter_row + 1 %}
               {% endfor %}
                 </tbody>
-              
+
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
@@ -91,21 +93,11 @@
 var filter_row = {{ filter_row }};
 
 function addFilterRow() {
-	html  = '<tr id="filter-row' + filter_row + '">';
-    html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="filter[' + filter_row + '][filter_id]" value="" />';
-	{% for language in languages %}
-	html += '  <div class="input-group">';
-	html += '    <span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><input type="text" name="filter[' + filter_row + '][filter_description][{{ language.language_id }}][name]" value="" placeholder="{{ entry_name }}" class="form-control" />';
-    html += '  </div>';
-	{% endfor %}
-	html += '  </td>';
-	html += '  <td class="text-right text-nowrap"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>';
-	html += '  <td class="text-right text-nowrap"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
-	html += '</tr>';
-
-	$('#filter tbody').append(html);
-
-	filter_row++;
+  {% set filter_row = '__FILTER_ROW__' %}
+  let html = '{{ block("filter_item")|e("js") }}';
+  html = html.replaceAll('__FILTER_ROW__', filter_row);
+  $('#filter tbody').append(html);
+  filter_row++;
 }
 </script></div>
-{{ footer }} 
+{{ footer }}

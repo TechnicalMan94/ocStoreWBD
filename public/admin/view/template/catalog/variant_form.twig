@@ -72,6 +72,7 @@
                 <tbody>
                   {% set variant_value_row = 0 %}
                   {% for variant_value in variant_values %}
+                  {% block variant_value_item %}
                   <tr id="variant-value-row{{ variant_value_row }}">
                     <td class="text-left"><input type="hidden" name="variant_value[{{ variant_value_row }}][variant_id]" value="{{ variant_value.variant_id }}" />
                       <input type="text" name="variant_value[{{ variant_value_row }}][name]" value="{{ variant_value.name }}" placeholder="{{ entry_value_name }}" class="form-control" /></td>
@@ -83,6 +84,7 @@
                       </select></td>
                     <td class="text-right text-nowrap"><button type="button" onclick="$('#variant-value-row{{ variant_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                   </tr>
+                  {% endblock %}
                   {% set variant_value_row = variant_value_row + 1 %}
                   {% endfor %}
                 </tbody>
@@ -104,18 +106,11 @@
 var variant_value_row = {{ variant_value_row }};
 
 function addVariantValue() {
-	var html = '';
-
-	html += '<tr id="variant-value-row' + variant_value_row + '">';
-	html += '  <td class="text-left"><input type="hidden" name="variant_value[' + variant_value_row + '][variant_id]" value="" /><input type="text" name="variant_value[' + variant_value_row + '][name]" value="" placeholder="{{ entry_value_name }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="variant_value[' + variant_value_row + '][keyword]" value="" placeholder="{{ entry_value_keyword }}" class="form-control" /></td>';
-	html += '  <td class="text-right text-nowrap"><input type="text" name="variant_value[' + variant_value_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-left"><select name="variant_value[' + variant_value_row + '][status]" class="form-control"><option value="1" selected="selected">{{ text_enabled }}</option><option value="0">{{ text_disabled }}</option></select></td>';
-	html += '  <td class="text-right text-nowrap"><button type="button" onclick="$(\'#variant-value-row' + variant_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
-	html += '</tr>';
-
-	$('#variant-value tbody').append(html);
-	variant_value_row++;
+  {% set variant_value_row = '__VARIANT_VALUE_ROW__' %}
+  let html = '{{ block("variant_value_item")|e("js") }}';
+  html = html.replaceAll('__VARIANT_VALUE_ROW__', variant_value_row);
+  $('#variant-value tbody').append(html);
+  variant_value_row++;
 }
 </script>
 {{ footer }}
