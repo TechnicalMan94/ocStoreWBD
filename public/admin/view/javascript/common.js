@@ -264,11 +264,10 @@ $(document).ready(function() {
 
 		$element.popover({
 			html: true,
+			sanitize: false,
 			placement: 'right',
 			trigger: 'manual',
-			content: function() {
-				return '<button type="button" id="button-image" class="btn btn-primary"><i class="bi bi-pencil-square"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="bi bi-trash"></i></button>';
-			}
+			content: '<button type="button" id="button-image" class="btn btn-primary"><i class="bi bi-pencil-square"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="bi bi-trash"></i></button>'
 		});
 
 		$element.popover('show');

@@ -1411,3 +1411,6 @@ label.col-form-label span:after {
     font-weight: normal;
     line-height: 1;
 }
+.img-thumbnail {
+    display: inline-block;
+}
