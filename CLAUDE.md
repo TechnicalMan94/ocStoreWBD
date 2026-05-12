@@ -46,6 +46,8 @@ Default route: catalog `common/home`, admin `common/dashboard`. Error route: `er
 
 Pre-actions can intercept dispatch by returning an `Action` from `execute()`, replacing the main route.
 
+CLI requests skip `startup/login` and `startup/permission` (gated by `php_sapi_name() !== 'cli'`).
+
 ### OCMOD Modification System
 
 `system/modification.xml` and `storage/modification/` implement a file modification layer. The `modification()` function in `startup.php` intercepts every `require`/`include` of `system/` and application files, redirecting to patched copies in `storage/modification/`. This is how extensions hook into core without editing core files. When debugging, remember that `modification()` wraps file paths — the actual executed file may be in `storage/modification/`.
@@ -68,7 +70,7 @@ Twig 3 templates in `catalog/view/template/` and `admin/view/template/`. The `Te
 ### SEO URL System
 
 Handled by `catalog/controller/startup/seo_url.php` (no SeoPro library). This controller:
-- Implements `Url::addRewrite()` to generate SEO-friendly URLs for products, categories, manufacturers, information pages, services, blog articles/categories.
+- Implements `Url::addRewrite()` to generate SEO-friendly URLs for products, categories, manufacturers, information pages, dynamic pages/categories, and legacy blog/service routes.
 - Decodes incoming SEO URLs back to query parameters.
 - Handles product variant URLs (keyword-variant_key format).
 - Redirects to canonical URLs (301) when the current URL doesn't match.
@@ -77,6 +79,69 @@ Handled by `catalog/controller/startup/seo_url.php` (no SeoPro library). This co
 ### Admin UI
 
 Bootstrap 5 + Bootstrap Icons. Custom class `text-right` is used instead of Bootstrap's `text-end` for right alignment (defined in admin stylesheet). Action buttons in table columns should always have `text-nowrap` to prevent wrapping.
+
+### Database-Stored Configuration
+
+Runtime settings (store config, module settings, theme) are stored in the `oc_setting` table (key-value, grouped by `store_id` and `code`), not in PHP files. To change `config_seo_url`, `config_language_id`, template choices, etc., use the admin panel or direct SQL — there is no migration system.
+
+### API Layer
+
+REST API at `catalog/controller/api/`: cart, coupon, currency, customer, login, order, payment, reward, shipping, voucher. Accessible at `/index.php?route=api/<endpoint>`.
+
+## Variant System
+
+Product variants allow SKU-level differentiation within a product. Architecture:
+
+- **Variant Groups** (`oc_variant_group`): named groups like "Color", "Size" with sort order.
+- **Variants** (`oc_variant`): values within groups, each with a unique SEO keyword.
+- **Product-Variant mapping** (`oc_product_variant`): links products to variants with `product_variant_id`, SKU, price delta, quantity, image.
+- No dedicated frontend controller — variant selection is handled inline in `catalog/controller/product/product.php` via `variant_key` query parameter. The product controller uses `$this->load->controller('product/variant')` for the variant selection UI block.
+- **SEO URL integration**: `seo_url.php` resolves URLs in `keyword-variant_key` format via `getProductVariantRoute()` and appends variant_key to product keywords during URL rewriting.
+- **Admin**: `admin/model/catalog/variant.php` (CRUD), `admin/controller/catalog/variant.php` (autocomplete, list).
+
+## Dynamic Sections Module
+
+Unified content system replacing the old separate blog and service modules. Two pre-configured sections:
+
+- **Section 1** (code: `services`) — migrated from old `service` tables
+- **Section 2** (code: `blog`) — migrated from old `article`/`blog_category` tables
+
+### Architecture
+
+- **Sections** (`oc_dynamic_section`): top-level grouping with JSON `settings` column (template choices, etc.).
+- **Pages** (`oc_dynamic_page`): content items belonging to a section. Fields: image, status, noindex, date_available.
+- **Categories** (`oc_dynamic_category`): hierarchical categories within a section (`parent_id`, `path` for tree traversal).
+- **Fields** (`oc_dynamic_field`): custom fields per section (name, code, type).
+- **Field Values** (`oc_dynamic_field_value`): page-to-field value mappings.
+- **Reviews** (`oc_dynamic_review`): per-page reviews.
+
+### Migration
+
+`admin/controller/dynamic/migrate.php` handles one-time migration from legacy tables (`service`, `service_description`, `article`, `article_description`, `blog_category`, etc.) into the new dynamic tables. Old `service_id` SEO URLs are remapped to `dpage_id`, `blog_category_id`/`article_id` similarly remapped. Schema: `install_dynamic_sections.sql`.
+
+### Legacy Blog/Service
+
+The old `controller/blog/`, `controller/service/`, `model/blog/`, etc. directories have been **removed**. SEO URL controller still handles legacy `blog/article`, `blog/category`, `service/service`, `service/category` routes for backward compatibility, but they redirect to dynamic routes (`dynamic/page`, `dynamic/category`).
+
+## Composer Dependencies
+
+Run `composer install` from `storage/` directory. Vendor dir: `storage/vendor/`.
+
+| Package | Version | Role |
+|---------|---------|------|
+| `twig/twig` | ^3.0 | Template engine |
+| `catfan/medoo` | ^2.2 | SQL query builder |
+| `intervention/image` | ^3.0 | Image resizing (used by `resize_image()`) |
+| `ezyang/htmlpurifier` | ^4.17 | HTML sanitization |
+| `phpmailer/phpmailer` | ^6.10 | Email sending |
+
+## ocStore-Specific Features
+
+- **Feed exporters**: `extension/feed/yandex_market.php`, `yandex_turbo.php`, `google_base.php`, `unisender.php` — XML feed generation for marketplaces.
+- **translit()**: Cyrillic-to-Latin transliteration helper for SEO slugs (`system/helper/general.php`).
+- **resize_image()**: Image resizing via Intervention/Image v3, always outputs **WebP** to `image/cache/`. Cache key: `{path}-{width}x{height}.webp`. Supports PNG, JPEG, GIF, WebP sources.
+- **writelog()**: Console/file logging with 14 ANSI colors. Second parameter: filename (logs to `storage/logs/{name}.log`) or color name. Detects AJAX and suppresses console output in that case. Requires `posix_isatty()` for color.
+- **Language**: Only `ru-ru` language files are present.
 
 ## How to Add or Modify
 
@@ -96,18 +161,19 @@ Create `language/<lang>/<path>/<name>.php` populating `$_['key'] = 'value'`. Loa
 
 Controllers pass data to templates via `$this->load->view('path/template', $data)`. The second parameter is an associative array available as Twig variables.
 
-## ocStore-Specific Features
+## Debugging
 
-- **Blog module**: `catalog/controller/blog/` and `admin/controller/blog/` — articles with categories, not present in vanilla OpenCart.
-- **Service module**: `catalog/controller/service/` and `admin/controller/service/` — services with categories, custom fields, similar to products.
-- **Product variants**: `catalog/controller/product/variant.php` and admin variant management — variant groups/values with keywords, auto-generated SEO URLs.
-- **translit()**: Cyrillic-to-Latin transliteration helper for SEO slugs (`system/helper/general.php`).
-- **writelog()**: Console/file logging with ANSI color support (`system/helper/general.php`).
-- **resize_image()**: Image resizing, outputs WebP to `image/cache/` (`system/helper/general.php`).
-- **Language**: Only `ru-ru` language files are present.
-- **Composer vendor**: Lives in `storage/vendor/` (outside web root). Run `composer install` from `storage/` directory.
-- No test suite exists in this repository.
+- **Clear template cache**: delete `storage/cache/template/` contents.
+- **Clear modification cache**: delete `storage/modification/` contents (rebuilds from `system/modification.xml` on next request).
+- **Clear all cache**: `php public/framework tool/cache/clear`.
+- **writelog($data, $filename_or_color)**: write to `storage/logs/{name}.log` or console with color. Use for quick debug output — no debugger required.
+- Remember that `modification()` wraps file paths — when editing `system/` files, the executed version may be cached in `storage/modification/`.
 
+## Known Issues
+
+- **Admin config duplicate key** (`system/config/admin.php` lines 45-51): `view/*/before` is defined twice. The second array overwrites the first, so the `event/theme` handler (priority 1000) is lost. Only `event/language` executes for `view/*/before` in admin.
+
+---
 
 # Доступ к БД всегда в public/system/config/database.php
 Не пиши никаких миграций, просто вноси необходимые изменения в таблицы БД
