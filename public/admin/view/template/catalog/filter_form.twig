@@ -50,7 +50,7 @@
               <thead>
                 <tr>
                   <td class="text-left required">{{ entry_name }}</td>
-                  <td class="text-right">{{ entry_sort_order }}</td>
+                  <td class="text-right text-nowrap">{{ entry_sort_order }}</td>
                   <td></td>
                 </tr>
               </thead>
@@ -68,8 +68,8 @@
                   <div class="text-danger">{{ error_filter[filter_row][language.language_id] }}</div>
                   {% endif %}
                   {% endfor %}</td>
-                <td class="text-right"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>
-                <td class="text-right"><button type="button" onclick="$('#filter-row{{ filter_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+                <td class="text-right text-nowrap"><input type="text" name="filter[{{ filter_row }}][sort_order]" value="{{ filter.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>
+                <td class="text-right text-nowrap"><button type="button" onclick="$('#filter-row{{ filter_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
               </tr>
               {% set filter_row = filter_row + 1 %}
               {% endfor %}
@@ -78,7 +78,7 @@
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-right"><button type="button" onclick="addFilterRow();" data-bs-toggle="tooltip" title="{{ button_filter_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
+                  <td class="text-right text-nowrap"><button type="button" onclick="addFilterRow();" data-bs-toggle="tooltip" title="{{ button_filter_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -99,8 +99,8 @@ function addFilterRow() {
     html += '  </div>';
 	{% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>';
-	html += '  <td class="text-right"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
+	html += '  <td class="text-right text-nowrap"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" /></td>';
+	html += '  <td class="text-right text-nowrap"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#filter tbody').append(html);

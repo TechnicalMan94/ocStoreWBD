@@ -491,7 +491,7 @@
                             <div class="input-group"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}"/></span> <textarea name="product_attribute[{{ attribute_row }}][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control">{{ product_attribute.product_attribute_description[language.language_id] ? product_attribute.product_attribute_description[language.language_id].text }}</textarea>
                             </div>
                           {% endfor %}</td>
-                        <td class="text-right"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+                        <td class="text-right text-nowrap"><button type="button" onclick="$('#attribute-row{{ attribute_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                       </tr>
                       {% set attribute_row = attribute_row + 1 %}
                     {% endfor %}
@@ -500,7 +500,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-right"><button type="button" onclick="addAttribute();" data-bs-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
+                      <td class="text-right text-nowrap"><button type="button" onclick="addAttribute();" data-bs-toggle="tooltip" title="{{ button_attribute_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -615,11 +615,11 @@
                               <thead>
                                 <tr>
                                   <td class="text-left">{{ entry_option_value }}</td>
-                                  <td class="text-right">{{ entry_quantity }}</td>
+                                  <td class="text-right text-nowrap">{{ entry_quantity }}</td>
                                   <td class="text-left">{{ entry_subtract }}</td>
-                                  <td class="text-right">{{ entry_price }}</td>
-                                  <td class="text-right">{{ entry_option_points }}</td>
-                                  <td class="text-right">{{ entry_weight }}</td>
+                                  <td class="text-right text-nowrap">{{ entry_price }}</td>
+                                  <td class="text-right text-nowrap">{{ entry_option_points }}</td>
+                                  <td class="text-right text-nowrap">{{ entry_weight }}</td>
                                   <td></td>
                                 </tr>
                               </thead>
@@ -652,7 +652,7 @@
 
 
                                       </select> <input type="hidden" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][product_option_value_id]" value="{{ product_option_value.product_option_value_id }}"/></td>
-                                    <td class="text-right"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
+                                    <td class="text-right text-nowrap"><input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][quantity]" value="{{ product_option_value.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
                                     <td class="text-left"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][subtract]" class="form-control">
 
 
@@ -674,7 +674,7 @@
 
 
                                       </select></td>
-                                    <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="form-control">
+                                    <td class="text-right text-nowrap"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price_prefix]" class="form-control">
 
 
                                         {% if product_option_value.price_prefix == '+' %}
@@ -706,7 +706,7 @@
 
 
                                       </select> <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][price]" value="{{ product_option_value.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
-                                    <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" class="form-control">
+                                    <td class="text-right text-nowrap"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points_prefix]" class="form-control">
 
 
                                         {% if product_option_value.points_prefix == '+' %}
@@ -738,7 +738,7 @@
 
 
                                       </select> <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][points]" value="{{ product_option_value.points }}" placeholder="{{ entry_points }}" class="form-control"/></td>
-                                    <td class="text-right"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" class="form-control">
+                                    <td class="text-right text-nowrap"><select name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight_prefix]" class="form-control">
 
 
                                         {% if product_option_value.weight_prefix == '+' %}
@@ -770,7 +770,7 @@
 
 
                                       </select> <input type="text" name="product_option[{{ option_row }}][product_option_value][{{ option_value_row }}][weight]" value="{{ product_option_value.weight }}" placeholder="{{ entry_weight }}" class="form-control"/></td>
-                                    <td class="text-right"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+                                    <td class="text-right text-nowrap"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                                   </tr>
                                   {% set option_value_row = option_value_row + 1 %}
                                 {% endfor %}
@@ -908,9 +908,9 @@
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
-                      <td class="text-right">{{ entry_quantity }}</td>
-                      <td class="text-right">{{ entry_priority }}</td>
-                      <td class="text-right">{{ entry_price }}</td>
+                      <td class="text-right text-nowrap">{{ entry_quantity }}</td>
+                      <td class="text-right text-nowrap">{{ entry_priority }}</td>
+                      <td class="text-right text-nowrap">{{ entry_price }}</td>
                       <td class="text-left">{{ entry_date_start }}</td>
                       <td class="text-left">{{ entry_date_end }}</td>
                       <td></td>
@@ -930,9 +930,9 @@
                               {% endif %}
                             {% endfor %}
                           </select></td>
-                        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
-                        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-                        <td class="text-right"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_discount[{{ discount_row }}][quantity]" value="{{ product_discount.quantity }}" placeholder="{{ entry_quantity }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_discount[{{ discount_row }}][priority]" value="{{ product_discount.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_discount[{{ discount_row }}][price]" value="{{ product_discount.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-left" style="width: 20%;">
                           <div class="input-group date">
                             <input type="text" name="product_discount[{{ discount_row }}][date_start]" value="{{ product_discount.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control"/> 
@@ -966,8 +966,8 @@
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
-                      <td class="text-right">{{ entry_priority }}</td>
-                      <td class="text-right">{{ entry_price }}</td>
+                      <td class="text-right text-nowrap">{{ entry_priority }}</td>
+                      <td class="text-right text-nowrap">{{ entry_price }}</td>
                       <td class="text-left">{{ entry_date_start }}</td>
                       <td class="text-left">{{ entry_date_end }}</td>
                       <td></td>
@@ -999,8 +999,8 @@
 
 
                           </select></td>
-                        <td class="text-right"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
-                        <td class="text-right"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_special[{{ special_row }}][priority]" value="{{ product_special.priority }}" placeholder="{{ entry_priority }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_special[{{ special_row }}][price]" value="{{ product_special.price }}" placeholder="{{ entry_price }}" class="form-control"/></td>
                         <td class="text-left" style="width: 20%;">
                           <div class="input-group date">
                             <input type="text" name="product_special[{{ special_row }}][date_start]" value="{{ product_special.date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control"/> 
@@ -1049,7 +1049,7 @@
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_additional_image }}</td>
-                      <td class="text-right">{{ entry_sort_order }}</td>
+                      <td class="text-right text-nowrap">{{ entry_sort_order }}</td>
                       <td></td>
                     </tr>
                   </thead>
@@ -1059,7 +1059,7 @@
                     {% for product_image in product_images %}
                       <tr id="image-row{{ image_row }}">
                         <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-oc-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/></td>
-                        <td class="text-right"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                         <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                       </tr>
                       {% set image_row = image_row + 1 %}
@@ -1087,7 +1087,7 @@
                   <thead>
                     <tr>
                       <td class="text-left">{{ entry_customer_group }}</td>
-                      <td class="text-right">{{ entry_reward }}</td>
+                      <td class="text-right text-nowrap">{{ entry_reward }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -1095,7 +1095,7 @@
                     {% for customer_group in customer_groups %}
                       <tr>
                         <td class="text-left">{{ customer_group.name }}</td>
-                        <td class="text-right"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="text" name="product_reward[{{ customer_group.customer_group_id }}][points]" value="{{ product_reward[customer_group.customer_group_id] ? product_reward[customer_group.customer_group_id].points }}" class="form-control"/></td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -1477,7 +1477,7 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
 	  html += '<div class="input-group"><span class="input-group-text"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span><textarea name="product_attribute[' + attribute_row + '][product_attribute_description][{{ language.language_id }}][text]" rows="5" placeholder="{{ entry_text }}" class="form-control"></textarea></div>';
     {% endfor %}
 	  html += '  </td>';
-	  html += '  <td class="text-right"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
+	  html += '  <td class="text-right text-nowrap"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	  html += '</tr>';
 
 	  $('#attribute tbody').append(html);
@@ -1599,11 +1599,11 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
 			  html += '  	 <thead>';
 			  html += '      <tr>';
 			  html += '        <td class="text-left">{{ entry_option_value }}</td>';
-			  html += '        <td class="text-right">{{ entry_quantity }}</td>';
+			  html += '        <td class="text-right text-nowrap">{{ entry_quantity }}</td>';
 			  html += '        <td class="text-left">{{ entry_subtract }}</td>';
-			  html += '        <td class="text-right">{{ entry_price }}</td>';
-			  html += '        <td class="text-right">{{ entry_option_points }}</td>';
-			  html += '        <td class="text-right">{{ entry_weight }}</td>';
+			  html += '        <td class="text-right text-nowrap">{{ entry_price }}</td>';
+			  html += '        <td class="text-right text-nowrap">{{ entry_option_points }}</td>';
+			  html += '        <td class="text-right text-nowrap">{{ entry_weight }}</td>';
 			  html += '        <td></td>';
 			  html += '      </tr>';
 			  html += '  	 </thead>';
@@ -1667,22 +1667,22 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
 	  html += '  <td class="text-left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][option_value_id]" class="form-control">';
 	  html += $('#option-values' + option_row).html();
 	  html += '  </select><input type="hidden" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][product_option_value_id]" value="" /></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
 	  html += '  <td class="text-left"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][subtract]" class="form-control">';
 	  html += '    <option value="1">{{ text_yes }}</option>';
 	  html += '    <option value="0">{{ text_no }}</option>';
 	  html += '  </select></td>';
-	  html += '  <td class="text-right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="form-control">';
+	  html += '  <td class="text-right text-nowrap"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price_prefix]" class="form-control">';
 	  html += '    <option value="+">+</option>';
 	  html += '    <option value="-">-</option>';
 	  html += '  </select>';
 	  html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
-	  html += '  <td class="text-right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]" class="form-control">';
+	  html += '  <td class="text-right text-nowrap"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points_prefix]" class="form-control">';
 	  html += '    <option value="+">+</option>';
 	  html += '    <option value="-">-</option>';
 	  html += '  </select>';
 	  html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][points]" value="" placeholder="{{ entry_points }}" class="form-control" /></td>';
-	  html += '  <td class="text-right"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]" class="form-control">';
+	  html += '  <td class="text-right text-nowrap"><select name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight_prefix]" class="form-control">';
 	  html += '    <option value="+">+</option>';
 	  html += '    <option value="-">-</option>';
 	  html += '  </select>';
@@ -1707,9 +1707,9 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
 	  html += '    <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
     {% endfor %}
 	  html += '  </select></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="{{ entry_quantity }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
 	  html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div></td>';
 	  html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div></td>';
 	  html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
@@ -1735,8 +1735,8 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
 	  html += '      <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name|escape('js') }}</option>';
     {% endfor %}
 	  html += '  </select></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="{{ entry_priority }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="{{ entry_price }}" class="form-control" /></td>';
 	  html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div></td>';
 	  html += '  <td class="text-left" style="width: 20%;"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" class="form-control" /><button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button></div></td>';
 	  html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
@@ -1759,7 +1759,7 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
   function addImage() {
 	  html = '<tr id="image-row' + image_row + '">';
 	  html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-oc-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
-	  html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	  html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	  html += '</tr>';
 

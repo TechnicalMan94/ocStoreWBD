@@ -183,7 +183,7 @@
                 <tr>
                   <td class="text-left required">{{ entry_option_value }}</td>
                   <td class="text-center">{{ entry_image }}</td>
-                  <td class="text-right">{{ entry_sort_order }}</td>
+                  <td class="text-right text-nowrap">{{ entry_sort_order }}</td>
                   <td></td>
                 </tr>
               </thead>
@@ -203,8 +203,8 @@
                   {% endfor %}</td>
                 <td class="text-left"><a href="" id="thumb-image{{ option_value_row }}" data-oc-toggle="image" class="img-thumbnail"><img src="{{ option_value.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
                   <input type="hidden" name="option_value[{{ option_value_row }}][image]" value="{{ option_value.image }}" id="input-image{{ option_value_row }}" /></td>
-                <td class="text-right"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control" /></td>
-                <td class="text-right"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+                <td class="text-right text-nowrap"><input type="text" name="option_value[{{ option_value_row }}][sort_order]" value="{{ option_value.sort_order }}" class="form-control" /></td>
+                <td class="text-right text-nowrap"><button type="button" onclick="$('#option-value-row{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
               </tr>
               {% set option_value_row = option_value_row + 1 %}
               {% endfor %}
@@ -213,7 +213,7 @@
               <tfoot>
                 <tr>
                   <td colspan="3"></td>
-                  <td class="text-right"><button type="button" onclick="addOptionValue();" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
+                  <td class="text-right text-nowrap"><button type="button" onclick="addOptionValue();" data-bs-toggle="tooltip" title="{{ button_option_value_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -245,8 +245,8 @@ function addOptionValue() {
 	{% endfor %}
 	html += '  </td>';
     html += '  <td class="text-center"><a href="" id="thumb-image' + option_value_row + '" data-oc-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
-	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	html += '  <td class="text-right"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
+	html += '  <td class="text-right text-nowrap"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+	html += '  <td class="text-right text-nowrap"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#option-value tbody').append(html);

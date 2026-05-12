@@ -45,7 +45,7 @@
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'value' %}
+                  <td class="text-right text-nowrap">{% if sort == 'value' %}
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
                     {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
@@ -55,7 +55,7 @@
                     {% else %}
                     <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -69,9 +69,9 @@
                     {% endif %}</td>
                   <td class="text-left">{{ currency.title }}</td>
                   <td class="text-left">{{ currency.code }}</td>
-                  <td class="text-right">{{ currency.value }}</td>
+                  <td class="text-right text-nowrap">{{ currency.value }}</td>
                   <td class="text-left">{{ currency.date_modified }}</td>
-                  <td class="text-right"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap"><a href="{{ currency.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

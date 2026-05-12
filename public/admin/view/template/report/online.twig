@@ -50,7 +50,7 @@
                     <td class="text-left">{{ column_url }}</td>
                     <td class="text-left">{{ column_referer }}</td>
                     <td class="text-left">{{ column_date_added }}</td>
-                    <td class="text-right">{{ column_action }}</td>
+                    <td class="text-right text-nowrap">{{ column_action }}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@
                   <td class="text-left">{% if customer.referer %}<a href="{{ customer.referer }}" target="_blank">{{ customer.referer|split('', 30)|join('<br/>
                     ') }}</a>{% endif %}</td>
                   <td class="text-left">{{ customer.date_added }}</td>
-                  <td class="text-right">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>{% else %}
+                  <td class="text-right text-nowrap">{% if customer.customer_id %}<a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>{% else %}
                     <button type="button" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary" disabled="disabled"><i class="bi bi-pencil-square"></i></button>
                     {% endif %}</td>
                 </tr>

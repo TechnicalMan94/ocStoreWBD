@@ -2,9 +2,9 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <td class="text-right">{{ column_order_id }}</td>
+        <td class="text-right text-nowrap">{{ column_order_id }}</td>
         <td class="text-left">{{ column_customer }}</td>
-        <td class="text-right">{{ column_amount }}</td>
+        <td class="text-right text-nowrap">{{ column_amount }}</td>
         <td class="text-left">{{ column_date_added }}</td>
       </tr>
     </thead>
@@ -12,9 +12,9 @@
       {% if histories %}
       {% for history in histories %}
       <tr>
-        <td class="text-right">{{ history.order_id }}</td>
+        <td class="text-right text-nowrap">{{ history.order_id }}</td>
         <td class="text-left">{{ history.customer }}</td>
-        <td class="text-right">{{ history.amount }}</td>
+        <td class="text-right text-nowrap">{{ history.amount }}</td>
         <td class="text-left">{{ history.date_added }}</td>
       </tr>
       {% endfor %}

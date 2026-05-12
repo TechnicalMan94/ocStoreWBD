@@ -118,7 +118,7 @@
           <thead>
             <tr>
               <td class="text-left">{{ column_date_added }}</td>
-              <td class="text-right">{{ column_amount }}</td>
+              <td class="text-right text-nowrap">{{ column_amount }}</td>
               <td class="text-left">{{ column_type }}</td>
             </tr>
           </thead>
@@ -127,7 +127,7 @@
             {% for transaction in transactions %}
             <tr>
               <td class="text-left">{{ transaction.date_added }}</td>
-              <td class="text-right">{{ transaction.amount }}</td>
+              <td class="text-right text-nowrap">{{ transaction.amount }}</td>
               <td class="text-left">{{ transaction.type }}</td>
             </tr>
             {% endfor %}

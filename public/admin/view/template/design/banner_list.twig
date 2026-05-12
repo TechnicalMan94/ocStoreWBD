@@ -45,7 +45,7 @@
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -59,7 +59,7 @@
                     {% endif %}</td>
                   <td class="text-left">{{ banner.name }}</td>
                   <td class="text-left">{{ banner.status }}</td>
-                  <td class="text-right"><a href="{{ banner.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap"><a href="{{ banner.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

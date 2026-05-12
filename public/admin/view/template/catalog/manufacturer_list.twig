@@ -40,17 +40,17 @@
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'sort_order' %}
+                  <td class="text-right text-nowrap">{% if sort == 'sort_order' %}
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
                     {% endif %}</td>
-				  <td class="text-right">{% if sort == 'noindex' %}
+				  <td class="text-right text-nowrap">{% if sort == 'noindex' %}
                     <a href="{{ sort_noindex }}" class="{{ order|lower }}">{{ column_noindex }}</a>
                     {% else %}
                     <a href="{{ sort_noindex }}">{{ column_noindex }}</a>
 					{% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -63,9 +63,9 @@
                     <input type="checkbox" name="selected[]" value="{{ manufacturer.manufacturer_id }}" />
                     {% endif %}</td>
                   <td class="text-left">{{ manufacturer.name }}</td>
-                  <td class="text-right">{{ manufacturer.sort_order }}</td>
-				  <td class="text-right">{{ manufacturer.noindex }}</td>
-                  <td class="text-right">
+                  <td class="text-right text-nowrap">{{ manufacturer.sort_order }}</td>
+				  <td class="text-right text-nowrap">{{ manufacturer.noindex }}</td>
+                  <td class="text-right text-nowrap">
 					<a target="_blank" href="{{ manufacturer.href_shop }}" data-bs-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="bi bi-eye"></i></a>
 					<a href="{{ manufacturer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
 				  </td>

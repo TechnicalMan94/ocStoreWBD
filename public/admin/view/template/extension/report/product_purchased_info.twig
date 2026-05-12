@@ -70,8 +70,8 @@
               <tr>
                 <td class="text-left">{{ column_name }}</td>
                 <td class="text-left">{{ column_model }}</td>
-                <td class="text-right">{{ column_quantity }}</td>
-                <td class="text-right">{{ column_total }}</td>
+                <td class="text-right text-nowrap">{{ column_quantity }}</td>
+                <td class="text-right text-nowrap">{{ column_total }}</td>
               </tr>
             </thead>
             <tbody>
@@ -81,8 +81,8 @@
             <tr>
               <td class="text-left">{{ product.name }}</td>
               <td class="text-left">{{ product.model }}</td>
-              <td class="text-right">{{ product.quantity }}</td>
-              <td class="text-right">{{ product.total }}</td>
+              <td class="text-right text-nowrap">{{ product.quantity }}</td>
+              <td class="text-right text-nowrap">{{ product.total }}</td>
             </tr>
             {% endfor %}
             {% else %}

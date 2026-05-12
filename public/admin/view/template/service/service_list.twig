@@ -99,7 +99,7 @@
                       <td class="text-left">{% if sort == 'pd.name' %} <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a> {% else %} <a href="{{ sort_name }}">{{ column_name }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.noindex' %} <a href="{{ sort_noindex }}" class="{{ order|lower }}">{{ column_noindex }}</a> {% else %} <a href="{{ sort_noindex }}">{{ column_noindex }}</a> {% endif %}</td>
-					  <td class="text-right">{{ column_action }}</td>
+					  <td class="text-right text-nowrap">{{ column_action }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,7 +116,7 @@
                     <td class="text-left">{{ service.name }}</td>
                     <td class="text-left">{{ service.status }}</td>
 					<td class="text-left">{{ service.noindex }}</td>
-                    <td class="text-right">
+                    <td class="text-right text-nowrap">
 						<a target="_blank" href="{{ service.href_shop }}" data-bs-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="bi bi-eye"></i></a>
 						<a href="{{ service.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
 					</td>

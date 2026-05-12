@@ -3,9 +3,9 @@
     <thead>
       <tr>
         <td class="text-left">{{ column_ip }}</td>
-        <td class="text-right">{{ column_total }}</td>
+        <td class="text-right text-nowrap">{{ column_total }}</td>
         <td class="text-left">{{ column_date_added }}</td>
-        <td class="text-right">{{ column_action }}</td>
+        <td class="text-right text-nowrap">{{ column_action }}</td>
       </tr>
     </thead>
     <tbody>
@@ -13,9 +13,9 @@
       {% for ip in ips %}
       <tr>
         <td class="text-left"><a href="http://www.geoiptool.com/en/?IP={{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
-        <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
+        <td class="text-right text-nowrap"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
         <td class="text-left">{{ ip.date_added }}</td>
-        <td class="text-right"><button type="button" value="{{ ip.ip }}" data-bs-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+        <td class="text-right text-nowrap"><button type="button" value="{{ ip.ip }}" data-bs-toggle="tooltip" title="{{ button_remove }}" data-loading-text="{{ text_loading }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
       </tr>
       {% endfor %}
       {% else %}

@@ -4,7 +4,7 @@
       <tr>
         <td class="text-left">{{ column_date_added }}</td>
         <td class="text-left">{{ column_description }}</td>
-        <td class="text-right">{{ column_points }}</td>
+        <td class="text-right text-nowrap">{{ column_points }}</td>
       </tr>
     </thead>
     <tbody>
@@ -13,13 +13,13 @@
       <tr>
         <td class="text-left">{{ reward.date_added }}</td>
         <td class="text-left">{{ reward.description }}</td>
-        <td class="text-right">{{ reward.points }}</td>
+        <td class="text-right text-nowrap">{{ reward.points }}</td>
       </tr>
       {% endfor %}
       <tr>
         <td></td>
-        <td class="text-right"><b>{{ text_balance }}</b></td>
-        <td class="text-right">{{ balance }}</td>
+        <td class="text-right text-nowrap"><b>{{ text_balance }}</b></td>
+        <td class="text-right text-nowrap">{{ balance }}</td>
       </tr>
       {% else %}
       <tr>

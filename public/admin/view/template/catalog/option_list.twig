@@ -40,12 +40,12 @@
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'o.sort_order' %}
+                  <td class="text-right text-nowrap">{% if sort == 'o.sort_order' %}
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -58,8 +58,8 @@
                     <input type="checkbox" name="selected[]" value="{{ option.option_id }}" />
                     {% endif %}</td>
                   <td class="text-left">{{ option.name }}</td>
-                  <td class="text-right">{{ option.sort_order }}</td>
-                  <td class="text-right"><a href="{{ option.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap">{{ option.sort_order }}</td>
+                  <td class="text-right text-nowrap"><a href="{{ option.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

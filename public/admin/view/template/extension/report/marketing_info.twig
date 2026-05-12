@@ -70,9 +70,9 @@
               <tr>
                 <td class="text-left">{{ column_campaign }}</td>
                 <td class="text-left">{{ column_code }}</td>
-                <td class="text-right">{{ column_clicks }}</td>
-                <td class="text-right">{{ column_orders }}</td>
-                <td class="text-right">{{ column_total }}</td>
+                <td class="text-right text-nowrap">{{ column_clicks }}</td>
+                <td class="text-right text-nowrap">{{ column_orders }}</td>
+                <td class="text-right text-nowrap">{{ column_total }}</td>
               </tr>
             </thead>
             <tbody>
@@ -82,9 +82,9 @@
             <tr>
               <td class="text-left">{{ marketing.campaign }}</td>
               <td class="text-left">{{ marketing.code }}</td>
-              <td class="text-right">{{ marketing.clicks }}</td>
-              <td class="text-right">{{ marketing.orders }}</td>
-              <td class="text-right">{{ marketing.total }}</td>
+              <td class="text-right text-nowrap">{{ marketing.clicks }}</td>
+              <td class="text-right text-nowrap">{{ marketing.orders }}</td>
+              <td class="text-right text-nowrap">{{ marketing.total }}</td>
             </tr>
             {% endfor %}
             {% else %}

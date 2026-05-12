@@ -50,7 +50,7 @@
                     {% else %}
                     <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -65,7 +65,7 @@
                   <td class="text-left">{{ user.username }}</td>
                   <td class="text-left">{{ user.status }}</td>
                   <td class="text-left">{{ user.date_added }}</td>
-                  <td class="text-right"><a href="{{ user.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap"><a href="{{ user.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

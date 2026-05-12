@@ -45,7 +45,7 @@
                     {% else %}
                     <a href="{{ sort_code }}">{{ column_code }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'discount' %}
+                  <td class="text-right text-nowrap">{% if sort == 'discount' %}
                     <a href="{{ sort_discount }}" class="{{ order|lower }}">{{ column_discount }}</a>
                     {% else %}
                     <a href="{{ sort_discount }}">{{ column_discount }}</a>
@@ -65,7 +65,7 @@
                     {% else %}
                     <a href="{{ sort_status }}">{{ column_status }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -79,11 +79,11 @@
                     {% endif %}</td>
                   <td class="text-left">{{ coupon.name }}</td>
                   <td class="text-left">{{ coupon.code }}</td>
-                  <td class="text-right">{{ coupon.discount }}</td>
+                  <td class="text-right text-nowrap">{{ coupon.discount }}</td>
                   <td class="text-left">{{ coupon.date_start }}</td>
                   <td class="text-left">{{ coupon.date_end }}</td>
                   <td class="text-left">{{ coupon.status }}</td>
-                  <td class="text-right"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap"><a href="{{ coupon.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

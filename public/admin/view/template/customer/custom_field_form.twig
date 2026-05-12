@@ -365,7 +365,7 @@
                 <thead>
                   <tr>
                     <td class="text-left required">{{ entry_custom_value }}</td>
-                    <td class="text-right">{{ entry_sort_order }}</td>
+                    <td class="text-right text-nowrap">{{ entry_sort_order }}</td>
                     <td></td>
                   </tr>
                 </thead>
@@ -383,7 +383,7 @@
                     <div class="text-danger">{{ error_custom_field_value[custom_field_value_row][language.language_id] }}</div>
                     {% endif %}
                     {% endfor %}</td>
-                  <td class="text-right"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
+                  <td class="text-right text-nowrap"><input type="text" name="custom_field_value[{{ custom_field_value_row }}][sort_order]" value="{{ custom_field_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
                   <td class="text-left"><button onclick="$('#custom-field-value-row{{ custom_field_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                 </tr>
                 {% set custom_field_value_row = custom_field_value_row + 1 %}
@@ -455,7 +455,7 @@ function addCustomFieldValue() {
     html += '    </div>';
 	{% endfor %}
 	html += '  </td>';
-	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+	html += '  <td class="text-right text-nowrap"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	html += '</tr>';
 

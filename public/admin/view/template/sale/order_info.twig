@@ -88,7 +88,7 @@
               </tr>
               <tr>
                 <td>{{ text_reward }}</td>
-                <td class="text-right">{{ reward }}</td>
+                <td class="text-right text-nowrap">{{ reward }}</td>
                 <td class="text-center">{% if customer and reward %}
                     {% if not reward_total %}
                       <button id="button-reward-add" data-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_reward_add }}" class="btn btn-success btn-xs"><i class="bi bi-plus-circle"></i></button>
@@ -104,7 +104,7 @@
                   {% if affiliate %}
                     (<a href="{{ affiliate }}">{{ affiliate_firstname }} {{ affiliate_lastname }}</a>)
                   {% endif %}</td>
-                <td class="text-right">{{ commission }}</td>
+                <td class="text-right text-nowrap">{{ commission }}</td>
                 <td class="text-center">{% if affiliate %}
                     {% if not commission_total %}
                       <button id="button-commission-add" data-loading-text="{{ text_loading }}" data-bs-toggle="tooltip" title="{{ button_commission_add }}" class="btn btn-success btn-xs"><i class="bi bi-plus-circle"></i></button>
@@ -146,9 +146,9 @@
             <tr>
               <td class="text-left">{{ column_product }}</td>
               <td class="text-left">{{ column_model }}</td>
-              <td class="text-right">{{ column_quantity }}</td>
-              <td class="text-right">{{ column_price }}</td>
-              <td class="text-right">{{ column_total }}</td>
+              <td class="text-right text-nowrap">{{ column_quantity }}</td>
+              <td class="text-right text-nowrap">{{ column_price }}</td>
+              <td class="text-right text-nowrap">{{ column_total }}</td>
             </tr>
           </thead>
           <tbody>
@@ -164,24 +164,24 @@
                       <small> - {{ option.name }}: <a href="{{ option.href }}">{{ option.value }}</a></small> {% endif %}
                   {% endfor %}</td>
                 <td class="text-left">{{ product.model }}</td>
-                <td class="text-right">{{ product.quantity }}</td>
-                <td class="text-right">{{ product.price }}</td>
-                <td class="text-right">{{ product.total }}</td>
+                <td class="text-right text-nowrap">{{ product.quantity }}</td>
+                <td class="text-right text-nowrap">{{ product.price }}</td>
+                <td class="text-right text-nowrap">{{ product.total }}</td>
               </tr>
             {% endfor %}
             {% for voucher in vouchers %}
               <tr>
                 <td class="text-left"><a href="{{ voucher.href }}">{{ voucher.description }}</a></td>
                 <td class="text-left"></td>
-                <td class="text-right">1</td>
-                <td class="text-right">{{ voucher.amount }}</td>
-                <td class="text-right">{{ voucher.amount }}</td>
+                <td class="text-right text-nowrap">1</td>
+                <td class="text-right text-nowrap">{{ voucher.amount }}</td>
+                <td class="text-right text-nowrap">{{ voucher.amount }}</td>
               </tr>
             {% endfor %}
             {% for total in totals %}
               <tr>
                 <td colspan="4" class="text-right">{{ total.title }}</td>
-                <td class="text-right">{{ total.text }}</td>
+                <td class="text-right text-nowrap">{{ total.text }}</td>
               </tr>
             {% endfor %}
           </tbody>

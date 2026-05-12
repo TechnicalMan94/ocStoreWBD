@@ -40,7 +40,7 @@
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_name }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'tr.rate' %}
+                  <td class="text-right text-nowrap">{% if sort == 'tr.rate' %}
                     <a href="{{ sort_rate }}" class="{{ order|lower }}">{{ column_rate }}</a>
                     {% else %}
                     <a href="{{ sort_rate }}">{{ column_rate }}</a>
@@ -65,7 +65,7 @@
                     {% else %}
                     <a href="{{ sort_date_modified }}">{{ column_date_modified }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -78,12 +78,12 @@
                     <input type="checkbox" name="selected[]" value="{{ tax_rate.tax_rate_id }}" />
                     {% endif %}</td>
                   <td class="text-left">{{ tax_rate.name }}</td>
-                  <td class="text-right">{{ tax_rate.rate }}</td>
+                  <td class="text-right text-nowrap">{{ tax_rate.rate }}</td>
                   <td class="text-left">{{ tax_rate.type }}</td>
                   <td class="text-left">{{ tax_rate.geo_zone }}</td>
                   <td class="text-left">{{ tax_rate.date_added }}</td>
                   <td class="text-left">{{ tax_rate.date_modified }}</td>
-                  <td class="text-right"><a href="{{ tax_rate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap"><a href="{{ tax_rate.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

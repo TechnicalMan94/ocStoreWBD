@@ -40,12 +40,12 @@
                     {% else %}
                     <a href="{{ sort_name }}">{{ column_group }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'fg.sort_order' %}
+                  <td class="text-right text-nowrap">{% if sort == 'fg.sort_order' %}
                     <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
                     {% else %}
                     <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -58,8 +58,8 @@
                     <input type="checkbox" name="selected[]" value="{{ filter.filter_group_id }}" />
                     {% endif %}</td>
                   <td class="text-left">{{ filter.name }}</td>
-                  <td class="text-right">{{ filter.sort_order }}</td>
-                  <td class="text-right"><a href="{{ filter.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap">{{ filter.sort_order }}</td>
+                  <td class="text-right text-nowrap"><a href="{{ filter.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

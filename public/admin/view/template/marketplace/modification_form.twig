@@ -53,7 +53,7 @@
                     <td class="text-left">{{column_id}}</td>
                     <td class="text-left">{{column_code}}</td>
                     <td class="text-left">{{column_date_added}}</td>
-                    <td class="text-right">{{column_restore}} <a type="button" href="{{history}}" data-bs-toggle="tooltip" title="{{button_history}}" class="btn btn-secondary"><i class="bi bi-trash"></i></a></td>
+                    <td class="text-right text-nowrap">{{column_restore}} <a type="button" href="{{history}}" data-bs-toggle="tooltip" title="{{button_history}}" class="btn btn-secondary"><i class="bi bi-trash"></i></a></td>
                   </tr>
                   </thead>
                   <tbody>
@@ -63,7 +63,7 @@
                         <td class="text-left">{{backup['backup_id']}}</td>
                         <td class="text-left">{{backup['code']}}</td>
                         <td class="text-left">{{backup['date_added']}}</td>
-                        <td class="text-right"><a href="{{backup['restore']}}" data-bs-toggle="tooltip" title="{{button_restore}}" class="btn btn-primary"><i class="bi bi-share"></i></a></td>
+                        <td class="text-right text-nowrap"><a href="{{backup['restore']}}" data-bs-toggle="tooltip" title="{{button_restore}}" class="btn btn-primary"><i class="bi bi-share"></i></a></td>
                       </tr>
                     {% endfor %}
                   {% else %}

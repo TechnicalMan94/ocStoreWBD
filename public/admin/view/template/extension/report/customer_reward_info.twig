@@ -45,10 +45,10 @@
                 <td class="text-left">{{ column_email }}</td>
                 <td class="text-left">{{ column_customer_group }}</td>
                 <td class="text-left">{{ column_status }}</td>
-                <td class="text-right">{{ column_points }}</td>
-                <td class="text-right">{{ column_orders }}</td>
-                <td class="text-right">{{ column_total }}</td>
-                <td class="text-right">{{ column_action }}</td>
+                <td class="text-right text-nowrap">{{ column_points }}</td>
+                <td class="text-right text-nowrap">{{ column_orders }}</td>
+                <td class="text-right text-nowrap">{{ column_total }}</td>
+                <td class="text-right text-nowrap">{{ column_action }}</td>
               </tr>
             </thead>
             <tbody>
@@ -60,10 +60,10 @@
               <td class="text-left">{{ customer.email }}</td>
               <td class="text-left">{{ customer.customer_group }}</td>
               <td class="text-left">{{ customer.status }}</td>
-              <td class="text-right">{{ customer.points }}</td>
-              <td class="text-right">{{ customer.orders }}</td>
-              <td class="text-right">{{ customer.total }}</td>
-              <td class="text-right"><a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+              <td class="text-right text-nowrap">{{ customer.points }}</td>
+              <td class="text-right text-nowrap">{{ customer.orders }}</td>
+              <td class="text-right text-nowrap">{{ customer.total }}</td>
+              <td class="text-right text-nowrap"><a href="{{ customer.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
             </tr>
             {% endfor %}
             {% else %}

@@ -64,7 +64,7 @@
                   <tr>
                     <td class="text-left">{{ entry_value_name }}</td>
                     <td class="text-left">{{ entry_value_keyword }}</td>
-                    <td class="text-right">{{ entry_sort_order }}</td>
+                    <td class="text-right text-nowrap">{{ entry_sort_order }}</td>
                     <td class="text-left">{{ entry_status }}</td>
                     <td></td>
                   </tr>
@@ -76,12 +76,12 @@
                     <td class="text-left"><input type="hidden" name="variant_value[{{ variant_value_row }}][variant_id]" value="{{ variant_value.variant_id }}" />
                       <input type="text" name="variant_value[{{ variant_value_row }}][name]" value="{{ variant_value.name }}" placeholder="{{ entry_value_name }}" class="form-control" /></td>
                     <td class="text-left"><input type="text" name="variant_value[{{ variant_value_row }}][keyword]" value="{{ variant_value.keyword }}" placeholder="{{ entry_value_keyword }}" class="form-control" /></td>
-                    <td class="text-right"><input type="text" name="variant_value[{{ variant_value_row }}][sort_order]" value="{{ variant_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
+                    <td class="text-right text-nowrap"><input type="text" name="variant_value[{{ variant_value_row }}][sort_order]" value="{{ variant_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control" /></td>
                     <td class="text-left"><select name="variant_value[{{ variant_value_row }}][status]" class="form-control">
                         <option value="1" {% if variant_value.status %}selected="selected"{% endif %}>{{ text_enabled }}</option>
                         <option value="0" {% if not variant_value.status %}selected="selected"{% endif %}>{{ text_disabled }}</option>
                       </select></td>
-                    <td class="text-right"><button type="button" onclick="$('#variant-value-row{{ variant_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
+                    <td class="text-right text-nowrap"><button type="button" onclick="$('#variant-value-row{{ variant_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                   </tr>
                   {% set variant_value_row = variant_value_row + 1 %}
                   {% endfor %}
@@ -89,7 +89,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="4"></td>
-                    <td class="text-right"><button type="button" onclick="addVariantValue();" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
+                    <td class="text-right text-nowrap"><button type="button" onclick="addVariantValue();" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -109,9 +109,9 @@ function addVariantValue() {
 	html += '<tr id="variant-value-row' + variant_value_row + '">';
 	html += '  <td class="text-left"><input type="hidden" name="variant_value[' + variant_value_row + '][variant_id]" value="" /><input type="text" name="variant_value[' + variant_value_row + '][name]" value="" placeholder="{{ entry_value_name }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="text" name="variant_value[' + variant_value_row + '][keyword]" value="" placeholder="{{ entry_value_keyword }}" class="form-control" /></td>';
-	html += '  <td class="text-right"><input type="text" name="variant_value[' + variant_value_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+	html += '  <td class="text-right text-nowrap"><input type="text" name="variant_value[' + variant_value_row + '][sort_order]" value="0" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
 	html += '  <td class="text-left"><select name="variant_value[' + variant_value_row + '][status]" class="form-control"><option value="1" selected="selected">{{ text_enabled }}</option><option value="0">{{ text_disabled }}</option></select></td>';
-	html += '  <td class="text-right"><button type="button" onclick="$(\'#variant-value-row' + variant_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
+	html += '  <td class="text-right text-nowrap"><button type="button" onclick="$(\'#variant-value-row' + variant_value_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
 	html += '</tr>';
 
 	$('#variant-value tbody').append(html);

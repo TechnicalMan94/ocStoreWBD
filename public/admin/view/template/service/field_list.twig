@@ -33,9 +33,9 @@
                   <td class="text-left"><a href="{{ sort_name }}">{{ column_name }}</a></td>
                   <td class="text-left"><a href="{{ sort_code }}">{{ column_code }}</a></td>
                   <td class="text-left"><a href="{{ sort_type }}">{{ column_type }}</a></td>
-                  <td class="text-right"><a href="{{ sort_order }}">{{ column_sort_order }}</a></td>
+                  <td class="text-right text-nowrap"><a href="{{ sort_order }}">{{ column_sort_order }}</a></td>
                   <td class="text-left"><a href="{{ sort_status }}">{{ column_status }}</a></td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -46,9 +46,9 @@
                   <td class="text-left">{{ field.name }}</td>
                   <td class="text-left"><code>{{ field.code }}</code></td>
                   <td class="text-left">{{ field.type }}</td>
-                  <td class="text-right">{{ field.sort_order }}</td>
+                  <td class="text-right text-nowrap">{{ field.sort_order }}</td>
                   <td class="text-left">{{ field.status }}</td>
-                  <td class="text-right"><a href="{{ field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil"></i></a></td>
+                  <td class="text-right text-nowrap"><a href="{{ field.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

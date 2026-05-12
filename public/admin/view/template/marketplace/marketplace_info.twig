@@ -67,7 +67,7 @@
                     <tr>
                       <td>{{ download.name }}</td>
                       <td>{{ download.date_added }}</td>
-                      <td class="text-right">{% if download.extension_install_id %}
+                      <td class="text-right text-nowrap">{% if download.extension_install_id %}
                         <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="{{ download.extension_install_id }}" data-loading="{{ text_loading }}" class="btn btn-danger"><i class="bi bi-trash"></i> {{ button_uninstall }}</button>
                         {% elseif download.filename|slice(-10) == '.ocmod.zip' %}
                         <button type="button" data-install="{{ download.extension_download_id }}" data-uninstall="" data-loading="{{ text_loading }}" class="btn btn-primary"{% if not download.status %} disabled{% endif %}><i class="bi bi-download"></i> {{ button_install }}</button>

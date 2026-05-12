@@ -101,8 +101,8 @@
                 <td class="text-left">{{ column_date_start }}</td>
                 <td class="text-left">{{ column_date_end }}</td>
                 <td class="text-left">{{ column_title }}</td>
-                <td class="text-right">{{ column_orders }}</td>
-                <td class="text-right">{{ column_total }}</td>
+                <td class="text-right text-nowrap">{{ column_orders }}</td>
+                <td class="text-right text-nowrap">{{ column_total }}</td>
               </tr>
             </thead>
             <tbody>
@@ -113,8 +113,8 @@
               <td class="text-left">{{ order.date_start }}</td>
               <td class="text-left">{{ order.date_end }}</td>
               <td class="text-left">{{ order.title }}</td>
-              <td class="text-right">{{ order.orders }}</td>
-              <td class="text-right">{{ order.total }}</td>
+              <td class="text-right text-nowrap">{{ order.orders }}</td>
+              <td class="text-right text-nowrap">{{ order.total }}</td>
             </tr>
             {% endfor %}
             {% else %}

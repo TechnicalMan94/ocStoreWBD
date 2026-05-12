@@ -12,8 +12,8 @@
           <tr>
             <td class="text-left">{{ column_name }}</td>
             <td class="text-left">{{ column_model }}</td>
-            <td class="text-right">{{ column_viewed }}</td>
-            <td class="text-right">{{ column_percent }}</td>
+            <td class="text-right text-nowrap">{{ column_viewed }}</td>
+            <td class="text-right text-nowrap">{{ column_percent }}</td>
           </tr>
         </thead>
         <tbody>
@@ -23,8 +23,8 @@
         <tr>
           <td class="text-left">{{ product.name }}</td>
           <td class="text-left">{{ product.model }}</td>
-          <td class="text-right">{{ product.viewed }}</td>
-          <td class="text-right">{{ product.percent }}</td>
+          <td class="text-right text-nowrap">{{ product.viewed }}</td>
+          <td class="text-right text-nowrap">{{ product.percent }}</td>
         </tr>
         {% endfor %}
         {% else %}

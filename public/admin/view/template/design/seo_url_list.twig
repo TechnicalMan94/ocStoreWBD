@@ -153,7 +153,7 @@
                       <td class="text-left">{% if sort == 'keyword' %}<a href="{{ sort_keyword }}" class="{{ order|lower }}">{{ column_keyword }}</a> {% else %}<a href="{{ sort_keyword }}">{{ column_keyword }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'store' %}<a href="{{ sort_store }}" class="{{ order|lower }}">{{ column_store }}</a>{% else %}<a href="{{ sort_store }}">{{ column_store }}</a>{% endif %}</td>
                       <td class="text-left">{% if sort == 'language' %}<a href="{{ sort_language }}" class="{{ order|lower }}">{{ column_language }}</a>{% else %}<a href="{{ sort_language }}">{{ column_language }}</a>{% endif %}</td>
-                      <td class="text-right">{{ column_action }}</td>
+                      <td class="text-right text-nowrap">{{ column_action }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -170,7 +170,7 @@
                     <td class="text-left">{{ seo_url.keyword }}</td>
                     <td class="text-left">{{ seo_url.store }}</td>
                     <td class="text-left">{{ seo_url.language }}</td>
-                    <td class="text-right"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                    <td class="text-right text-nowrap"><a href="{{ seo_url.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                   </tr>
                   {% endfor %}
                   {% else %}

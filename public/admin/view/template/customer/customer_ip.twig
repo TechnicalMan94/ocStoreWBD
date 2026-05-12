@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <td class="text-left">{{ column_ip }}</td>
-        <td class="text-right">{{ column_total }}</td>
+        <td class="text-right text-nowrap">{{ column_total }}</td>
         <td class="text-left">{{ column_date_added }}</td>
       </tr>
     </thead>
@@ -12,7 +12,7 @@
       {% for ip in ips %}
       <tr>
         <td class="text-left"><a href="//whatismyipaddress.com/ip/{{ ip.ip }}" target="_blank">{{ ip.ip }}</a></td>
-        <td class="text-right"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
+        <td class="text-right text-nowrap"><a href="{{ ip.filter_ip }}" target="_blank">{{ ip.total }}</a></td>
         <td class="text-left">{{ ip.date_added }}</td>      </tr>
       {% endfor %}
       {% else %}

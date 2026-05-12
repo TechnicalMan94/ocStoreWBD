@@ -246,11 +246,11 @@
                       <td class="text-center">{{ column_image }}</td>
                       <td class="text-left">{% if sort == 'pd.name' %} <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a> {% else %} <a href="{{ sort_name }}">{{ column_name }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.model' %} <a href="{{ sort_model }}" class="{{ order|lower }}">{{ column_model }}</a> {% else %} <a href="{{ sort_model }}">{{ column_model }}</a> {% endif %}</td>
-                      <td class="text-right">{% if sort == 'p.price' %} <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a> {% else %} <a href="{{ sort_price }}">{{ column_price }}</a> {% endif %}</td>
-                      <td class="text-right">{% if sort == 'p.quantity' %} <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a> {% else %} <a href="{{ sort_quantity }}">{{ column_quantity }}</a> {% endif %}</td>
+                      <td class="text-right text-nowrap">{% if sort == 'p.price' %} <a href="{{ sort_price }}" class="{{ order|lower }}">{{ column_price }}</a> {% else %} <a href="{{ sort_price }}">{{ column_price }}</a> {% endif %}</td>
+                      <td class="text-right text-nowrap">{% if sort == 'p.quantity' %} <a href="{{ sort_quantity }}" class="{{ order|lower }}">{{ column_quantity }}</a> {% else %} <a href="{{ sort_quantity }}">{{ column_quantity }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.status' %} <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a> {% else %} <a href="{{ sort_status }}">{{ column_status }}</a> {% endif %}</td>
                       <td class="text-left">{% if sort == 'p.noindex' %} <a href="{{ sort_noindex }}" class="{{ order|lower }}">{{ column_noindex }}</a> {% else %} <a href="{{ sort_noindex }}">{{ column_noindex }}</a> {% endif %}</td>
-					  <td class="text-right">{{ column_action }}</td>
+					  <td class="text-right text-nowrap">{{ column_action }}</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -266,15 +266,15 @@
                     <td class="text-center">{% if product.image %} <img src="{{ product.image }}" alt="{{ product.name }}" class="img-thumbnail" /> {% else %} <span class="img-thumbnail list"><i class="bi bi-camera fs-2"></i></span> {% endif %}</td>
                     <td class="text-left">{{ product.name }}</td>
                     <td class="text-left">{{ product.model }}</td>
-                    <td class="text-right">{% if product.special %} <span style="text-decoration: line-through;">{{ product.price }}</span><br/>
+                    <td class="text-right text-nowrap">{% if product.special %} <span style="text-decoration: line-through;">{{ product.price }}</span><br/>
                       <div class="text-danger">{{ product.special }}</div>
                       {% else %}
                       {{ product.price }}
                       {% endif %}</td>
-                    <td class="text-right">{% if product.quantity <= 0 %} <span class="badge text-bg-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="badge text-bg-danger">{{ product.quantity }}</span> {% else %} <span class="badge text-bg-success">{{ product.quantity }}</span> {% endif %}</td>
+                    <td class="text-right text-nowrap">{% if product.quantity <= 0 %} <span class="badge text-bg-warning">{{ product.quantity }}</span> {% elseif product.quantity <= 5 %} <span class="badge text-bg-danger">{{ product.quantity }}</span> {% else %} <span class="badge text-bg-success">{{ product.quantity }}</span> {% endif %}</td>
                     <td class="text-left">{{ product.status }}</td>
 					<td class="text-left">{{ product.noindex }}</td>
-                    <td class="text-right">
+                    <td class="text-right text-nowrap">
 						<a target="_blank" href="{{ product.href_shop }}" data-bs-toggle="tooltip" title="{{ button_shop }}" class="btn btn-success"><i class="bi bi-eye"></i></a>
 						<a href="{{ product.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
 					</td>

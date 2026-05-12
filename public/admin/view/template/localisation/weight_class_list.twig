@@ -45,12 +45,12 @@
                     {% else %}
                     <a href="{{ sort_unit }}">{{ column_unit }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{% if sort == 'value' %}
+                  <td class="text-right text-nowrap">{% if sort == 'value' %}
                     <a href="{{ sort_value }}" class="{{ order|lower }}">{{ column_value }}</a>
                     {% else %}
                     <a href="{{ sort_value }}">{{ column_value }}</a>
                     {% endif %}</td>
-                  <td class="text-right">{{ column_action }}</td>
+                  <td class="text-right text-nowrap">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -64,8 +64,8 @@
                     {% endif %}</td>
                   <td class="text-left">{{ weight_class.title }}</td>
                   <td class="text-left">{{ weight_class.unit }}</td>
-                  <td class="text-right">{{ weight_class.value }}</td>
-                  <td class="text-right"><a href="{{ weight_class.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
+                  <td class="text-right text-nowrap">{{ weight_class.value }}</td>
+                  <td class="text-right text-nowrap"><a href="{{ weight_class.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
