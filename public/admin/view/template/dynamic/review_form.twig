@@ -25,54 +25,22 @@
       </div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-review" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 col-form-label" for="input-author">{{ entry_author }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="author" value="{{ author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control" />
-              {% if error_author %}<div class="text-danger">{{ error_author }}</div>{% endif %}
+          {{ form({type: 'text', name: 'author', value: author, label: entry_author, placeholder: entry_author, id: 'input-author', required: 1, error: error_author}) }}
+
+          {{ form({type: 'textarea', name: 'text', value: text, label: entry_text, placeholder: entry_text, id: 'input-text', rows: 8, required: 1, error: error_text}) }}
+
+          {{ form({type: 'radio', name: 'rating', value: rating, label: entry_rating, id: 'input-rating', required: 1, inline: 1, options: [[1, 2, 3, 4, 5], [1, 2, 3, 4, 5]], error: error_rating}) }}
+
+          {% set date_added_field %}
+            <div class="input-group datetime">
+              <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" id="input-date-added" class="form-control" />
+              <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
             </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 col-form-label" for="input-text">{{ entry_text }}</label>
-            <div class="col-sm-10">
-              <textarea name="text" cols="60" rows="8" placeholder="{{ entry_text }}" id="input-text" class="form-control">{{ text }}</textarea>
-              {% if error_text %}<div class="text-danger">{{ error_text }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 col-form-label">{{ entry_rating }}</label>
-            <div class="col-sm-10">
-              <label class="radio-inline">{% if rating == 1 %}<input type="radio" name="rating" value="1" checked="checked" /> 1{% else %}<input type="radio" name="rating" value="1" /> 1{% endif %}</label>
-              <label class="radio-inline">{% if rating == 2 %}<input type="radio" name="rating" value="2" checked="checked" /> 2{% else %}<input type="radio" name="rating" value="2" /> 2{% endif %}</label>
-              <label class="radio-inline">{% if rating == 3 %}<input type="radio" name="rating" value="3" checked="checked" /> 3{% else %}<input type="radio" name="rating" value="3" /> 3{% endif %}</label>
-              <label class="radio-inline">{% if rating == 4 %}<input type="radio" name="rating" value="4" checked="checked" /> 4{% else %}<input type="radio" name="rating" value="4" /> 4{% endif %}</label>
-              <label class="radio-inline">{% if rating == 5 %}<input type="radio" name="rating" value="5" checked="checked" /> 5{% else %}<input type="radio" name="rating" value="5" /> 5{% endif %}</label>
-              {% if error_rating %}<div class="text-danger">{{ error_rating }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-date-added">{{ entry_date_added }}</label>
-            <div class="col-sm-3">
-              <div class="input-group datetime">
-                <input type="text" name="date_added" value="{{ date_added }}" placeholder="{{ entry_date_added }}" data-date-format="YYYY-MM-DD HH:mm:ss" id="input-date-added" class="form-control" />
-                <button type="button" class="btn btn-secondary"><i class="bi bi-calendar3"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
-            <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                {% if status %}
-                <option value="1" selected="selected">{{ text_enabled }}</option>
-                <option value="0">{{ text_disabled }}</option>
-                {% else %}
-                <option value="1">{{ text_enabled }}</option>
-                <option value="0" selected="selected">{{ text_disabled }}</option>
-                {% endif %}
-              </select>
-            </div>
-          </div>
+          {% endset %}
+
+          {{ form({type: 'content', content: date_added_field, label: entry_date_added, id: 'input-date-added', label_col: 2, input_col: 3}) }}
+
+          {{ form({type: 'select', name: 'status', value: status, label: entry_status, id: 'input-status', options: [[1, 0], [text_enabled, text_disabled]]}) }}
         </form>
       </div>
     </div>

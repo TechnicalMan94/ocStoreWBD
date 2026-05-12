@@ -25,68 +25,21 @@
       </div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-section" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              {% if error_name %}<div class="text-danger">{{ error_name }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 col-form-label" for="input-code">{{ entry_code }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
-              {% if error_code %}<div class="text-danger">{{ error_code }}</div>{% endif %}
-              <small class="form-text text-muted">{{ help_code }}</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-sort-order">{{ entry_sort_order }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
-            <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                <option value="1" {% if status %}selected="selected"{% endif %}>{{ text_enabled }}</option>
-                <option value="0" {% if not status %}selected="selected"{% endif %}>{{ text_disabled }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-icon">{{ entry_icon }}</label>
-            <div class="col-sm-10">
-              <select name="settings[icon]" id="input-icon" class="form-control">
-                {% for key, name in icons %}
-                <option value="{{ key }}" {% if setting_icon == key %}selected="selected"{% endif %}>{{ name }} ({{ key }})</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-category-template">{{ entry_category_template }}</label>
-            <div class="col-sm-10">
-              <select name="settings[category_template]" id="input-category-template" class="form-control">
-                <option value="">{{ text_select }}</option>
-                {% for key, name in category_templates %}
-                <option value="{{ key }}" {% if setting_category_template == key %}selected="selected"{% endif %}>{{ name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-page-template">{{ entry_page_template }}</label>
-            <div class="col-sm-10">
-              <select name="settings[page_template]" id="input-page-template" class="form-control">
-                <option value="">{{ text_select }}</option>
-                {% for key, name in page_templates %}
-                <option value="{{ key }}" {% if setting_page_template == key %}selected="selected"{% endif %}>{{ name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
+          {{ form({type: 'text', name: 'name', value: name, label: entry_name, placeholder: entry_name, id: 'input-name', required: 1, error: error_name}) }}
+
+          {% set code_help %}<small class="form-text text-muted">{{ help_code }}</small>{% endset %}
+
+          {{ form({type: 'text', name: 'code', value: code, label: entry_code, placeholder: entry_code, id: 'input-code', required: 1, error: error_code, appendcontent: code_help}) }}
+
+          {{ form({type: 'text', name: 'sort_order', value: sort_order, label: entry_sort_order, placeholder: entry_sort_order, id: 'input-sort-order'}) }}
+
+          {{ form({type: 'select', name: 'status', value: status, label: entry_status, id: 'input-status', options: [[1, 0], [text_enabled, text_disabled]]}) }}
+
+          {{ form({type: 'select', name: 'settings[icon]', value: setting_icon, label: entry_icon, id: 'input-icon', options: [icons|keys, icons|map(name => name)]}) }}
+
+          {{ form({type: 'select', name: 'settings[category_template]', value: setting_category_template, label: entry_category_template, id: 'input-category-template', noselect: text_select, options: [category_templates|keys, category_templates|map(name => name)]}) }}
+
+          {{ form({type: 'select', name: 'settings[page_template]', value: setting_page_template, label: entry_page_template, id: 'input-page-template', noselect: text_select, options: [page_templates|keys, page_templates|map(name => name)]}) }}
         </form>
       </div>
     </div>

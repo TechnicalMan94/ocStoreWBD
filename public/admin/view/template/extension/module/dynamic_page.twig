@@ -24,59 +24,24 @@
       <div class="card-header"><h3 class="card-title mb-0"><i class="bi bi-pencil-square"></i> {{ text_edit }}</h3></div>
       <div class="card-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-name">{{ entry_name }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
-              {% if error_name %}<div class="text-danger">{{ error_name }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-section">{{ entry_section }}</label>
-            <div class="col-sm-10">
-              <select name="section_id" id="input-section" class="form-control">
-                <option value="0">{{ text_select }}</option>
-                {% for section in sections %}
-                <option value="{{ section.section_id }}"{% if section.section_id == section_id %} selected="selected"{% endif %}>{{ section.name }}</option>
-                {% endfor %}
-              </select>
-              {% if error_section %}<div class="text-danger">{{ error_section }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-source-page"><span data-bs-toggle="tooltip" title="{{ help_source_page }}">{{ entry_source_page }}</span></label>
-            <div class="col-sm-10">
-              <input type="text" name="source_page_name" value="{{ source_page_name }}" placeholder="{{ text_none }}" id="input-source-page" class="form-control" />
-              <input type="hidden" name="source_page_id" value="{{ source_page_id }}" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-limit">{{ entry_limit }}</label>
-            <div class="col-sm-10"><input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control" /></div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-width">{{ entry_width }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
-              {% if error_width %}<div class="text-danger">{{ error_width }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-height">{{ entry_height }}</label>
-            <div class="col-sm-10">
-              <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
-              {% if error_height %}<div class="text-danger">{{ error_height }}</div>{% endif %}
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
-            <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                <option value="1"{% if status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
-                <option value="0"{% if not status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
-              </select>
-            </div>
-          </div>
+          {{ form({type: 'text', name: 'name', value: name, label: entry_name, placeholder: entry_name, id: 'input-name', error: error_name}) }}
+
+          {{ form({type: 'select', name: 'section_id', value: section_id, label: entry_section, id: 'input-section', noselect: text_select, options: [sections|map(section => section.section_id), sections|map(section => section.name)], error: error_section}) }}
+
+          {% set source_page_field %}
+            <input type="text" name="source_page_name" value="{{ source_page_name }}" placeholder="{{ text_none }}" id="input-source-page" class="form-control" />
+            <input type="hidden" name="source_page_id" value="{{ source_page_id }}" />
+          {% endset %}
+
+          {{ form({type: 'content', content: source_page_field, label: entry_source_page, help: help_source_page, id: 'input-source-page'}) }}
+
+          {{ form({type: 'text', name: 'limit', value: limit, label: entry_limit, placeholder: entry_limit, id: 'input-limit'}) }}
+
+          {{ form({type: 'text', name: 'width', value: width, label: entry_width, placeholder: entry_width, id: 'input-width', error: error_width}) }}
+
+          {{ form({type: 'text', name: 'height', value: height, label: entry_height, placeholder: entry_height, id: 'input-height', error: error_height}) }}
+
+          {{ form({type: 'select', name: 'status', value: status, label: entry_status, id: 'input-status', options: [[1, 0], [text_enabled, text_disabled]]}) }}
         </form>
       </div>
     </div>

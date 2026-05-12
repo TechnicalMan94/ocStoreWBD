@@ -41,6 +41,27 @@ final class Twig {
         $loader = new \Twig\Loader\ChainLoader([$loader1, $loader2]);
 
         $twig = new \Twig\Environment($loader, $config);
+        $twig->addFunction(new \Twig\TwigFunction('form', function (\Twig\Environment $env, array $context, array $data = []) {
+            return $env->render('tool/form.twig', array_merge($context, $data));
+        }, ['needs_environment' => true, 'needs_context' => true, 'is_safe' => ['html']]));
+        $twig->addFunction(new \Twig\TwigFunction('resize', function ($filename, $width, $height, $mode = 'resize') {
+            $image_new = function_exists('resize_image') ? resize_image($filename, $width, $height, $mode) : '';
+
+            if (!$image_new) {
+                return '';
+            }
+
+            if (substr($image_new, 0, strlen(DIR_IMAGE)) == DIR_IMAGE) {
+                return $image_new;
+            }
+
+            $catalog = (defined('HTTPS_CATALOG') ? HTTPS_CATALOG : (defined('HTTP_CATALOG') ? HTTP_CATALOG : ''));
+
+            return $catalog ? $catalog . 'image/' . $image_new : 'image/' . $image_new;
+        }));
+        $twig->addFilter(new \Twig\TwigFilter('unescape', function ($value) {
+            return html_entity_decode((string)$value, ENT_QUOTES, 'UTF-8');
+        }, ['is_safe' => ['html']]));
 
         return $twig->render($filename . '.twig', $this->data);
     } catch (\Exception $e) {

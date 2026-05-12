@@ -182,10 +182,6 @@ REST API в `catalog/controller/api/`: cart, coupon, currency, customer, login, 
 - **Field Values** (`oc_dynamic_field_value`): значения полей для страниц.
 - **Reviews** (`oc_dynamic_review`): отзывы к страницам.
 
-### Миграция
-
-`admin/controller/dynamic/migrate.php` — одноразовая миграция из legacy-таблиц (`service`, `service_description`, `article`, `article_description`, `blog_category` и т.д.) в новые dynamic-таблицы. Старые `service_id` SEO URL перенаправляются на `dpage_id`, `blog_category_id`/`article_id` аналогично. Схема: `install_dynamic_sections.sql`.
-
 ### Legacy Blog/Service
 
 Старые директории `controller/blog/`, `controller/service/`, `model/blog/` и т.д. **удалены**. SEO URL контроллер всё ещё обрабатывает legacy-маршруты `blog/article`, `blog/category`, `service/service`, `service/category` для обратной совместимости, но перенаправляет их на dynamic-маршруты (`dynamic/page`, `dynamic/category`).

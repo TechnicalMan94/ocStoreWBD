@@ -1,0 +1,237 @@
+{% set input_id = id ? id : 'input-' ~ random %}
+{% if mode != 'only' %}<div class="{% if mode != 'short' %}form-group{% endif %} {% if required %}required{% endif %} {% if class %}{{ class }}{% endif %}" {{ sort ? 'data-sort="'~sort~'"' }} id="form-group-{{ input_id }}">{% endif %}
+
+{% if label is defined and mode != 'only' %}
+<label class="{% if mode != 'short' %}col-sm-{{ label_col ? label_col : (col ? (12 - col) : '2') }}{% endif %} col-form-label" for="{{ input_id }}">{% if help %}<span data-bs-toggle="tooltip" title="{{ help|e('html') }}">{% endif %}{{ label }}{% if help %}</span>{% endif %}</label>
+{% endif %}
+{% if mode != 'only' %}<div class="{% if mode != 'short' %}col-sm-{{ input_col ? input_col : (col ? col : '10') }} {% else %}form-input-inline{% endif %}">{% endif %}
+{% if append or prepend %}
+<div class="input-group">
+{% if prepend %}
+<div class="input-group-addon">{{ prepend }}</div>
+{% endif %}
+{% endif %}
+{% if after %}
+<div class="form-inline">
+{% endif %}
+{% if type in ['text','number','email','tel', 'password', 'color', 'date', 'datetime-local', 'time'] %}
+	
+	<input {% if readonly or type == 'icon' %}readonly{% endif %} type="{{ type }}" {% if step %}step="{{ step }}"{% endif %} {% if disabled %}disabled{% endif %} style="{% if type in ['color','number', 'time'] %}max-width: 100px;{% endif %}{% if width %}width: {{ width }};{% endif %}" name="{{ name }}" value="{{ value }}" placeholder="{{ placeholder }}" id="{{ input_id }}" class="form-control" {% if required == 2 %}required{% endif %}/>
+{% elseif type in ['submit', 'button'] %}
+	<button id="{{ input_id }}" type="{{ type }}" {% if onclick %}onclick="{{ onclick }}"{% endif %} class="btn {{ btn ? btn : 'btn-primary' }}">{{ placeholder }}</button>
+{% elseif type in ['autocomplete'] %}
+	{% set path = ('/' in autocomplete ? autocomplete : ('catalog/' ~ autocomplete)) %}
+	
+	{% if not resultvaluename %}
+	{% if autocomplete == 'product' %}
+	{% set resultvaluename = 'product_id' %}
+	{% elseif autocomplete == 'category' %}
+	{% set resultvaluename = 'category_id' %}
+	{% elseif autocomplete == 'attribute' %}
+	{% set resultvaluename = 'attribute_id' %}
+	{% else %}
+	{% set resultvaluename = autocomplete ~ '_id' %}
+	{% endif %}
+	{% endif %}
+	<input type="text" value="{{ valuename }}" {% if required == 2 %}required{% endif %} name="{{ inputname }}" placeholder="{{ placeholder }}" id="{{ input_id }}-input" class="form-control"/>
+	{% if '[]' in name %}
+	<div class="well well-sm list" style="height: 150px; overflow: auto;"> 
+	
+		{% for k,i in values[0] %}
+		
+		{% set vv = {name: values[1][k], value: values[0][k]} %}
+		
+		{% block added_element %}
+		
+		<div id="value-{{ vv.value }}"><i  onclick="$(this).parent().remove();" class="bi bi-dash-circle"></i> {{ vv.name }}
+			<input type="hidden" name="{{ name }}" value="{{ vv.value }}"/>
+		  </div>
+		  {% endblock %}
+		{% endfor %}
+	</div>
+	{% else %}
+
+	<input type="hidden" id="{{ input_id }}-input-hidden" name="{{ name }}" value="{{ value }}">
+	
+	{% endif %}
+	{% if allow_delete %}
+	<div class="d-flex mt-1">
+		<button type="button" onclick="$('#{{ input_id }}-input-hidden, #{{ input_id }}-input').val('');" class="btn btn-danger btn-xs">Очистить</button>
+	</div>
+	{% endif %}
+	<script>
+	
+	$('input#{{ input_id }}-input').autocomplete({
+		  'source': function(request, response) {
+			  $.ajax({
+				  url: 'index.php?route={{ path }}/autocomplete&fullmode=1&user_token='+getURLVar('user_token')+'&filter_name=' + encodeURIComponent(request),
+				  dataType: 'json',
+				  success: function(json) {
+					  {% if onselect %}
+					 	
+					  /* if(json.length == 1){
+						
+						$('#{{ input_id }}-input').val('');
+						$('[id^={{ input_id }}-value]').remove();
+						
+						var item = {
+							label: json[0].name,
+							value: json[0].product_id,
+						};
+						$('#{{ input_id }}-input').focus();
+						return {{ onselect }}
+					  } */
+					  {% else %}
+					  
+					  {% endif %}
+					  response($.map(json, function(item) {
+						  return {
+							  label: item['name'],
+							  value: item['{{ resultvaluename ? resultvaluename : (path|replace({'/': '_'}) ~ '_id') }}'],
+							  data: item,
+						  }
+					  }));
+				  }
+			  });
+		  },
+		  'select': function(item) {
+				
+			 	var $input = $(this);
+			  	$input.val('');
+				$input.parent().find('#value-' + item['value']).remove();
+			  
+				{% if onselect %}{{ onselect }}{% endif %}
+				
+				{% if '[]' in name %}
+
+					{% set vv = {name: '__NAME__', value: '__VALUE__' } %}
+
+				
+					$input.parent().find('.list').append(
+						'{{ block("added_element")|e("js") }}'.replaceAll('__NAME__', item['label']).replaceAll('__VALUE__', item['value'])
+					
+					)
+			   		{% if limit %}
+			 	 	if($('#{{ input_id }}-list>div').length > {{ limit }} ){
+						$('#{{ input_id }}-list>div:first-child').remove();
+			  		}
+			  		{% endif %}
+				{% else %}
+				$input.nextAll('input[type="hidden"]').first().val(item['value']);
+				$input.val(item['label'])
+			 	{% endif %}
+		  }
+	});
+	</script>
+	
+{% elseif type in ['sizes'] %}
+	<div style="display: flex; align-items: center;">
+		{% for k,item in ['width', 'height'] %}
+		<input type="number" style="max-width: 100px" name="{{ name }}[{{ item }}]" value="{{ value[item] }}" placeholder="{{ placeholder }}" id="{{ input_id }}-{{ input_id }}" class="form-control" />
+		{% if k == 0 %} &nbsp;&nbsp;x&nbsp;&nbsp; {% endif %}
+		{% endfor %}
+	</div>
+{% elseif type == 'editor' %}
+	<textarea  name="{{ name }}" {% if height %}data-height="{{ height }}"{% endif %} placeholder="{{ placeholder }}" id="{{ input_id }}" class="editor form-control">{{ value }}</textarea>
+{% elseif type in ['textarea', 'summernote'] %}
+	<textarea  {% if readonly %}readonly{% endif %} name="{{ name }}" {% if type == 'summernote' or type == 'editor' %}data-toggle="summernote" data-lang="{{ summernote }}"{% endif %} rows="{{ rows ? rows : 5 }}" placeholder="{{ placeholder }}" id="{{ input_id }}" class="form-control">{{ value }}</textarea>
+{% elseif type in ['wysiwyg'] %}
+	<textarea name="{{ name }}" data-toggle="wysiwyg" rows="{{ rows ? rows : 5 }}" id="{{ input_id }}" class="form-control">{{ value }}</textarea>
+	<script>
+	WysiwygInit('[data-toggle=wysiwyg][id="{{ input_id }}"]')
+	</script>
+{% elseif type == 'select' %}
+	
+	<select style="{% if width %}width: {{ width }};{% endif %}" name="{{ name }}" class="form-control" id="{{ input_id }}">
+		{% if noselect is defined %}<option value="">{{ noselect }}</option>{% endif %}
+		{% if options %}
+		{% for opt_key,opt_value in options[0] %}
+		<option value="{{ opt_value }}" {% if value is defined and ((value is iterable and opt_value in value) or (value is not iterable and value == opt_value)) %}selected{% endif %} >{{ options[1][opt_key] }}</option>
+		{% endfor %}
+		{% endif %}
+	</select>
+{% elseif type in ['checkbox','radio'] %}
+{% if type == 'checkbox' and options[0]|length > 1 %}
+<div class="well well-sm" style="height: 150px; overflow: auto;">
+{% endif %}
+	{% for opt_key,opt_value in options[0] %}
+	<div class="{{ inline ? 'radio-inline' : type }}"><label><input {% if value is defined and ((value is iterable and opt_value in value) or (value is not iterable and value == opt_value)) %}checked{% endif %} type="{{ type }}" name="{{ name }}" value="{{ opt_value }}" /> {{ options[1][opt_key] }}</label></div>
+	{% endfor %} 
+{% if type == 'checkbox' and options[0]|length > 1 %}
+ </div>
+{# <a onclick="$('[name=\'{{ name }}\']').prop('checked', true);">Выделить всё</a> / <a style="color:red" onclick="$('[name=\'{{ name }}\']').prop('checked', false);">Снять выделение</a>#}
+{% endif %}
+{% elseif type == 'image' %}
+<a href="" id="thumb-{{ input_id }}" data-toggle="image" {% if folder %}data-folder="{{ folder }}"{% endif %} class="img-thumbnail"><img src="{{ resize(value ? value : 'no_image.png', 100, 100, 'fit') }}" alt="" title="" data-placeholder="{{ resize('no_image.png', 100, 100) }}" /></a>
+ <input type="hidden" name="{{ name }}" value="{{ value }}" id="input-{{ input_id }}" />
+ {% elseif type == 'icon' %}
+<a href="" id="thumb-{{ input_id }}" data-toggle="icon" class="img-thumbnail"><div class="svg-mesto" style="width:100px;height:100px">{{ value|unescape }}</div></a>
+ <input type="hidden" name="{{ name }}" value="{{ value }}" id="input-{{ input_id }}" />
+{% elseif type == 'images' %}
+	{% set rr = 0 %}
+	<div id="items-{{ input_id }}">
+	{% for v in value %}
+	{% block imgblock %}
+	<div class="imgblock item">
+		<div style="display:flex; flex-wrap: wrap">
+			<div style="width: 120px">
+				<a href="" id="thumb-{{ input_id }}-{{ rr }}" data-toggle="image" class="img-thumbnail">
+					<img src="{{ resize(v.image ? v.image : 'no_image.png', 100, 100, 'fit') }}" alt="" title="" data-placeholder="{{ resize('no_image.png', 100, 100, 'fit') }}" />
+				</a>
+				<input type="hidden" name="{{ name }}[{{ rr }}][image]" value="{{ v.image }}" id="input-{{ input_id }}-{{ rr }}" />
+			</div>
+			<div style="width: calc(100% - 120px)">
+				<textarea name="{{ name }}[{{ rr }}][label]" placeholder="Название" class="form-control">{{ v.label }}</textarea>
+			</div>
+			<div style="width: 100%;margin-top: 10px;"><button type="button" class="btn btn-danger btn-sm" onclick="if(confirm('Удалить этот элемент?')){$(this).parent().parent().parent().remove()}">Удалить</button></div>
+		</div>
+	</div>
+	
+	{% endblock %}
+	{% set rr = rr + 1 %}
+	{% endfor %}
+	</div>
+	
+	<button type="button" onclick="AddImage{{ random }}();" class="btn btn-primary">Добавить изображение</button>
+	<script>
+		var rr = {{ rr }};
+		function AddImage{{ random }}(){
+			
+					
+			{% set rr = '__ROW__' %}
+			var html = '{{ block('imgblock')|e('js') }}';
+			html = html.replaceAll('__ROW__', rr);
+			$("#items-{{ input_id }}").append(html);
+			
+			rr++;
+					
+		}
+	</script>
+{% elseif type == 'content' %}	
+{{ content }}
+{% endif %}
+
+{% if after %}
+{{ after }}
+</div>
+{% endif %}
+{% if error %}
+ <div class="text-danger">{{ error }}</div>
+{% endif %}
+
+{% if translate and translate != 1 %}
+<a href="#" onclick="ToNewTranslate('1', '{{ translate }}', '{{ name }}', this, '{{ format ? format : '' }}', '{{ return ? return : '' }}');return false;" class="text-primary float-end">Перевести с русского</a>
+{% endif %}
+{% if append or prepend %}
+{{ append }}
+</div>
+{% endif %}
+{% if mode != 'only' %}
+{% if appendcontent %}
+{{ appendcontent }}
+{% endif %}
+</div>
+{% endif %}
+{% if mode != 'only' %}
+</div>
+{% endif %}
