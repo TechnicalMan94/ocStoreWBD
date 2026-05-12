@@ -3040,21 +3040,6 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 
 
 
---
--- Table structure for table `oc_theme`
---
-
-DROP TABLE IF EXISTS `oc_theme`;
-CREATE TABLE `oc_theme` (
-  `theme_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL,
-  `theme` varchar(64) NOT NULL,
-  `route` varchar(64) NOT NULL,
-  `code` mediumtext NOT NULL,
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`theme_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 
 --
