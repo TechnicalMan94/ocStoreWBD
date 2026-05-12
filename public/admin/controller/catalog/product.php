@@ -1619,7 +1619,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['product_related_article'])) {
 			$articles = $this->request->post['product_related_article'];
 		} elseif (isset($product_info)) {
-			$articles = $this->model_catalog_product->getArticleRelated($this->request->get['product_id']);
+			$articles = $this->model_catalog_product->getPageRelated($this->request->get['product_id']);
 		} else {
 			$articles = array();
 		}
