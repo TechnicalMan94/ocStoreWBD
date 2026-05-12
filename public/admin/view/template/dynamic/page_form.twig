@@ -29,7 +29,7 @@
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
             <li class="nav-item"><a href="#tab-links" data-bs-toggle="tab" class="nav-link">{{ tab_links }}</a></li>
-            {% if fields is not empty %}<li class="nav-item"><a href="#tab-fields" data-bs-toggle="tab" class="nav-link">{{ tab_fields }}</a></li>{% endif %}
+            {% if page_fields is not empty %}<li class="nav-item"><a href="#tab-fields" data-bs-toggle="tab" class="nav-link">{{ tab_fields }}</a></li>{% endif %}
             <li class="nav-item"><a href="#tab-image" data-bs-toggle="tab" class="nav-link">{{ tab_image }}</a></li>
             <li class="nav-item"><a href="#tab-seo" data-bs-toggle="tab" class="nav-link">{{ tab_seo }}</a></li>
             <li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
@@ -206,22 +206,22 @@
                 </div>
               </div>
             </div>
-            {% if fields is not empty %}
+            {% if page_fields is not empty %}
             <div class="tab-pane" id="tab-fields">
-              {% for field in fields %}
+              {% for field in page_fields %}
               <div class="form-group">
                 <label class="col-sm-2 col-form-label" for="input-field-{{ field.code }}">{{ field.name }}</label>
                 <div class="col-sm-10">
                   {% if field.type == 'text' %}
-                  <textarea name="field[{{ field.code }}]" rows="5" id="input-field-{{ field.code }}" class="form-control">{{ field_values[field.code] }}</textarea>
+                  <textarea name="page_field[{{ field.code }}]" rows="5" id="input-field-{{ field.code }}" class="form-control">{{ page_field_values[field.code] }}</textarea>
                   {% elseif field.type == 'number' %}
-                  <input type="number" step="any" name="field[{{ field.code }}]" value="{{ field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
+                  <input type="number" step="any" name="page_field[{{ field.code }}]" value="{{ page_field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
                   {% elseif field.type == 'date' %}
-                  <input type="date" name="field[{{ field.code }}]" value="{{ field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
+                  <input type="date" name="page_field[{{ field.code }}]" value="{{ page_field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
                   {% elseif field.type == 'time' %}
-                  <input type="time" name="field[{{ field.code }}]" value="{{ field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
+                  <input type="time" name="page_field[{{ field.code }}]" value="{{ page_field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
                   {% else %}
-                  <input type="text" name="field[{{ field.code }}]" value="{{ field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
+                  <input type="text" name="page_field[{{ field.code }}]" value="{{ page_field_values[field.code] }}" id="input-field-{{ field.code }}" class="form-control" />
                   {% endif %}
                 </div>
               </div>
