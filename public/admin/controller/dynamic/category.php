@@ -71,7 +71,7 @@ class ControllerDynamicCategory extends Controller {
 		$this->load->model('dynamic/category');
 
 		if ($this->validateRepair()) {
-			$this->model_dynamic_category->repairCategories();
+			$this->model_dynamic_category->repairCategories(0, (int)$this->request->get['section_id']);
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = $this->buildUrl();
@@ -471,7 +471,7 @@ class ControllerDynamicCategory extends Controller {
 			$href_action = $this->url->link('dynamic/category/update', 'user_token=' . $this->session->data['user_token'] . '&section_id=' . $section_id . '&category_id=', true);
 		}
 
-		$results = $this->model_dynamic_category->getCategoriesByParentId($parent_id);
+		$results = $this->model_dynamic_category->getCategoriesByParentId($parent_id, $section_id);
 
 		foreach ($results as $result) {
 			$path = $parent_path . $result['category_id'];
@@ -503,6 +503,7 @@ class ControllerDynamicCategory extends Controller {
 				'noindex'     => $result['noindex'],
 				'status'      => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'        => $this->url->link('dynamic/category/edit', 'user_token=' . $this->session->data['user_token'] . '&section_id=' . $section_id . '&category_id=' . $result['category_id'], true),
+				'href_shop'   => HTTP_CATALOG . 'index.php?route=dynamic/category&dcategory_id=' . $result['category_id'],
 				'selected'    => $selected,
 				'action'      => $action,
 				'href'        => $href,

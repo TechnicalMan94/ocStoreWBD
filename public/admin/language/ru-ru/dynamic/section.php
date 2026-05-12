@@ -19,6 +19,7 @@ $_['entry_name']             = 'Название раздела';
 $_['entry_code']             = 'Кодовое имя';
 $_['entry_status']           = 'Статус';
 $_['entry_sort_order']       = 'Порядок сортировки';
+$_['entry_icon']             = 'Иконка в меню';
 $_['entry_category_template'] = 'Шаблон категории';
 $_['entry_page_template']    = 'Шаблон страницы';
 

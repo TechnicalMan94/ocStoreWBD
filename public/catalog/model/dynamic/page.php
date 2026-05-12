@@ -138,6 +138,12 @@ class ModelDynamicPage extends Model {
 		return $query->rows;
 	}
 
+	public function getDownload($download_id) {
+		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "download d LEFT JOIN " . DB_PREFIX . "download_description dd ON (d.download_id = dd.download_id) WHERE d.download_id = '" . (int)$download_id . "' AND dd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
+	}
+
 	public function getPageLayoutId($page_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "dynamic_page_to_layout WHERE page_id = '" . (int)$page_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
 		if ($query->num_rows) {

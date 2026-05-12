@@ -141,9 +141,8 @@ class ControllerDynamicPage extends Controller {
 			// Downloads
 			$data['downloads'] = array();
 			$downloads = $this->model_dynamic_page->getDownloads($page_id);
-			$this->load->model('catalog/download');
 			foreach ($downloads as $download) {
-				$download_info = $this->model_catalog_download->getDownload($download['download_id']);
+				$download_info = $this->model_dynamic_page->getDownload($download['download_id']);
 				if ($download_info) {
 					$data['downloads'][] = array(
 						'name' => $download_info['name'],
@@ -280,8 +279,8 @@ class ControllerDynamicPage extends Controller {
 			$download_id = 0;
 		}
 
-		$this->load->model('catalog/download');
-		$download_info = $this->model_catalog_download->getDownload($download_id);
+		$this->load->model('dynamic/page');
+		$download_info = $this->model_dynamic_page->getDownload($download_id);
 
 		if ($download_info) {
 			$file = DIR_DOWNLOAD . $download_info['filename'];

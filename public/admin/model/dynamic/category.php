@@ -1,6 +1,8 @@
 <?php
 class ModelDynamicCategory extends Model {
 	public function addCategory($data) {
+		$data['parent_id'] = $this->getValidParentId($data['parent_id'], $data['section_id']);
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_category SET section_id = '" . (int)$data['section_id'] . "', parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', date_modified = NOW(), date_added = NOW()");
 
 		$category_id = $this->db->getLastId();
@@ -50,6 +52,8 @@ class ModelDynamicCategory extends Model {
 	}
 
 	public function editCategory($category_id, $data) {
+		$data['parent_id'] = $this->getValidParentId($data['parent_id'], $data['section_id'], $category_id);
+
 		$this->db->query("UPDATE " . DB_PREFIX . "dynamic_category SET section_id = '" . (int)$data['section_id'] . "', parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', noindex = '" . (int)$data['noindex'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
 		if (isset($data['image'])) {
@@ -142,8 +146,14 @@ class ModelDynamicCategory extends Model {
 		$this->cache->delete('dynamic_category');
 	}
 
-	public function repairCategories($parent_id = 0) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "dynamic_category WHERE parent_id = '" . (int)$parent_id . "'");
+	public function repairCategories($parent_id = 0, $section_id = 0) {
+		$sql = "SELECT * FROM " . DB_PREFIX . "dynamic_category WHERE parent_id = '" . (int)$parent_id . "'";
+
+		if ($section_id) {
+			$sql .= " AND section_id = '" . (int)$section_id . "'";
+		}
+
+		$query = $this->db->query($sql);
 		foreach ($query->rows as $category) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "dynamic_category_path` WHERE category_id = '" . (int)$category['category_id'] . "'");
 			$level = 0;
@@ -153,7 +163,7 @@ class ModelDynamicCategory extends Model {
 				$level++;
 			}
 			$this->db->query("REPLACE INTO `" . DB_PREFIX . "dynamic_category_path` SET category_id = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$category['category_id'] . "', level = '" . (int)$level . "'");
-			$this->repairCategories($category['category_id']);
+			$this->repairCategories($category['category_id'], $section_id);
 		}
 	}
 
@@ -250,9 +260,22 @@ class ModelDynamicCategory extends Model {
 		return $query->row['total'];
 	}
 
-	public function getCategoriesByParentId($parent_id = 0) {
-		$query = $this->db->query("SELECT *, (SELECT COUNT(parent_id) FROM " . DB_PREFIX . "dynamic_category WHERE parent_id = c.category_id) AS children FROM " . DB_PREFIX . "dynamic_category c LEFT JOIN " . DB_PREFIX . "dynamic_category_description cd ON (c.category_id = cd.category_id) WHERE c.parent_id = '" . (int)$parent_id . "' AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY c.sort_order, cd.name");
+	public function getCategoriesByParentId($parent_id = 0, $section_id = 0) {
+		$section_sql = $section_id ? " AND section_id = '" . (int)$section_id . "'" : "";
+		$query = $this->db->query("SELECT *, (SELECT COUNT(parent_id) FROM " . DB_PREFIX . "dynamic_category WHERE parent_id = c.category_id" . $section_sql . ") AS children FROM " . DB_PREFIX . "dynamic_category c LEFT JOIN " . DB_PREFIX . "dynamic_category_description cd ON (c.category_id = cd.category_id) WHERE c.parent_id = '" . (int)$parent_id . "'" . ($section_id ? " AND c.section_id = '" . (int)$section_id . "'" : "") . " AND cd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY c.sort_order, cd.name");
 		return $query->rows;
+	}
+
+	private function getValidParentId($parent_id, $section_id, $category_id = 0) {
+		$parent_id = (int)$parent_id;
+
+		if (!$parent_id || $parent_id == (int)$category_id) {
+			return 0;
+		}
+
+		$query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "dynamic_category WHERE category_id = '" . $parent_id . "' AND section_id = '" . (int)$section_id . "'");
+
+		return $query->num_rows ? $parent_id : 0;
 	}
 
 	public function getAllCategories() {

@@ -122,6 +122,7 @@ class ControllerDynamicSection extends Controller {
 		// Template selection via glob()
 		$data['category_templates'] = $this->scanTemplates('category_');
 		$data['page_templates'] = $this->scanTemplates('page_');
+		$data['icons'] = $this->getMenuIcons();
 
 		$settings = array();
 		if (isset($this->request->post['settings'])) {
@@ -132,6 +133,7 @@ class ControllerDynamicSection extends Controller {
 
 		$data['setting_category_template'] = isset($settings['category_template']) ? $settings['category_template'] : '';
 		$data['setting_page_template'] = isset($settings['page_template']) ? $settings['page_template'] : '';
+		$data['setting_icon'] = isset($settings['icon']) ? $settings['icon'] : 'bi-file-earmark-text';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -154,6 +156,23 @@ class ControllerDynamicSection extends Controller {
 		return $templates;
 	}
 
+	private function getMenuIcons() {
+		return array(
+			'bi-file-earmark-text' => 'Документ',
+			'bi-newspaper'         => 'Новости',
+			'bi-book'              => 'Книга',
+			'bi-folder2-open'      => 'Папка',
+			'bi-card-list'         => 'Список',
+			'bi-info-circle'       => 'Информация',
+			'bi-briefcase'         => 'Портфель',
+			'bi-star'              => 'Звезда',
+			'bi-image'             => 'Изображение',
+			'bi-chat-left-text'    => 'Комментарии',
+			'bi-question-circle'   => 'Вопросы',
+			'bi-gear'              => 'Настройки'
+		);
+	}
+
 	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'dynamic/section')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -171,6 +190,14 @@ class ControllerDynamicSection extends Controller {
 		$section_info = $this->model_dynamic_section->getSectionByCode($code);
 		if ($section_info && (!isset($this->request->get['section_id']) || $section_info['section_id'] != $this->request->get['section_id'])) {
 			$this->error['code'] = $this->language->get('error_code_exists');
+		}
+
+		if (!isset($this->request->post['settings']) || !is_array($this->request->post['settings'])) {
+			$this->request->post['settings'] = array();
+		}
+
+		if (empty($this->request->post['settings']['icon']) || !array_key_exists($this->request->post['settings']['icon'], $this->getMenuIcons())) {
+			$this->request->post['settings']['icon'] = 'bi-file-earmark-text';
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {

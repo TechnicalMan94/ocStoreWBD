@@ -199,6 +199,7 @@ class ControllerDynamicPage extends Controller {
 				'status'     => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'noindex'    => $result['noindex'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'sort_order' => $result['sort_order'],
+				'href_shop'  => HTTP_CATALOG . 'index.php?route=dynamic/page&dpage_id=' . $result['page_id'],
 				'edit'       => $this->url->link('dynamic/page/edit', 'user_token=' . $this->session->data['user_token'] . '&section_id=' . $section_id . '&page_id=' . $result['page_id'], true)
 			);
 		}
@@ -354,22 +355,44 @@ class ControllerDynamicPage extends Controller {
 		if (isset($this->request->post['page_category'])) {
 			$data['page_category'] = $this->request->post['page_category'];
 		} elseif (isset($this->request->get['page_id'])) {
-			$data['page_category'] = $this->model_dynamic_page->getPageCategories($this->request->get['page_id']);
+			$data['page_category'] = $this->model_dynamic_page->getPageCategories($this->request->get['page_id'], $section_id);
 		} else {
 			$data['page_category'] = array();
 		}
 
+		$data['page_categories'] = array();
+		foreach ($data['page_category'] as $category_id) {
+			$category_info = $this->model_dynamic_category->getCategory($category_id);
+			if ($category_info && (int)$category_info['section_id'] == $section_id) {
+				$data['page_categories'][] = array(
+					'category_id' => $category_info['category_id'],
+					'name'        => $category_info['path'] ? html_entity_decode($category_info['path'], ENT_QUOTES, 'UTF-8') . ' > ' . $category_info['name'] : $category_info['name']
+				);
+			}
+		}
+
 		$data['main_category_id'] = isset($this->request->post['main_category_id'])
 			? $this->request->post['main_category_id']
-			: (isset($this->request->get['page_id']) ? $this->model_dynamic_page->getPageMainCategoryId($this->request->get['page_id']) : 0);
+			: (isset($this->request->get['page_id']) ? $this->model_dynamic_page->getPageMainCategoryId($this->request->get['page_id'], $section_id) : 0);
 
 		// Related pages (from this section)
 		if (isset($this->request->post['page_related'])) {
 			$data['page_related'] = $this->request->post['page_related'];
 		} elseif (isset($this->request->get['page_id'])) {
-			$data['page_related'] = $this->model_dynamic_page->getPageRelated($this->request->get['page_id']);
+			$data['page_related'] = $this->model_dynamic_page->getPageRelated($this->request->get['page_id'], $section_id);
 		} else {
 			$data['page_related'] = array();
+		}
+
+		$data['page_relateds'] = array();
+		foreach ($data['page_related'] as $related_id) {
+			$related_info = $this->model_dynamic_page->getPage($related_id);
+			if ($related_info && (int)$related_info['section_id'] == $section_id) {
+				$data['page_relateds'][] = array(
+					'page_id' => $related_info['page_id'],
+					'name'    => $related_info['name']
+				);
+			}
 		}
 
 		// Related products
@@ -433,7 +456,7 @@ class ControllerDynamicPage extends Controller {
 		$data['page_fields'] = $this->model_dynamic_page->getPageFields($section_id);
 		$data['page_field_values'] = isset($this->request->post['page_field'])
 			? $this->request->post['page_field']
-			: (isset($this->request->get['page_id']) ? $this->model_dynamic_page->getPageFieldValues($this->request->get['page_id']) : array());
+			: (isset($this->request->get['page_id']) ? $this->model_dynamic_page->getPageFieldValues($this->request->get['page_id'], $section_id) : array());
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -462,12 +485,21 @@ class ControllerDynamicPage extends Controller {
 			$this->load->model('design/seo_url');
 			foreach ($this->request->post['page_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					if (empty($keyword)) continue;
-					$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
-					foreach ($seo_urls as $seo_url) {
-						if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['page_id']) || ($seo_url['query'] != 'dpage_id=' . $this->request->get['page_id']))) {
-							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword_exists');
-							break;
+					if (empty($keyword)) {
+						$keyword = $this->request->post['page_seo_url'][$store_id][$language_id] = translit($this->request->post['page_description'][$language_id]['name']);
+					}
+
+					if (!empty($keyword)) {
+						if (count(array_keys($language, $keyword)) > 1) {
+							$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_unique');
+						}
+
+						$seo_urls = $this->model_design_seo_url->getSeoUrlsByKeyword($keyword);
+						foreach ($seo_urls as $seo_url) {
+							if (($seo_url['store_id'] == $store_id) && (!isset($this->request->get['page_id']) || ($seo_url['query'] != 'dpage_id=' . $this->request->get['page_id']))) {
+								$this->error['keyword'][$store_id][$language_id] = $this->language->get('error_keyword_exists');
+								break;
+							}
 						}
 					}
 				}

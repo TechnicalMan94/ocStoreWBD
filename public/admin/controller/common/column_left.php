@@ -170,9 +170,12 @@ class ControllerCommonColumnLeft extends Controller {
 				}
 
 				if ($children) {
+					$settings = !empty($section['settings']) && is_array($section['settings']) ? $section['settings'] : array();
+					$icon = !empty($settings['icon']) && strpos($settings['icon'], 'bi-') === 0 ? $settings['icon'] : 'bi-file-earmark-text';
+
 					$data['menus'][] = array(
 						'id'       => 'menu-dynamic-' . $code,
-						'icon'	   => 'fa-file-text',
+						'icon'	   => $icon,
 						'name'	   => $section['name'],
 						'href'     => '',
 						'children' => $children

@@ -503,7 +503,7 @@ class ControllerStartupSeoUrl extends Controller {
 	private function getDynamicPagePath($page_id) {
 		$page_id = (int)$page_id;
 
-		$query = $this->db->query("SELECT dptc.category_id FROM " . DB_PREFIX . "dynamic_page_to_category dptc LEFT JOIN " . DB_PREFIX . "dynamic_category dc ON (dptc.category_id = dc.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store dc2s ON (dptc.category_id = dc2s.category_id) WHERE dptc.page_id = '" . $page_id . "' AND dc.status = '1' AND dc2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY dptc.main_category DESC, dc.sort_order ASC LIMIT 1");
+		$query = $this->db->query("SELECT dptc.category_id FROM " . DB_PREFIX . "dynamic_page_to_category dptc LEFT JOIN " . DB_PREFIX . "dynamic_page dp ON (dptc.page_id = dp.page_id) LEFT JOIN " . DB_PREFIX . "dynamic_category dc ON (dptc.category_id = dc.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store dc2s ON (dptc.category_id = dc2s.category_id) WHERE dptc.page_id = '" . $page_id . "' AND dc.section_id = dp.section_id AND dc.status = '1' AND dc2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY dptc.main_category DESC, dc.sort_order ASC LIMIT 1");
 
 		if ($query->num_rows) {
 			return $this->getDynamicCategoryPath($query->row['category_id']);
@@ -513,7 +513,7 @@ class ControllerStartupSeoUrl extends Controller {
 	}
 
 	private function getDynamicCategoryPath($category_id) {
-		$query = $this->db->query("SELECT GROUP_CONCAT(dcp.path_id ORDER BY dcp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "dynamic_category_path dcp LEFT JOIN " . DB_PREFIX . "dynamic_category dc ON (dcp.path_id = dc.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store dc2s ON (dcp.path_id = dc2s.category_id) WHERE dcp.category_id = '" . (int)$category_id . "' AND dc.status = '1' AND dc2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+		$query = $this->db->query("SELECT GROUP_CONCAT(dcp.path_id ORDER BY dcp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "dynamic_category_path dcp LEFT JOIN " . DB_PREFIX . "dynamic_category target ON (dcp.category_id = target.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category dc ON (dcp.path_id = dc.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store dc2s ON (dcp.path_id = dc2s.category_id) WHERE dcp.category_id = '" . (int)$category_id . "' AND dc.section_id = target.section_id AND dc.status = '1' AND dc2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		return $query->row['path'] ?? '';
 	}

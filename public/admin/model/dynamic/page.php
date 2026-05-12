@@ -31,21 +31,25 @@ class ModelDynamicPage extends Model {
 			}
 		}
 
-		if (isset($data['page_category'])) {
-			foreach ($data['page_category'] as $category_id) {
+		$page_categories = isset($data['page_category']) ? $this->getValidCategoryIds($data['page_category'], $data['section_id']) : array();
+
+		if ($page_categories) {
+			foreach ($page_categories as $category_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_page_to_category SET page_id = '" . (int)$page_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
 
-		if (isset($data['main_category_id']) && $data['main_category_id'] > 0) {
+		if (isset($data['main_category_id']) && in_array((int)$data['main_category_id'], $page_categories)) {
 			$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_to_category WHERE page_id = '" . (int)$page_id . "' AND category_id = '" . (int)$data['main_category_id'] . "'");
 			$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_page_to_category SET page_id = '" . (int)$page_id . "', category_id = '" . (int)$data['main_category_id'] . "', main_category = 1");
-		} elseif (isset($data['page_category'][0])) {
-			$this->db->query("UPDATE " . DB_PREFIX . "dynamic_page_to_category SET main_category = 1 WHERE page_id = '" . (int)$page_id . "' AND category_id = '" . (int)$data['page_category'][0] . "'");
+		} elseif (isset($page_categories[0])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "dynamic_page_to_category SET main_category = 1 WHERE page_id = '" . (int)$page_id . "' AND category_id = '" . (int)$page_categories[0] . "'");
 		}
 
-		if (isset($data['page_related'])) {
-			foreach ($data['page_related'] as $related_id) {
+		$page_related = isset($data['page_related']) ? $this->getValidPageIds($data['page_related'], $data['section_id'], $page_id) : array();
+
+		if ($page_related) {
+			foreach ($page_related as $related_id) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_related WHERE page_id = '" . (int)$page_id . "' AND related_id = '" . (int)$related_id . "'");
 				$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_page_related SET page_id = '" . (int)$page_id . "', related_id = '" . (int)$related_id . "'");
 				$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_related WHERE page_id = '" . (int)$related_id . "' AND related_id = '" . (int)$page_id . "'");
@@ -123,24 +127,28 @@ class ModelDynamicPage extends Model {
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_to_category WHERE page_id = '" . (int)$page_id . "'");
 
-		if (isset($data['page_category'])) {
-			foreach ($data['page_category'] as $category_id) {
+		$page_categories = isset($data['page_category']) ? $this->getValidCategoryIds($data['page_category'], $data['section_id']) : array();
+
+		if ($page_categories) {
+			foreach ($page_categories as $category_id) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_page_to_category SET page_id = '" . (int)$page_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
 
-		if (isset($data['main_category_id']) && $data['main_category_id'] > 0) {
+		if (isset($data['main_category_id']) && in_array((int)$data['main_category_id'], $page_categories)) {
 			$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_to_category WHERE page_id = '" . (int)$page_id . "' AND category_id = '" . (int)$data['main_category_id'] . "'");
 			$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_page_to_category SET page_id = '" . (int)$page_id . "', category_id = '" . (int)$data['main_category_id'] . "', main_category = 1");
-		} elseif (isset($data['page_category'][0])) {
-			$this->db->query("UPDATE " . DB_PREFIX . "dynamic_page_to_category SET main_category = 1 WHERE page_id = '" . (int)$page_id . "' AND category_id = '" . (int)$data['page_category'][0] . "'");
+		} elseif (isset($page_categories[0])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "dynamic_page_to_category SET main_category = 1 WHERE page_id = '" . (int)$page_id . "' AND category_id = '" . (int)$page_categories[0] . "'");
 		}
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_related WHERE page_id = '" . (int)$page_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_related WHERE related_id = '" . (int)$page_id . "'");
 
-		if (isset($data['page_related'])) {
-			foreach ($data['page_related'] as $related_id) {
+		$page_related = isset($data['page_related']) ? $this->getValidPageIds($data['page_related'], $data['section_id'], $page_id) : array();
+
+		if ($page_related) {
+			foreach ($page_related as $related_id) {
 				$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_related WHERE page_id = '" . (int)$page_id . "' AND related_id = '" . (int)$related_id . "'");
 				$this->db->query("INSERT INTO " . DB_PREFIX . "dynamic_page_related SET page_id = '" . (int)$page_id . "', related_id = '" . (int)$related_id . "'");
 				$this->db->query("DELETE FROM " . DB_PREFIX . "dynamic_page_related WHERE page_id = '" . (int)$related_id . "' AND related_id = '" . (int)$page_id . "'");
@@ -298,17 +306,26 @@ class ModelDynamicPage extends Model {
 		return $page_description_data;
 	}
 
-	public function getPageCategories($page_id) {
+	public function getPageCategories($page_id, $section_id = 0) {
 		$page_category_data = array();
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "dynamic_page_to_category WHERE page_id = '" . (int)$page_id . "'");
+		$sql = "SELECT p2c.* FROM " . DB_PREFIX . "dynamic_page_to_category p2c LEFT JOIN " . DB_PREFIX . "dynamic_category c ON (p2c.category_id = c.category_id) WHERE p2c.page_id = '" . (int)$page_id . "'";
+		if ($section_id) {
+			$sql .= " AND c.section_id = '" . (int)$section_id . "'";
+		}
+		$query = $this->db->query($sql);
 		foreach ($query->rows as $result) {
 			$page_category_data[] = $result['category_id'];
 		}
 		return $page_category_data;
 	}
 
-	public function getPageMainCategoryId($page_id) {
-		$query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "dynamic_page_to_category WHERE page_id = '" . (int)$page_id . "' AND main_category = '1' LIMIT 1");
+	public function getPageMainCategoryId($page_id, $section_id = 0) {
+		$sql = "SELECT p2c.category_id FROM " . DB_PREFIX . "dynamic_page_to_category p2c LEFT JOIN " . DB_PREFIX . "dynamic_category c ON (p2c.category_id = c.category_id) WHERE p2c.page_id = '" . (int)$page_id . "' AND p2c.main_category = '1'";
+		if ($section_id) {
+			$sql .= " AND c.section_id = '" . (int)$section_id . "'";
+		}
+		$sql .= " LIMIT 1";
+		$query = $this->db->query($sql);
 		return ($query->num_rows ? (int)$query->row['category_id'] : 0);
 	}
 
@@ -353,9 +370,13 @@ class ModelDynamicPage extends Model {
 		return $page_layout_data;
 	}
 
-	public function getPageRelated($page_id) {
+	public function getPageRelated($page_id, $section_id = 0) {
 		$page_related_data = array();
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "dynamic_page_related WHERE page_id = '" . (int)$page_id . "'");
+		$sql = "SELECT pr.* FROM " . DB_PREFIX . "dynamic_page_related pr LEFT JOIN " . DB_PREFIX . "dynamic_page p ON (pr.related_id = p.page_id) WHERE pr.page_id = '" . (int)$page_id . "'";
+		if ($section_id) {
+			$sql .= " AND p.section_id = '" . (int)$section_id . "'";
+		}
+		$query = $this->db->query($sql);
 		foreach ($query->rows as $result) {
 			$page_related_data[] = $result['related_id'];
 		}
@@ -401,9 +422,14 @@ class ModelDynamicPage extends Model {
 		return $query->row['total'];
 	}
 
-	public function getPageFieldValues($page_id) {
+	public function getPageFieldValues($page_id, $section_id = 0) {
 		$field_data = array();
-		$query = $this->db->query("SELECT df.code, df.type, dfv.value FROM " . DB_PREFIX . "dynamic_field df LEFT JOIN " . DB_PREFIX . "dynamic_field_value dfv ON (df.field_id = dfv.field_id AND dfv.page_id = '" . (int)$page_id . "') ORDER BY df.sort_order, df.name");
+		$sql = "SELECT df.code, df.type, dfv.value FROM " . DB_PREFIX . "dynamic_field df LEFT JOIN " . DB_PREFIX . "dynamic_field_value dfv ON (df.field_id = dfv.field_id AND dfv.page_id = '" . (int)$page_id . "')";
+		if ($section_id) {
+			$sql .= " WHERE df.section_id = '" . (int)$section_id . "'";
+		}
+		$sql .= " ORDER BY df.sort_order, df.name";
+		$query = $this->db->query($sql);
 		foreach ($query->rows as $result) {
 			$field_data[$result['code']] = $this->normalizeFieldValue($result['type'], $result['value']);
 		}
@@ -445,5 +471,53 @@ class ModelDynamicPage extends Model {
 		if ($type == 'time') return preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $value) ? substr($value, 0, 5) : '';
 
 		return $value;
+	}
+
+	private function getValidCategoryIds($category_ids, $section_id) {
+		$ids = array();
+
+		foreach ((array)$category_ids as $category_id) {
+			$category_id = (int)$category_id;
+			if ($category_id) {
+				$ids[$category_id] = $category_id;
+			}
+		}
+
+		if (!$ids) {
+			return array();
+		}
+
+		$query = $this->db->query("SELECT category_id FROM " . DB_PREFIX . "dynamic_category WHERE section_id = '" . (int)$section_id . "' AND category_id IN (" . implode(',', $ids) . ")");
+		$valid_ids = array();
+
+		foreach ($query->rows as $row) {
+			$valid_ids[] = (int)$row['category_id'];
+		}
+
+		return $valid_ids;
+	}
+
+	private function getValidPageIds($page_ids, $section_id, $exclude_page_id = 0) {
+		$ids = array();
+
+		foreach ((array)$page_ids as $page_id) {
+			$page_id = (int)$page_id;
+			if ($page_id && $page_id != (int)$exclude_page_id) {
+				$ids[$page_id] = $page_id;
+			}
+		}
+
+		if (!$ids) {
+			return array();
+		}
+
+		$query = $this->db->query("SELECT page_id FROM " . DB_PREFIX . "dynamic_page WHERE section_id = '" . (int)$section_id . "' AND page_id IN (" . implode(',', $ids) . ")");
+		$valid_ids = array();
+
+		foreach ($query->rows as $row) {
+			$valid_ids[] = (int)$row['page_id'];
+		}
+
+		return $valid_ids;
 	}
 }
