@@ -4,6 +4,26 @@ class ModelDynamicCategory extends Model {
 		return $this->getCategories((int)$category_id, 'by_id');
 	}
 
+	public function getCategoriesBySection($data = array()) {
+		$sql = "SELECT * FROM " . DB_PREFIX . "dynamic_category c LEFT JOIN " . DB_PREFIX . "dynamic_category_description cd ON (c.category_id = cd.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store c2s ON (c.category_id = c2s.category_id) WHERE cd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND c2s.store_id = '" . (int)$this->config->get('config_store_id') . "' AND c.status = '1'";
+
+		if (!empty($data['filter_section_id'])) {
+			$sql .= " AND c.section_id = '" . (int)$data['filter_section_id'] . "'";
+		}
+
+		$sql .= " ORDER BY c.sort_order ASC, cd.name ASC";
+
+		if (isset($data['start']) || isset($data['limit'])) {
+			$start = isset($data['start']) ? max(0, (int)$data['start']) : 0;
+			$limit = isset($data['limit']) ? max(1, (int)$data['limit']) : 20;
+			$sql .= " LIMIT " . $start . "," . $limit;
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+
 	public function getCategories($id = 0, $type = 'by_parent') {
 		static $data = null;
 

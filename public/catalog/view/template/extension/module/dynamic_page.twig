@@ -1,0 +1,21 @@
+{% if pages %}
+<h3>{{ heading_title }}</h3>
+<div class="row">
+  {% for page in pages %}
+  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="product-thumb transition">
+      <div class="image"><a href="{{ page.href }}"><img src="{{ page.thumb }}" alt="{{ page.name }}" title="{{ page.name }}" class="img-responsive" /></a></div>
+      <div class="caption">
+        <h4><a href="{{ page.href }}">{{ page.name }}</a></h4>
+        <p>{{ page.description }}</p>
+      </div>
+      <div class="button-group">
+        <button type="button" onclick="location.href = '{{ page.href }}';"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_more }}</span></button>
+        <button type="button" data-toggle="tooltip" title="{{ page.date_added }}"><i class="fa fa-clock-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{ text_views }} {{ page.viewed }}"><i class="fa fa-eye"></i></button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

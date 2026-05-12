@@ -1,0 +1,19 @@
+{% if categories %}
+<h3>{{ heading_title }}</h3>
+<div class="row">
+  {% for category in categories %}
+  <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="product-thumb transition">
+      <div class="image"><a href="{{ category.href }}"><img src="{{ category.thumb }}" alt="{{ category.name }}" title="{{ category.name }}" class="img-responsive" /></a></div>
+      <div class="caption">
+        <h4><a href="{{ category.href }}">{{ category.name }}</a></h4>
+        <p>{{ category.description }}</p>
+      </div>
+      <div class="button-group">
+        <button type="button" onclick="location.href = '{{ category.href }}';"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_more }}</span></button>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

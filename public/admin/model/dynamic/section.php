@@ -43,6 +43,10 @@ class ModelDynamicSection extends Model {
 	public function getSections($data = array()) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "dynamic_section";
 
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+			$sql .= " WHERE status = '" . (int)$data['filter_status'] . "'";
+		}
+
 		$sort_data = array('name', 'code', 'sort_order', 'status');
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
