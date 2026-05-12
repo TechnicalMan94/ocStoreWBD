@@ -15,11 +15,36 @@ OpenCart e-commerce platform (ocStore distribution), version 3.0.3.7. Custom PHP
 - CLI entry: `php public/framework <route>` (e.g., `php public/framework tool/cache/clear`).
 - Admin CLI: `php public/admin/adminframework <route>`.
 
+`startup.php` defines the `modification()` wrapper, Composer autoload from `storage/vendor/`, a PSR-0-style `library()` autoloader, and loads engine + helper files. The `start()` function delegates to `system/framework.php`.
+
+## Bootstrap Flow (`system/framework.php`)
+
+1. Creates `Registry` and loads `Config` (default → application-specific config).
+2. Sets up error handler, `Event` system, and registers `action_event` hooks.
+3. Creates `Loader`, `Request`, `Response`, `DB` + `Medoo`, `Session`, `Cache`, `Url`, `Language`, `Document`.
+4. Runs autoloads: `config_autoload`, `language_autoload`, `library_autoload`, `model_autoload`.
+5. Executes `action_pre_action` controllers in order, then dispatches the main route via `Router`.
+6. `Response::output()` sends the final output.
+
 ## Key Architecture
 
 ### Registry Pattern (Service Locator)
 
 All core services are stored in a central `Registry` (key-value store). Controllers and models access services via magic `__get` proxying to the registry — `$this->config`, `$this->db`, `$this->session`, `$this->load`, `$this->event`, `$this->medoo`, etc. all work from within any controller or model.
+
+### Routing and Action Resolution
+
+URLs route as `controller_folder/controller_file/method` (e.g., `product/product`, `common/home`). The `Action` class converts a route string to a file path and class name: `common/home` → `controller/common/home.php` → `ControllerCommonHome`. The `Action` class peels segments from right to left — the last segment is the method, preceding segments form the path.
+
+Default route: catalog `common/home`, admin `common/dashboard`. Error route: `error/not_found`.
+
+### Pre-Actions (Startup Controllers)
+
+**Catalog** (`config/catalog.php`): `startup/session` → `startup/startup` → `startup/error` → `startup/event` → `startup/maintenance` → `startup/seo_url`
+
+**Admin** (`config/admin.php`): `startup/startup` → `startup/error` → `startup/event` → (web only: `startup/login` → `startup/permission`)
+
+Pre-actions can intercept dispatch by returning an `Action` from `execute()`, replacing the main route.
 
 ### OCMOD Modification System
 
@@ -29,34 +54,39 @@ All core services are stored in a central `Registry` (key-value store). Controll
 
 `engine/event.php` provides a publish-subscribe system. Events are registered with key patterns (e.g., `controller/*/before`) and priorities. Model methods are automatically wrapped by the `Proxy` class so that `model/*/before` and `model/*/after` events fire around every model call. Event registrations are defined in config arrays like `action_event`.
 
-### Routing and Action Resolution
-
-URLs route as `controller_folder/controller_file/method` (e.g., `product/product`, `common/home`). The `Action` class converts a route string to a file path and class name: `common/home` → `controller/common/home.php` → `ControllerCommonHome`. The default route for catalog is `common/home`, for admin is `common/dashboard`. Pre-actions (startup controllers) run before the main route — these handle session, SEO URL resolution, error handling, etc.
-
 ### Two Parallel Database Layers
 
 1. Native `DB` class (`system/library/db.php`) — raw SQL via driver adaptors (`mysqli`, `mpdo`, `pgsql`), registered as `$this->db`.
 2. Medoo (`catfan/medoo`) — query builder, registered as `$this->medoo`. Prefer Medoo for simpler queries.
 
-Table prefix `oc_` is applied automatically by Medoo but must be explicit in raw SQL.
+`DB_PREFIX` is defined in `system/config/database.php` (typically `oc_`). Medoo applies it automatically; raw SQL must use `DB_PREFIX` explicitly.
 
 ### Template Engine
 
-Twig 3 templates in `catalog/view/template/` and `admin/view/template/`. Rendering: `$this->load->view('path/template', $data)` returns rendered HTML. The Twig environment uses a `ChainLoader` with caching to `storage/cache/template/`.
+Twig 3 templates in `catalog/view/template/` and `admin/view/template/`. The `Template` class delegates to `Template\Twig` adaptor (`system/library/template/twig.php`). Rendering: `$this->load->view('path/template', $data)` returns rendered HTML. The Twig environment uses a `ChainLoader` with caching to `storage/cache/template/`.
 
-### SeoPro
+### SEO URL System
 
-`system/library/seopro.php` is an advanced SEO URL manager (ocStore-specific). It handles SEO URLs for category, product, information, and manufacturer pages with automatic redirects, canonical URLs, and microdata.
+Handled by `catalog/controller/startup/seo_url.php` (no SeoPro library). This controller:
+- Implements `Url::addRewrite()` to generate SEO-friendly URLs for products, categories, manufacturers, information pages, services, blog articles/categories.
+- Decodes incoming SEO URLs back to query parameters.
+- Handles product variant URLs (keyword-variant_key format).
+- Redirects to canonical URLs (301) when the current URL doesn't match.
+- Stores keyword-to-query mappings in the `oc_seo_url` table.
+
+### Admin UI
+
+Bootstrap 5 + Bootstrap Icons. Custom class `text-right` is used instead of Bootstrap's `text-end` for right alignment (defined in admin stylesheet). Action buttons in table columns should always have `text-nowrap` to prevent wrapping.
 
 ## How to Add or Modify
 
 ### New Controller
 
-Create `controller/<path>/<name>.php` with class `Controller<Path><Name>` extending `Controller`. The last segment of the route is the method name. Access all services via `$this-><service>`.
+Create `controller/<path>/<name>.php` with class `Controller<Path><Name>` extending `Controller`. The last segment of the route is the method name.
 
 ### New Model
 
-Create `model/<path>/<name>.php` with class `Model<Path><Name>` extending `Model`. Load it from a controller via `$this->load->model('<path>/<name>')`. Access it as `$this->model_<path>_<name>` — model methods are automatically proxied with before/after events.
+Create `model/<path>/<name>.php` with class `Model<Path><Name>` extending `Model`. Load via `$this->load->model('<path>/<name>')`. Access as `$this->model_<path>_<name>` — model methods are automatically proxied with before/after events.
 
 ### New Language File
 
@@ -68,9 +98,12 @@ Controllers pass data to templates via `$this->load->view('path/template', $data
 
 ## ocStore-Specific Features
 
-- **Blog module**: `catalog/controller/blog/` and `admin/controller/blog/` — not present in vanilla OpenCart.
+- **Blog module**: `catalog/controller/blog/` and `admin/controller/blog/` — articles with categories, not present in vanilla OpenCart.
+- **Service module**: `catalog/controller/service/` and `admin/controller/service/` — services with categories, custom fields, similar to products.
+- **Product variants**: `catalog/controller/product/variant.php` and admin variant management — variant groups/values with keywords, auto-generated SEO URLs.
 - **translit()**: Cyrillic-to-Latin transliteration helper for SEO slugs (`system/helper/general.php`).
-- **writelog()**: Console/file logging with ANSI color support.
-- **resize_image()**: Image resizing, outputs WebP to `image/cache/`.
+- **writelog()**: Console/file logging with ANSI color support (`system/helper/general.php`).
+- **resize_image()**: Image resizing, outputs WebP to `image/cache/` (`system/helper/general.php`).
 - **Language**: Only `ru-ru` language files are present.
 - **Composer vendor**: Lives in `storage/vendor/` (outside web root). Run `composer install` from `storage/` directory.
+- No test suite exists in this repository.
