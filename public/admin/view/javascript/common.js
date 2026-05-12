@@ -255,7 +255,7 @@ $(document).ready(function() {
 		e.preventDefault();
 
 		// destroy all image popovers
-		$('a[data-oc-toggle="image"]').popover('destroy');
+		$('a[data-oc-toggle="image"]').popover('dispose');
 
 		// remove flickering (do not re-add popover when clicking for removal)
 		if (popover) {
@@ -302,7 +302,7 @@ $(document).ready(function() {
 				}
 			});
 
-			$element.popover('destroy');
+			$element.popover('dispose');
 		});
 
 		$('#button-clear').on('click', function() {
@@ -310,7 +310,7 @@ $(document).ready(function() {
 
 			$element.parent().find('input').val('');
 
-			$element.popover('destroy');
+			$element.popover('dispose');
 		});
 	});
 });
