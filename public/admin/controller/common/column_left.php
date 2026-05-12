@@ -136,85 +136,48 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
-			// BLOG
-			$blog = array();
-			if ($this->user->hasPermission('access', 'blog/article')) {
-				$blog[] = array(
-					'name'	   => $this->language->get('text_blog_article'),
-					'href'     => $this->url->link('blog/article', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+			// Dynamic Sections
+			$this->load->model('dynamic/section');
+			$sections = $this->model_dynamic_section->getSections(array('filter_status' => 1));
 
-			if ($this->user->hasPermission('access', 'blog/category')) {
-				$blog[] = array(
-					'name'	   => $this->language->get('text_blog_category'),
-					'href'     => $this->url->link('blog/category', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+			foreach ($sections as $section) {
+				$code = $section['code'];
 
-			if ($this->user->hasPermission('access', 'blog/review')) {
-				$blog[] = array(
-					'name'	   => $this->language->get('text_blog_review'),
-					'href'     => $this->url->link('blog/review', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+				$children = array();
 
-			if ($this->user->hasPermission('access', 'blog/setting')) {
-				$blog[] = array(
-					'name'	   => $this->language->get('text_blog_setting'),
-					'href'     => $this->url->link('blog/setting', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+				if ($this->user->hasPermission('access', 'dynamic/page_' . $code) || $this->user->hasPermission('access', 'dynamic/page')) {
+					$children[] = array(
+						'name'	   => $this->language->get('text_dynamic_page'),
+						'href'     => $this->url->link('dynamic/page', 'user_token=' . $this->session->data['user_token'] . '&section_id=' . $section['section_id'], true),
+						'children' => array()
+					);
+				}
 
-			if ($blog) {
-				$data['menus'][] = array(
-					'id'       => 'menu-blog',
-					'icon'	   => 'fa-book',
-					'name'	   => $this->language->get('text_blog'),
-					'href'     => '',
-					'children' => $blog
-				);
-			}
+				if ($this->user->hasPermission('access', 'dynamic/category_' . $code) || $this->user->hasPermission('access', 'dynamic/category')) {
+					$children[] = array(
+						'name'	   => $this->language->get('text_dynamic_category'),
+						'href'     => $this->url->link('dynamic/category', 'user_token=' . $this->session->data['user_token'] . '&section_id=' . $section['section_id'], true),
+						'children' => array()
+					);
+				}
 
-			// Services
-			$service = array();
+				if ($this->user->hasPermission('access', 'dynamic/field_' . $code) || $this->user->hasPermission('access', 'dynamic/field')) {
+					$children[] = array(
+						'name'	   => $this->language->get('text_dynamic_field'),
+						'href'     => $this->url->link('dynamic/field', 'user_token=' . $this->session->data['user_token'] . '&section_id=' . $section['section_id'], true),
+						'children' => array()
+					);
+				}
 
-			if ($this->user->hasPermission('access', 'service/service')) {
-				$service[] = array(
-					'name'	   => $this->language->get('text_service_service'),
-					'href'     => $this->url->link('service/service', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-
-			if ($this->user->hasPermission('access', 'service/category')) {
-				$service[] = array(
-					'name'	   => $this->language->get('text_service_category'),
-					'href'     => $this->url->link('service/category', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-
-			if ($this->user->hasPermission('access', 'service/field')) {
-				$service[] = array(
-					'name'	   => $this->language->get('text_service_field'),
-					'href'     => $this->url->link('service/field', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
-
-			if ($service) {
-				$data['menus'][] = array(
-					'id'       => 'menu-service',
-					'icon'	   => 'fa-briefcase',
-					'name'	   => $this->language->get('text_service'),
-					'href'     => '',
-					'children' => $service
-				);
+				if ($children) {
+					$data['menus'][] = array(
+						'id'       => 'menu-dynamic-' . $code,
+						'icon'	   => 'fa-file-text',
+						'name'	   => $section['name'],
+						'href'     => '',
+						'children' => $children
+					);
+				}
 			}
 
 			// Extension
@@ -512,6 +475,20 @@ class ControllerCommonColumnLeft extends Controller {
 					'name'	   => $this->language->get('text_users'),
 					'href'     => '',
 					'children' => $user
+				);
+			}
+
+			if ($this->user->hasPermission('access', 'dynamic/section')) {
+				$system[] = array(
+					'name'	   => $this->language->get('text_dynamic_section'),
+					'href'     => $this->url->link('dynamic/section', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+
+				$system[] = array(
+					'name'	   => $this->language->get('text_dynamic_migrate'),
+					'href'     => $this->url->link('dynamic/migrate', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
 				);
 			}
 

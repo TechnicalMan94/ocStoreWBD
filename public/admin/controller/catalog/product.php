@@ -1625,15 +1625,15 @@ class ControllerCatalogProduct extends Controller {
 		}
 	
 		$data['product_related_article'] = array();
-		$this->load->model('blog/article');
-		
-		foreach ($articles as $article_id) {
-			$article_info = $this->model_blog_article->getArticle($article_id);
-			
-			if ($article_info) {
+		$this->load->model('dynamic/page');
+
+		foreach ($articles as $page_id) {
+			$page_info = $this->model_dynamic_page->getPage($page_id);
+
+			if ($page_info) {
 				$data['product_related_article'][] = array(
-					'article_id' => $article_info['article_id'],
-					'name'       => $article_info['name']
+					'article_id' => $page_info['page_id'],
+					'name'       => $page_info['name']
 				);
 			}
 		}

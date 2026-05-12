@@ -69,7 +69,19 @@ class ControllerStartupSeoUrl extends Controller {
 						$this->request->get['article_id'] = $url[1];
 					}
 
-					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id' && $url[0] != 'service_category_id' && $url[0] != 'service_id' && $url[0] != 'blog_category_id' && $url[0] != 'article_id') {
+					if ($url[0] == 'dpage_id') {
+						$this->request->get['dpage_id'] = $url[1];
+					}
+
+					if ($url[0] == 'dcategory_id') {
+						if (!isset($this->request->get['dcategory_id'])) {
+							$this->request->get['dcategory_id'] = $url[1];
+						} else {
+							$this->request->get['dcategory_id'] .= '_' . $url[1];
+						}
+					}
+
+					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id' && $url[0] != 'service_category_id' && $url[0] != 'service_id' && $url[0] != 'blog_category_id' && $url[0] != 'article_id' && $url[0] != 'dpage_id' && $url[0] != 'dcategory_id') {
 						$this->request->get['route'] = $query->row['query'];
 					}
 				} else {
@@ -103,6 +115,10 @@ class ControllerStartupSeoUrl extends Controller {
 					$this->request->get['route'] = 'blog/article';
 				} elseif (isset($this->request->get['blog_category_id'])) {
 					$this->request->get['route'] = 'blog/category';
+				} elseif (isset($this->request->get['dpage_id'])) {
+					$this->request->get['route'] = 'dynamic/page';
+				} elseif (isset($this->request->get['dcategory_id'])) {
+					$this->request->get['route'] = 'dynamic/category';
 				} elseif ($this->request->get['_route_'] === '') {
 					$this->request->get['route'] = 'common/home';
 				}
@@ -167,6 +183,19 @@ class ControllerStartupSeoUrl extends Controller {
 				if ($canonical_path) {
 					$data['blog_category_id'] = $canonical_path;
 				}
+			} elseif ($data['route'] == 'dynamic/page' && isset($data['dpage_id'])) {
+				$canonical_path = $this->getDynamicPagePath($data['dpage_id']);
+
+				if ($canonical_path) {
+					$data['dcategory_id'] = $canonical_path;
+					$data = $this->moveKeyAfterRoute($data, 'dcategory_id');
+				}
+			} elseif ($data['route'] == 'dynamic/category' && isset($data['dcategory_id'])) {
+				$canonical_path = $this->getDynamicCategoryPath($this->getLastPathId($data['dcategory_id']));
+
+				if ($canonical_path) {
+					$data['dcategory_id'] = $canonical_path;
+				}
 			}
 		}
 
@@ -198,6 +227,14 @@ class ControllerStartupSeoUrl extends Controller {
 					}
 				} elseif (isset($data['route']) && $data['route'] == 'blog/article' && $key == 'article_id') {
 					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'article_id=" . (int)$value . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+					if ($query->num_rows && $query->row['keyword']) {
+						$url .= '/' . $query->row['keyword'];
+						$seo = true;
+						unset($data[$key]);
+					}
+				} elseif (isset($data['route']) && $data['route'] == 'dynamic/page' && $key == 'dpage_id') {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'dpage_id=" . (int)$value . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					if ($query->num_rows && $query->row['keyword']) {
 						$url .= '/' . $query->row['keyword'];
@@ -254,6 +291,23 @@ class ControllerStartupSeoUrl extends Controller {
 
 					foreach ($categories as $category) {
 						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'blog_category_id=" . (int)$category . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+						if ($query->num_rows && $query->row['keyword']) {
+							$url .= '/' . $query->row['keyword'];
+							$seo = true;
+						} else {
+							$url = '';
+							$seo = false;
+							break;
+						}
+					}
+
+					unset($data[$key]);
+				} elseif ($key == 'dcategory_id') {
+					$categories = explode('_', $value);
+
+					foreach ($categories as $category) {
+						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "seo_url WHERE `query` = 'dcategory_id=" . (int)$category . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 						if ($query->num_rows && $query->row['keyword']) {
 							$url .= '/' . $query->row['keyword'];
@@ -442,6 +496,24 @@ class ControllerStartupSeoUrl extends Controller {
 
 	private function getBlogCategoryPath($blog_category_id) {
 		$query = $this->db->query("SELECT GROUP_CONCAT(bcp.path_id ORDER BY bcp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "blog_category_path bcp LEFT JOIN " . DB_PREFIX . "blog_category bc ON (bcp.path_id = bc.blog_category_id) LEFT JOIN " . DB_PREFIX . "blog_category_to_store bc2s ON (bcp.path_id = bc2s.blog_category_id) WHERE bcp.blog_category_id = '" . (int)$blog_category_id . "' AND bc.status = '1' AND bc2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
+
+		return $query->row['path'] ?? '';
+	}
+
+	private function getDynamicPagePath($page_id) {
+		$page_id = (int)$page_id;
+
+		$query = $this->db->query("SELECT dptc.category_id FROM " . DB_PREFIX . "dynamic_page_to_category dptc LEFT JOIN " . DB_PREFIX . "dynamic_category dc ON (dptc.category_id = dc.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store dc2s ON (dptc.category_id = dc2s.category_id) WHERE dptc.page_id = '" . $page_id . "' AND dc.status = '1' AND dc2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY dptc.main_category DESC, dc.sort_order ASC LIMIT 1");
+
+		if ($query->num_rows) {
+			return $this->getDynamicCategoryPath($query->row['category_id']);
+		}
+
+		return '';
+	}
+
+	private function getDynamicCategoryPath($category_id) {
+		$query = $this->db->query("SELECT GROUP_CONCAT(dcp.path_id ORDER BY dcp.level SEPARATOR '_') AS path FROM " . DB_PREFIX . "dynamic_category_path dcp LEFT JOIN " . DB_PREFIX . "dynamic_category dc ON (dcp.path_id = dc.category_id) LEFT JOIN " . DB_PREFIX . "dynamic_category_to_store dc2s ON (dcp.path_id = dc2s.category_id) WHERE dcp.category_id = '" . (int)$category_id . "' AND dc.status = '1' AND dc2s.store_id = '" . (int)$this->config->get('config_store_id') . "'");
 
 		return $query->row['path'] ?? '';
 	}

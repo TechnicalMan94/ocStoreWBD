@@ -49,7 +49,18 @@ class ControllerStartupPermission extends Controller {
 			);
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return new Action('error/permission');
+				// For dynamic/* routes, also check section-specific permission
+				$allowed = false;
+				if (strpos($route, 'dynamic/') === 0 && $route !== 'dynamic/section' && isset($this->request->get['section_id'])) {
+					$this->load->model('dynamic/section');
+					$section = $this->model_dynamic_section->getSection((int)$this->request->get['section_id']);
+					if ($section && $this->user->hasPermission('access', $route . '_' . $section['code'])) {
+						$allowed = true;
+					}
+				}
+				if (!$allowed) {
+					return new Action('error/permission');
+				}
 			}
 		}
 	}

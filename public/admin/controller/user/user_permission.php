@@ -365,6 +365,18 @@ class ControllerUserUserPermission extends Controller {
 			}
 		}
 		
+		// Add section-specific virtual permissions
+		$this->load->model('dynamic/section');
+		$sections = $this->model_dynamic_section->getSections();
+		foreach ($sections as $section) {
+			$code = $section['code'];
+			foreach (array('dynamic/page_' . $code, 'dynamic/category_' . $code, 'dynamic/field_' . $code) as $perm) {
+				if (!in_array($perm, $ignore) && !in_array($perm, $data['permissions'])) {
+					$data['permissions'][] = $perm;
+				}
+			}
+		}
+
 		if (isset($this->request->post['permission']['hiden'])) {
 			$data['ishide'] = $this->request->post['permission']['hiden'];
 		} elseif (isset($user_group_info['permission']['hiden'])) {

@@ -1466,13 +1466,13 @@ $('#product-related').delegate('.bi-dash-circle', 'click', function() {
 $('input[name=\'product_related_article_input\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=blog/article/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=dynamic/page/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['article_id']
+						value: item['page_id']
 					}
 				}));
 			}

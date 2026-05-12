@@ -107,3 +107,7 @@ Controllers pass data to templates via `$this->load->view('path/template', $data
 - **Language**: Only `ru-ru` language files are present.
 - **Composer vendor**: Lives in `storage/vendor/` (outside web root). Run `composer install` from `storage/` directory.
 - No test suite exists in this repository.
+
+
+# Доступ к БД всегда в public/system/config/database.php
+Не пиши никаких миграций, просто вноси необходимые изменения в таблицы БД
