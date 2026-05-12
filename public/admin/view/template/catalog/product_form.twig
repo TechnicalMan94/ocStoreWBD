@@ -1057,11 +1057,13 @@
 
                     {% set image_row = 0 %}
                     {% for product_image in product_images %}
+                      {% block image_item %}
                       <tr id="image-row{{ image_row }}">
                         <td class="text-left"><a href="" id="thumb-image{{ image_row }}" data-oc-toggle="image" class="img-thumbnail"><img src="{{ product_image.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}"/></a> <input type="hidden" name="product_image[{{ image_row }}][image]" value="{{ product_image.image }}" id="input-image{{ image_row }}"/></td>
-                        <td class="text-right text-nowrap"><input type="text" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
+                        <td class="text-right text-nowrap"><input type="number" name="product_image[{{ image_row }}][sort_order]" value="{{ product_image.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/></td>
                         <td class="text-left"><button type="button" onclick="$('#image-row{{ image_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>
                       </tr>
+                      {% endblock %}
                       {% set image_row = image_row + 1 %}
                     {% endfor %}
                   </tbody>
@@ -1074,6 +1076,19 @@
                   </tfoot>
                 </table>
               </div>
+              <script>
+                var image_row = {{ image_row }};
+
+                function addImage() {
+                  {% set image_row = '__IMAGE_ROW__' %}
+                  let html = '{{ block("image_item")|e("js") }}';
+                  html = html.replaceAll('__IMAGE_ROW__', image_row);
+                  $('#images tbody').append(html);
+
+                  image_row++;
+                }
+
+                </script>
             </div>
             <div class="tab-pane" id="tab-reward">
               <div class="form-group">
@@ -1753,22 +1768,7 @@ $('#article-related').delegate('.bi-dash-circle', 'click', function() {
   }
 
   </script>
-  <script>
-  var image_row = {{ image_row }};
-
-  function addImage() {
-	  html = '<tr id="image-row' + image_row + '">';
-	  html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-oc-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
-	  html += '  <td class="text-right text-nowrap"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
-	  html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="bi bi-dash-circle"></i></button></td>';
-	  html += '</tr>';
-
-	  $('#images tbody').append(html);
-
-	  image_row++;
-  }
-
-  </script>
+  
   <script>
   var recurring_row = {{ recurring_row }};
 
