@@ -135,7 +135,6 @@ $_['text_dynamic_section']             = 'Разделы';
 $_['text_dynamic_page']                = 'Страницы';
 $_['text_dynamic_category']            = 'Категории';
 $_['text_dynamic_field']               = 'Поля';
-$_['text_dynamic_migrate']             = 'Миграция';
 $_['text_complete_status']             = 'Завершенных заказов'; 
 $_['text_processing_status']           = 'Заказов в процессе'; 
 $_['text_other_status']                = 'Другие заказы'; 

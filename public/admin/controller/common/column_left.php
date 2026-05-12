@@ -481,19 +481,13 @@ class ControllerCommonColumnLeft extends Controller {
 				);
 			}
 
-			if ($this->user->hasPermission('access', 'dynamic/section')) {
-				$system[] = array(
-					'name'	   => $this->language->get('text_dynamic_section'),
-					'href'     => $this->url->link('dynamic/section', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-
-				$system[] = array(
-					'name'	   => $this->language->get('text_dynamic_migrate'),
-					'href'     => $this->url->link('dynamic/migrate', 'user_token=' . $this->session->data['user_token'], true),
-					'children' => array()
-				);
-			}
+				if ($this->user->hasPermission('access', 'dynamic/section')) {
+					$system[] = array(
+						'name'	   => $this->language->get('text_dynamic_section'),
+						'href'     => $this->url->link('dynamic/section', 'user_token=' . $this->session->data['user_token'], true),
+						'children' => array()
+					);
+				}
 
 			// Localisation
 			$localisation = array();
