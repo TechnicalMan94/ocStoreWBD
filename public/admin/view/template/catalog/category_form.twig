@@ -100,7 +100,7 @@
                 <label class="col-sm-2 col-form-label" for="input-filter"><span data-bs-toggle="tooltip" title="{{ help_filter }}">{{ entry_filter }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="filter" value="" placeholder="{{ entry_filter }}" id="input-filter" class="form-control" />
-                  <div id="category-filter" class="bg-light p-3 "style="height: 150px; overflow: auto;">
+                  <div id="category-filter" class="bg-light p-3" style="height: 150px; overflow: auto;">
                     {% for category_filter in category_filters %}
                     <div id="category-filter{{ category_filter.filter_id }}"><i class="bi bi-dash-circle"></i> {{ category_filter.name }}
                       <input type="hidden" name="category_filter[]" value="{{ category_filter.filter_id }}" />
@@ -112,7 +112,7 @@
               <div class="form-group">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="bg-light p-3 "style="height: 150px; overflow: auto;">
+                  <div class="bg-light p-3" style="height: 150px; overflow: auto;">
                     {% for store in stores %}
                     <div class="checkbox">
                       <label>
@@ -224,7 +224,7 @@
                 <label class="col-sm-2 col-form-label" for="input-product-related"><span data-bs-toggle="tooltip" title="{{ help_related }}">{{ entry_related_wb }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="product_related_input" value="" placeholder="{{ entry_related_wb }}" id="input-product-related" class="form-control" />
-                  <div id="product-related" class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for product_related in product_related %}
+                  <div id="product-related" class="bg-light p-3" style="height: 150px; overflow: auto;"> {% for product_related in product_related %}
                     <div id="product-related{{ product_related.product_id }}"><i class="bi bi-dash-circle"></i> {{ product_related.name }}
                       <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}" />
                     </div>
@@ -235,7 +235,7 @@
                 <label class="col-sm-2 col-form-label" for="input-article-related"><span data-bs-toggle="tooltip" title="{{ help_related }}">{{ entry_related_article }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="article_related_input" value="" placeholder="{{ entry_related_article }}" id="input-article-related" class="form-control" />
-                  <div id="article-related" class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for article_related in article_related %}
+                  <div id="article-related" class="bg-light p-3" style="height: 150px; overflow: auto;"> {% for article_related in article_related %}
                     <div id="article-related{{ article_related.article_id }}"><i class="bi bi-dash-circle"></i> {{ article_related.name }}
                       <input type="hidden" name="article_related[]" value="{{ article_related.article_id }}" />
                     </div>

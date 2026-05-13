@@ -86,7 +86,7 @@
               <div class="form-group">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for store in stores %}
+                  <div class="bg-light p-3" style="height: 150px; overflow: auto;"> {% for store in stores %}
                     <div class="checkbox">
                       <label> {% if store.store_id in information_store %}
                         <input type="checkbox" name="information_store[]" value="{{ store.store_id }}" checked="checked" />
