@@ -171,7 +171,7 @@ class ControllerSettingStore extends Controller {
 		if (isset($this->error['meta_title'])) {
 			$data['error_meta_title'] = $this->error['meta_title'];
 		} else {
-			$data['error_meta_title'] = '';
+			$data['error_meta_title'] = array();
 		}
 
 		if (isset($this->error['name'])) {
@@ -274,28 +274,46 @@ class ControllerSettingStore extends Controller {
 			$data['config_ssl'] = '';
 		}
 
-		if (isset($this->request->post['config_meta_title'])) {
-			$data['config_meta_title'] = $this->request->post['config_meta_title'];
-		} elseif (isset($store_info['config_meta_title'])) {
-			$data['config_meta_title'] = $store_info['config_meta_title'];
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		if (isset($this->request->post['config_meta'])) {
+			$data['config_meta'] = $this->request->post['config_meta'];
+		} elseif (isset($store_info['config_meta'])) {
+			$data['config_meta'] = $store_info['config_meta'];
 		} else {
-			$data['config_meta_title'] = '';
+			$data['config_meta'] = array();
 		}
 
-		if (isset($this->request->post['config_meta_description'])) {
-			$data['config_meta_description'] = $this->request->post['config_meta_description'];
-		} elseif (isset($store_info['config_meta_description'])) {
-			$data['config_meta_description'] = $store_info['config_meta_description'];
-		} else {
-			$data['config_meta_description'] = '';
+		$default_language_id = $this->config->get('config_language_id');
+
+		foreach ($data['languages'] as $language) {
+			if ($language['code'] == $this->config->get('config_language')) {
+				$default_language_id = $language['language_id'];
+
+				break;
+			}
 		}
 
-		if (isset($this->request->post['config_meta_keyword'])) {
-			$data['config_meta_keyword'] = $this->request->post['config_meta_keyword'];
-		} elseif (isset($store_info['config_meta_keyword'])) {
-			$data['config_meta_keyword'] = $store_info['config_meta_keyword'];
-		} else {
-			$data['config_meta_keyword'] = '';
+		if ($default_language_id && empty($data['config_meta'][$default_language_id])) {
+			$data['config_meta'][$default_language_id] = array(
+				'meta_title'       => isset($store_info['config_meta_title']) ? $store_info['config_meta_title'] : '',
+				'meta_description' => isset($store_info['config_meta_description']) ? $store_info['config_meta_description'] : '',
+				'meta_keyword'     => isset($store_info['config_meta_keyword']) ? $store_info['config_meta_keyword'] : ''
+			);
+		}
+
+		foreach ($data['languages'] as $language) {
+			if (!isset($data['config_meta'][$language['language_id']])) {
+				$data['config_meta'][$language['language_id']] = array();
+			}
+
+			$data['config_meta'][$language['language_id']] = array_merge(array(
+				'meta_title'       => '',
+				'meta_description' => '',
+				'meta_keyword'     => ''
+			), $data['config_meta'][$language['language_id']]);
 		}
 
 		$data['config_theme'] = 'default';
@@ -443,10 +461,6 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_language'] = $this->config->get('config_language');
 		}
-
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		if (isset($this->request->post['config_currency'])) {
 			$data['config_currency'] = $this->request->post['config_currency'];
@@ -634,8 +648,30 @@ class ControllerSettingStore extends Controller {
 			$this->error['url'] = $this->language->get('error_url');
 		}
 
-		if (!$this->request->post['config_meta_title']) {
-			$this->error['meta_title'] = $this->language->get('error_meta_title');
+		$this->load->model('localisation/language');
+
+		foreach ($this->model_localisation_language->getLanguages() as $language) {
+			if (empty($this->request->post['config_meta'][$language['language_id']]['meta_title'])) {
+				$this->error['meta_title'][$language['language_id']] = $this->language->get('error_meta_title');
+			}
+		}
+
+		$default_language_id = $this->config->get('config_language_id');
+
+		$config_language = isset($this->request->post['config_language']) ? $this->request->post['config_language'] : $this->config->get('config_language');
+
+		foreach ($this->model_localisation_language->getLanguages() as $language) {
+			if ($language['code'] == $config_language) {
+				$default_language_id = $language['language_id'];
+
+				break;
+			}
+		}
+
+		if ($default_language_id && isset($this->request->post['config_meta'][$default_language_id])) {
+			$this->request->post['config_meta_title'] = $this->request->post['config_meta'][$default_language_id]['meta_title'];
+			$this->request->post['config_meta_description'] = $this->request->post['config_meta'][$default_language_id]['meta_description'];
+			$this->request->post['config_meta_keyword'] = $this->request->post['config_meta'][$default_language_id]['meta_keyword'];
 		}
 
 		if (!$this->request->post['config_name']) {
