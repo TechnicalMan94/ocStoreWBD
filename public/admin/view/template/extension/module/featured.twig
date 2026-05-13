@@ -38,7 +38,7 @@
             <label class="col-sm-2 col-form-label" for="input-product"><span data-bs-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
             <div class="col-sm-10">
               <input type="text" name="product_name" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-              <div id="featured-product" class="bg-light p-3 style="height: 150px; overflow: auto;">
+              <div id="featured-product" class="bg-light p-3 "style="height: 150px; overflow: auto;">
                 {% for product in products %}
                 <div id="featured-product{{ product.product_id }}"><i class="bi bi-dash-circle"></i> {{ product.name }}
                   <input type="hidden" name="product[]" value="{{ product.product_id }}" />

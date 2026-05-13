@@ -129,7 +129,7 @@
                 <label class="col-sm-2 col-form-label" for="input-product"><span data-bs-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
-                  <div id="coupon-product" class="bg-light p-3 style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
+                  <div id="coupon-product" class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
                     <div id="coupon-product{{ coupon_product.product_id }}"><i class="bi bi-dash-circle"></i> {{ coupon_product.name }}
                       <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}" />
                     </div>
@@ -140,7 +140,7 @@
                 <label class="col-sm-2 col-form-label" for="input-category"><span data-bs-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
-                  <div id="coupon-category" class="bg-light p-3 style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
+                  <div id="coupon-category" class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
                     <div id="coupon-category{{ coupon_category.category_id }}"><i class="bi bi-dash-circle"></i> {{ coupon_category.name }}
                       <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}" />
                     </div>

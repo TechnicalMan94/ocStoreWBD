@@ -87,7 +87,7 @@
               <div class="form-group">
 				<label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
-                  <div class="bg-light p-3 style="height: 150px; overflow: auto;"> {% for store in stores %}
+                  <div class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for store in stores %}
                     <div class="checkbox">
                       <label>{% if store.store_id in manufacturer_store %}
                         <input type="checkbox" name="manufacturer_store[]" value="{{ store.store_id }}" checked="checked" />
@@ -160,7 +160,7 @@
                 <label class="col-sm-2 col-form-label" for="input-product-related"><span data-bs-toggle="tooltip" title="{{ help_related }}">{{ entry_related_mn }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="product_related_input" value="" placeholder="{{ entry_related_mn }}" id="input-product-related" class="form-control" />
-                  <div id="product-related" class="bg-light p-3 style="height: 150px; overflow: auto;"> {% for product_related in product_related %}
+                  <div id="product-related" class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for product_related in product_related %}
                     <div id="product-related{{ product_related.product_id }}"><i class="bi bi-dash-circle"></i> {{ product_related.name }}
                       <input type="hidden" name="product_related[]" value="{{ product_related.product_id }}" />
                     </div>
@@ -171,7 +171,7 @@
                 <label class="col-sm-2 col-form-label" for="input-article-related"><span data-bs-toggle="tooltip" title="{{ help_related }}">{{ entry_related_article }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="article_related_input" value="" placeholder="{{ entry_related_article }}" id="input-article-related" class="form-control" />
-                  <div id="article-related" class="bg-light p-3 style="height: 150px; overflow: auto;"> {% for article_related in article_related %}
+                  <div id="article-related" class="bg-light p-3 "style="height: 150px; overflow: auto;"> {% for article_related in article_related %}
                     <div id="article-related{{ article_related.article_id }}"><i class="bi bi-dash-circle"></i> {{ article_related.name }}
                       <input type="hidden" name="article_related[]" value="{{ article_related.article_id }}" />
                     </div>
