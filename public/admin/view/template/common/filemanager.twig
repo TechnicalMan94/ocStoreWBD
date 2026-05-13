@@ -164,13 +164,14 @@ $('#button-upload').on('click', function() {
 $('#button-folder').popover({
 	html: true,
 	sanitize: false,
+	container: '#modal-image',
 	placement: 'bottom',
 	trigger: 'click',
 	title: '{{ entry_folder }}',
 	content: function() {
 		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="{{ entry_folder }}" class="form-control">';
-		html += '  <button type="button" title="{{ button_folder }}" id="button-create" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button>';
+		html += '  <button type="button" title="{{ button_folder }}" class="btn btn-primary button-create"><i class="bi bi-plus-circle"></i></button>';
 		html += '</div>';
 
 		return html;
@@ -178,33 +179,44 @@ $('#button-folder').popover({
 });
 
 $('#button-folder').on('shown.bs.popover', function() {
-	$('#button-create').on('click', function() {
-		$.ajax({
-			url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory }}',
-			type: 'post',
-			dataType: 'json',
-			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
-			beforeSend: function() {
-				$('#button-create').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-create').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['error']) {
-					alert(json['error']);
-				}
+	var popover_id = $(this).attr('aria-describedby');
+	var $popover = $('#' + popover_id);
 
-				if (json['success']) {
-					alert(json['success']);
+	$popover.find('input[name=\'folder\']').trigger('focus');
+});
 
-					$('#button-refresh').trigger('click');
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+$('#modal-image').off('click', '.popover .button-create').on('click', '.popover .button-create', function(e) {
+	e.preventDefault();
+	e.stopPropagation();
+
+	var $button = $(this);
+	var $popover = $button.closest('.popover');
+
+	$.ajax({
+		url: 'index.php?route=common/filemanager/folder&user_token={{ user_token }}&directory={{ directory }}',
+		type: 'post',
+		dataType: 'json',
+		data: 'folder=' + encodeURIComponent($popover.find('input[name=\'folder\']').val()),
+		beforeSend: function() {
+			$button.prop('disabled', true);
+		},
+		complete: function() {
+			$button.prop('disabled', false);
+		},
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
 			}
-		});
+
+			if (json['success']) {
+				alert(json['success']);
+
+				$('#button-refresh').trigger('click');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
 	});
 });
 

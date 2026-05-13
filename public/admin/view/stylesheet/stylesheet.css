@@ -696,7 +696,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 /* Filemanager Folder Size */
 #filemanager .bi-folder.fs-1 {
-    font-size: 10.5em;
+    font-size: 100px !important;
+    line-height: 1;
 }
 
 #extension-list {
